@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html><head>
+    <meta property="og:image" content="MABAj.jpg">
+    <style>
+      body, html{
+        margin: 0;
+        width: 100%;
+        height: 100vh;
+        overflow: hidden;
+        background: #000;
+      }
+      #c{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 100%;
+        height: 100%;
+        background: url(MABAj.jpg);
+        background-position: center center;
+        background-size: cover;
+        transform: translate(-50%, -50%);
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="c" width="1920" height="1079" style="height: 411.75px; width: 100vw;"></canvas>
+    <script>
+      c=document.querySelector('#c')
+      x=c.getContext('2d')
+      S=Math.sin
+      C=Math.cos
+      t=playing=go=0
+      window.onclick=()=>{if(!playing)mp3.play()}
+      rsz=window.onresize=()=>{
+        setTimeout(()=>{
+          if(document.body.clientWidth > document.body.clientHeight*1.77777778){
+            c.style.height = '100vh'
+            setTimeout(()=>c.style.width = c.clientHeight*1.77777778+'px',0)
+          }else{
+            c.style.width = '100vw'
+            setTimeout(()=>c.style.height = c.clientWidth/1.77777778 + 'px',0)
+          }
+          c.width=1920
+          c.height=c.width/1.777777778
+        },0)
+      }
+      rsz()
+      Draw=()=>{
+        if(!t){
+          mp3 = new Audio()
+          mp3.loop=true
+          mp3.onplaying=()=>{playing=true}
+          mp3.oncanplay=()=>{go=true;if(!playing)mp3.play()}
+          mp3.src='ca3ef56c120b697dc0ef9e389e385dd8.MP3'
+          Rn=Math.random
+          bgimg = new Image()
+          bgimg.onload=()=>{
+            go=true
+          }
+          bgimg.src='MABAj.jpg'
+          Rn=Math.random
+          cl=36
+          rw=(cl/1|0)|0
+          mag=100
+          reduc=1.07
+          B=Array(cl*rw).fill().map((v,i)=>{
+            X=i%cl
+            Y=i/cl|0
+            Z=0
+            return [X,Y,Z,0]
+          })
+          slideTheta=0
+          slideV=0
+          R=(Rl,Pt,Yw,m)=>{X=S(p=(A=(M=Math).atan2)(X,Y)+Rl)*(d=(H=M.hypot)(X,Y)),Y=C(p)*d,Y=S(p=A(Y,Z)+Pt)*(d=H(Y,Z)),Z=C(p)*d,X=S(p=A(X,Z)+Yw)*(d=H(X,Z)),Z=C(p)*d;if(m)X+=oX,Y+=oY,Z+=oZ;}
+          Q=()=>{
+            return [c.width/2+X/Z*800,c.height/2+Y/Z*800]
+          }
+        }
+        
+        if(go){
+          mag=850+S(t)*800
+          reduc=1.04-(S(t)/30)
+          spread=(6+S(t)*3)|0
+          slideTheta+=(Rn()-.5)
+          slideV+=(Rn()-.5)*2
+          slideV=Math.min(4,Math.max(-4,slideV))
+          slideV/=1.02
+          x.globalAlpha=.5
+          x.drawImage(bgimg,0,0,c.width,c.height)
+          x.globalAlpha=1
+          x.fillStyle='#0005'
+          x.fillRect(0,0,c.width,c.height)
+          oX=oY=0,oZ=5+S(t*1.5)*3
+          Rl=S(t/3)*8,Pt=-S(t/2)/2,Yw=S(t/4)/2
+          let tpt=S(t/2)*1
+          
+          if(!((t*60|0)%(8+S(t)*7|0))){
+            for(let m=1;m--;){
+              let sel = B[Rn()*B.length|0]
+              X=sel[0]
+              Y=sel[1]
+              Z=sel[2]
+              sel[3]=1
+              for(dir=2;dir--;){//let dir=Rn()<.5
+                let tx1
+                let ty1
+                let tx2
+                let ty2
+                if(dir){
+                  tx1=X+spread<cl-1?X+spread:0
+                  ty1=Y
+                  tx2=X-spread>-1?X-spread:cl-1
+                  ty2=Y
+                }else{
+                  tx1=X
+                  ty1=Y+spread<rw-1?Y+spread:0
+                  tx2=X
+                  ty2=Y-spread>-1?Y-spread:rw-1
+                }
+                let l1=ty1*cl+tx1
+                let l2=ty2*cl+tx2
+                B[l1][3]+=mag/4
+                B[l2][3]+=mag/4
+              }
+              sel[3]+=mag
+            }
+          }
+          let mcl=1
+          let mrw=1
+          let mbr=3
+          let msp=5
+          let spz=(1-S(t*10)/2)/8
+          for(let k=mcl*mrw*mbr;k--;){
+            let mx=((k%mcl)-mcl/2+.5)*msp
+            let my=((k/mcl|0)%mrw-mrw/2+.5)*msp
+            let mz=((k/mcl/mrw|0)-mbr/2+.5)*msp*spz
+            B.map(v=>{
+              let sp=.18
+              x.beginPath()
+              X=((v[0]-cl/2))*sp+mx
+              Y=((v[1]-rw/2))*sp+my
+              Z=v[2]+mz
+              R(Rl,Pt,Yw,0)
+              R(0,tpt,0,1)
+              if(Z>0)x.lineTo(...Q())
+              X=(((v[0]+1)-cl/2))*sp+mx
+              Y=((v[1]-rw/2))*sp+my
+              Z=v[2]+mz
+              R(Rl,Pt,Yw,0)
+              R(0,tpt,0,1)
+              if(Z>0)x.lineTo(...Q())
+              X=(((v[0]+1)-cl/2))*sp+mx
+              Y=(((v[1]+1)-rw/2))*sp+my
+              Z=v[2]+mz
+              R(Rl,Pt,Yw,0)
+              R(0,tpt,0,1)
+              if(Z>0)x.lineTo(...Q())
+              X=((v[0]-cl/2))*sp+mx
+              Y=(((v[1]+1)-rw/2))*sp+my
+              Z=v[2]+mz
+              R(Rl,Pt,Yw,0)
+              R(0,tpt,0,1)
+              if(Z>0)x.lineTo(...Q())
+              x.closePath()
+              let l;
+              //x.strokeStyle=
+              x.fillStyle=`hsla(${S(Math.PI*2*v[3])*360/9+t*1000},${50+S(Math.PI*2*v[3]**.8)*50}%,${(l=v[3])**.8/2*99}%,${Math.min(.95,l**.75/2)})`
+              x.fill()
+              //x.strokeStyle='#eef1'
+              //x.stroke()
+              v[3]/=reduc
+            })
+          }
+          P=JSON.parse(JSON.stringify(B))
+          B.map((v,j)=>{
+            X=v[0]
+            Y=v[1]
+            Z=v[2]
+            let l
+            let tx=X+1<cl-1?X+1:0
+            let ty=Y
+            l=ty*cl+tx
+            let a1=B[l][3]
+            tx=X-1>-1?X-1:cl-1
+            ty=Y
+            l=ty*cl+tx
+            let a2=B[l][3]
+            tx=X
+            ty=Y-1>-1?Y-1:rw-1
+            l=ty*cl+tx
+            let a3=B[l][3]
+            tx=X
+            ty=Y+1<rw-1?Y+1:0
+            l=ty*cl+tx
+            let a4=B[l][3]
+            X+=S(slideTheta)*slideV
+            Y+=C(slideTheta)*slideV
+            while(X>cl-1)X-=cl
+            while(Y>rw-1)Y-=rw
+            while(X<0)X+=cl
+            while(Y<0)Y+=rw
+            X|=0
+            Y|=0
+            l=Y*cl+X
+            P[l][3]=(v[3]+a1+a2+a3+a4)/5
+          })
+          B=P
+        }
+        
+        t+=1/60
+        requestAnimationFrame(Draw)
+      }
+      Draw()
+    </script>
+  
+
+</body></html>

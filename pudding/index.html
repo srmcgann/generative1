@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html><head>
+    <meta property="og:image" content="vFDar.jpg">
+    <style>
+      body, html{
+        margin: 0;
+        width: 100%;
+        height: 100vh;
+        overflow: hidden;
+        background: #000;
+      }
+      #c{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 100%;
+        height: 100%;
+        background: url(vFDar.jpg);
+        background-position: center center;
+        background-size: fill;
+        transform: translate(-50%, -50%);
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="c" width="1920" height="1079" style="height: 411.75px; width: 100vw;"></canvas>
+    <script>
+      c=document.querySelector('#c')
+      x=c.getContext('2d')
+      S=Math.sin
+      C=Math.cos
+      t=playing=0
+      window.onclick=()=>{if(!playing)mp3.play()}
+      rsz=window.onresize=()=>{
+        setTimeout(()=>{
+          if(document.body.clientWidth > document.body.clientHeight*1.77777778){
+            c.style.height = '100vh'
+            setTimeout(()=>c.style.width = c.clientHeight*1.77777778+'px',0)
+          }else{
+            c.style.width = '100vw'
+            setTimeout(()=>c.style.height = c.clientWidth/1.77777778 + 'px',0)
+          }
+          c.width=1920
+          c.height=c.width/1.777777778
+        },0)
+      }
+      rsz()
+      Draw=()=>{
+        if(!t){
+          mp3 = new Audio()
+          mp3.loop=true
+          mp3.onplaying=()=>{playing=true}
+          mp3.oncanplay=()=>{go=true;if(!playing)mp3.play()}
+          mp3.src='a7b25eb830b11bae419417976c785cf7.MP3'
+          Rn=Math.random
+          bgimg = new Image()
+          go=false
+          bgimg.onload=()=>{
+            go=true
+          }
+          bgimg.src='vFDar.jpg'
+          M=Math
+        }
+        if(go){
+          x.globalAlpha=.1
+          x.drawImage(bgimg,0,0,w=c.width,c.height)
+          x.globalAlpha=1
+        } else {
+          x.fillStyle='#0003',x.fillRect(0,0,w=c.width,w)
+        }
+        h=800,R=q=>{Y=S(p=(A=M.atan2)(Y,Z)+Pt)*(d=H(Y,Z)),Z=C(p)*d,X=S(p=A(X,Z)+Yw)*(d=H(X,Z)),Z=C(p)*d,Z+=oZ};Q=q=>[960+X/Z*h,540+Y/Z*h];Rn=q=>Math.random()-.5;L=.15,W=170,iMPl=1200,O=5,oZ=4,Pt=-t,Yw=S(t/1.24)*3;P=t?P:[[0,0,0,0,L,0,0,0,0,W,0]];for(l=P.length;l--;)if(Rn()>-.3&&P.length<iMPl)for(m=6;m--;)P=[...P,[P[l][0],P[l][1],P[l][2],P[l][3]+Rn()/99,P[l][4]+Rn()/99,P[l][5]+Rn()/99,0,0,0,W*(.5+Rn()),0]];P.map((v,i)=>{v[6]/=(l=1.05),v[7]/=l,v[8]/=l,v[6]+=Rn()/(l=500),v[7]+=Rn()/l,v[8]+=Rn()/l,X=v[0]+=v[3]+=v[6],Y=v[1]+=v[4]+=v[7],Z=v[2]+=v[5]+=v[8],d=(H=M.hypot)(v[3],v[4],v[5]),v[3]=v[3]/d*L/W*(l=v[9]),v[4]=v[4]/d*L/W*l,v[5]=v[5]/d*L/W*l;if(X>O*.75)v[0]-=O*1.5;if(X<-O*.75)v[0]+=O*1.5;if(Y>(l=O/2))v[1]-=O;if(Y<-l)v[1]+=O;if(Z>l)v[2]-=O;if(Z<-l)v[2]+=O;R();if(i&&Z>1){
+        x.globalAlpha=Math.min(.8,v[10]+=.015)
+        x.beginPath()
+        s=Math.min(500,(v[9]/=i?1.017:1)*8/Z/Z)
+        x.arc(...(l=Q()),s,0,7)
+        x.fillStyle=`hsla(${(d=H(v[3],v[4],v[5]))*450},99%,${30+d*350}%,${Math.min(1,((d/3)**1.4)*100*Math.min(1,Z/3))}`
+        x.fill()
+        x.beginPath()
+        s/=2.25
+        x.arc(...l,s,0,7)
+        x.fillStyle=`hsla(${d*450+15},99%,${30+d*600}%,${Math.min(1,((d/4)**1.8)*1800*Math.min(1,Z/3))}`
+        x.fill()
+        x.beginPath()
+        s/=2.25
+        x.arc(...l,s,0,7)
+        x.fillStyle=`hsla(${d*450+50},99%,${80+d*850}%,${Math.min(1,((d/12)**3)*5e6*Math.min(1,Z/3))}`
+        x.fill()
+        }})
+        P=P.filter(v=>v[9]>40)
+        t+=1/60
+        requestAnimationFrame(Draw)
+      }
+      Draw()
+    </script>
+  
+
+</body></html>

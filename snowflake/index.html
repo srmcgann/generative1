@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html><head>
+</script>
+    <meta property="og:image" content="uCRVq.jpg">
+    <style>
+      body, html{
+        margin: 0;
+        width: 100%;
+        height: 100vh;
+        overflow: hidden;
+        background: #000;
+      }
+      #c{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 100%;
+        height: 100%;
+        background: url(uCRVq.jpg);
+        background-position: center center;
+        backgroun-size: fill;
+        transform: translate(-50%, -50%);
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="c" width="1920" height="1079" style="width: 100vw; height: 587.812px;"></canvas>
+    <script>
+      c=document.querySelector('#c')
+      x=c.getContext('2d')
+      S=Math.sin
+      C=Math.cos
+      t=playing=0
+      window.onclick=()=>{if(!playing)mp3.play()}
+      rsz=window.onresize=()=>{
+        setTimeout(()=>{
+          if(document.body.clientWidth > document.body.clientHeight*1.77777778){
+            c.style.height = '100vh'
+            setTimeout(()=>c.style.width = c.clientHeight*1.77777778+'px',0)
+          }else{
+            c.style.width = '100vw'
+            setTimeout(()=>c.style.height = c.clientWidth/1.77777778 + 'px',0)
+          }
+          c.width=1920
+          c.height=c.width/1.777777778
+        },0)
+      }
+      rsz()
+      Draw=()=>{
+        if(!t){
+          go=false
+          R=(Rl,Pt,Yw,m)=>{X=S(p=(A=(M=Math).atan2)(X,Y)+Rl)*(d=(H=M.hypot)(X,Y)),Y=C(p)*d,Y=S(p=A(Y,Z)+Pt)*(d=H(Y,Z)),Z=C(p)*d,X=S(p=A(X,Z)+Yw)*(d=H(X,Z)),Z=C(p)*d;if(m)X+=oX,Y+=oY,Z+=oZ}
+          Q=()=>[c.width/2+X/Z*800,c.height/2+Y/Z*800]
+          mp3 = new Audio()
+          mp3.loop=true
+          mp3.onplaying=()=>{playing=true}
+          mp3.oncanplay=()=>{if(!playing)mp3.play()}
+          mp3.src='5a20530fd5f634712dafb7083e205f1d.MP3'
+          Rn=Math.random
+          
+          bg=new Image()
+          bg.onload=()=>{
+            go=true
+          }
+          bg.src='uCRVq.jpg'
+          
+          Snowflake = size => {
+            tx=0,ty=-1,tz=0
+            l=(.15+Rn()**.1/50)/6
+            res=5+(3+l*40)|0
+            thk=.8/7*1.25,ls=.7
+            mx=S(Math.PI*2/6*1+Math.PI/6*2)*20
+            my=C(Math.PI*2/6*1+Math.PI/6*2)*20
+            hex=Array(res).fill().map((v, i)=>{
+              j=i*3/res/2|0
+              tx1=S(p=Math.PI*2/6*j+Math.PI/3)*1
+              ty1=C(p)*1
+              tx2=S(p=Math.PI*2/6*(j+1)+Math.PI/3)*1
+              ty2=C(p)*1
+              X=tx1+(tx2-tx1)
+              Y=ty1+(ty2-ty1)
+              Z=0
+              return [X, Y, Z]
+            })
+            tx=0,ty=-10-Rn()*10,tz=0
+            txv=tyv=0
+            rw=Array(res).fill().map((v, i)=>{
+              X=tx,Y=ty
+              Z=0
+              tx+=txv+=Math.abs((0+(Rn()-.2)*200)*l*(150+i/res*100))/res/2
+              ty+=tyv-=((0+(Rn()-.5)*200)*l*(150-i/res*100))/res/2
+              tx=tx+(mx-tx)*(d=((i)/(res-2))**.5)
+              ty=ty+(my-ty)*d
+              return [X, Y, Z]
+            })
+            ipF=Rn()**.5-.5
+            
+            ip1=.5+ipF
+            ip2=.5-ipF
+            fin=[]
+            maxd=-6e6
+            for(i=res;i--;){
+              X=hex[res-i-1][0]*ip1+rw[i][0]*ip2
+              Y=hex[res-i-1][1]*ip1+rw[i][1]*ip2
+              Z=hex[res-i-1][2]*ip1+rw[i][2]*ip2
+              if((d=Math.hypot(X,Y))>maxd) maxd=d
+              fin=[...fin,[X,Y,Z]]
+            }
+
+            fin=fin.map(v=>{
+              X=v[0]
+              Y=v[1]
+              Z=v[2]
+              X/=maxd
+              Y/=maxd
+              Z/=maxd
+              X*=size
+              Y*=size
+              Z*=size
+              return [X,Y,Z]
+            })
+            out=[]
+            for(m=6;m--;){
+              fin.map((v,i)=>{
+                X=fin[l=res-i-1][0]
+                Y=fin[l][1]
+                Z=fin[l][2]
+                p=Math.PI/3*m+Math.PI/3-(Math.PI-(Math.atan2(X,Y)))/2
+                d=Math.hypot(X,Y)
+                X=S(p)*d
+                Y=C(p)*d
+                out=[...out,[X,Y,Z]]
+              })
+              fin.map(v=>{
+                X=v[0]
+                Y=v[1]
+                Z=v[2]
+                p=Math.PI/3*m+(Math.PI-(Math.atan2(X,Y)))/2
+                d=Math.hypot(X,Y)
+                X=S(p)*d
+                Y=C(p)*d
+                out=[...out,[X,Y,Z]]
+              })
+            }
+            fin=JSON.parse(JSON.stringify(out))
+            ret=[],out=[]
+            fin.map(v=>{
+              X=v[0]*ls
+              Y=v[1]*ls
+              Z=size*thk
+              out=[...out, [X,Y,Z]]
+            })
+            ret=[...ret, out]
+            out=[]
+            fin.map(v=>{
+              X=v[0]*ls
+              Y=v[1]*ls
+              Z=-size*thk
+              out=[...out, [X,Y,Z]]
+            })
+            ret=[...ret, out]
+            fin.map((v,i)=>{
+              out=[]
+              X=v[0]*ls
+              Y=v[1]*ls
+              Z=-size*thk
+              out=[...out, [X,Y,Z]]
+              X=v[0]
+              Y=v[1]
+              Z=v[2]
+              out=[...out, [X,Y,Z]]
+              X=fin[l=(i+1)%fin.length][0]
+              Y=fin[l][1]
+              Z=fin[l][2]
+              out=[...out, [X,Y,Z]]
+              X=fin[l][0]*ls
+              Y=fin[l][1]*ls
+              Z=-size*thk
+              out=[...out, [X,Y,Z]]
+              ret=[...ret, out]
+              
+              out=[]
+              X=v[0]*ls
+              Y=v[1]*ls
+              Z=size*thk
+              out=[...out, [X,Y,Z]]
+              X=v[0]
+              Y=v[1]
+              Z=v[2]
+              out=[...out, [X,Y,Z]]
+              X=fin[l=(i+1)%fin.length][0]
+              Y=fin[l][1]
+              Z=fin[l][2]
+              out=[...out, [X,Y,Z]]
+              X=fin[l][0]*ls
+              Y=fin[l][1]*ls
+              Z=size*thk
+              out=[...out, [X,Y,Z]]
+              ret=[...ret, out]
+            })
+            return ret
+          }
+          
+          G=199
+          ST=Array(4e3).fill().map(v=>{
+            X=(Rn()-.5)*G*2
+            Y=(Rn()-.5)*G
+            Z=50+(Rn())*G
+            return [X,Y,Z]
+          })
+          
+          size=2
+
+          snowflake=Snowflake(size)
+        }
+
+        if(go){
+          x.globalAlpha=.2
+          x.drawImage(bg,0,0,c.width,c.height)
+          x.globalAlpha=1
+          x.fillStyle='#00081030'
+          x.fillRect(0,0,c.width,c.height)
+        } else {
+          x.fillStyle='#0004'
+          x.fillRect(0,0,c.width,c.height)
+        }
+        
+        x.lineJoin=x.lineCap='round'
+
+        oX=oY=0, oZ=4-S(t*2)/3
+        Rl=S(t/4)*3,Pt=S(t/2)/2,Yw=-C(t*2)*.25+.2
+
+        ST.map((v,i)=>{
+          Z=v[2]
+          X=v[0]+=S(t/4+Z/40)/10
+          Y=v[1]+=.2
+          if(v[0]>G)v[0]-=G*2
+          if(v[0]<-G)v[0]+=G*2
+          if(v[1]>G/2)v[1]-=G
+          s=Math.min(400, 6e3/(Z**1.25))
+          l=Q()
+          x.fillStyle='#aaddff08'
+          x.fillRect(l[0]-s/2,l[1]-s/2,s,s)
+          x.fillStyle='#fff8'
+          s/=7
+          x.fillRect(l[0]-s/2,l[1]-s/2,s,s)
+        })
+        
+        snowflake.map(v=>{
+          x.beginPath()
+          v.map(q=>{
+            X=q[0]
+            Y=q[1]
+            Z=q[2]
+            R(Rl,Pt,Yw,1)
+            if(Z>0)x.lineTo(...Q())
+          })
+          x.lineWidth=Math.min(100, 700/(Z**1.5))
+          x.strokeStyle='#88ddff04'
+          x.stroke()
+          x.lineWidth/=40
+          x.strokeStyle='#adf6'
+          x.stroke()
+          x.fillStyle='#2bf1'
+          x.fill()
+        })
+        t+=1/60
+        requestAnimationFrame(Draw)
+      }
+      Draw()
+    </script>
+  
+
+</body></html>

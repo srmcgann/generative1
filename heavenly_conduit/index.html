@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html><head>
+    <meta property="og:image" content="ma2ha.jpg">
+    <style>
+      body, html{
+        margin: 0;
+        width: 100%;
+        height: 100vh;
+        overflow: hidden;
+        background: #000;
+      }
+      #c{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 100%;
+        height: 100%;
+        background: url(ma2ha.jpg);
+        background-position: center center;
+        background-size: fill;
+        transform: translate(-50%, -50%);
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="c" width="1920" height="1079" style="height: 732.375px; width: 100vw;"></canvas>
+    <script>
+      c=document.querySelector('#c')
+      x=c.getContext('2d')
+      S=Math.sin
+      C=Math.cos
+      t=playing=0
+      window.onclick=()=>{if(!playing)mp3.play()}
+      rsz=window.onresize=()=>{
+        setTimeout(()=>{
+          if(document.body.clientWidth > document.body.clientHeight*1.77777778){
+            c.style.height = '100vh'
+            setTimeout(()=>c.style.width = c.clientHeight*1.77777778+'px',0)
+          }else{
+            c.style.width = '100vw'
+            setTimeout(()=>c.style.height = c.clientWidth/1.77777778 + 'px',0)
+          }
+          c.width=1920
+          c.height=c.width/1.777777778
+        },0)
+      }
+      rsz()
+      Draw=()=>{
+        if(!t){
+          mp3 = new Audio()
+          mp3.loop=true
+          mp3.onplaying=()=>{playing=true}
+          mp3.oncanplay=()=>{go=true;if(!playing)mp3.play()}
+          mp3.src='4735914992ca3ddde21dd2d42b5bac8c.MP3'
+          Rn=Math.random
+          bgimg = new Image()
+          go=playing=false
+          bgimg.addEventListener('load', ()=>{
+            go=true
+          })
+          R=(Rl,Pt,Yw,o)=>{
+            X=S(p=(A=(M=Math).atan2)(X,Y)+Rl)*(d=(H=M.hypot)(X,Y)),Y=C(p)*d,Y=S(p=A(Y,Z)+Pt)*(d=H(Y,Z)),Z=C(p)*d,X=S(p=A(X,Z)+Yw)*(d=H(X,Z)),Z=C(p)*d
+            if(o)X+=oX,Y+=oY,Z+=oZ
+          }
+          Q=q=>[c.width/2+X/Z*800,c.height/2+Y/Z*800]
+          rw=14,col=80
+          x.lineJoin=x.lineCap='round'
+          bgimg = new Image()
+          go=false
+          bgimg.addEventListener('load',()=>{
+            go=true
+          })
+          bgimg.src='ma2ha.jpg'
+        }
+
+        if(go){
+          x.globalAlpha=.3
+          x.drawImage(bgimg,0,0,c.width,c.height)
+          x.globalAlpha=1
+          x.fillStyle='#0004',x.fillRect(0,0,w=c.width,w)
+        } else {
+          x.fillStyle='#0008',x.fillRect(0,0,w=c.width,w)
+        }
+        B=[]
+        for(i=rw*col;i--;){
+          j=i/rw|0
+          ls=4+(8+S(Math.PI*2/col*4*j-t*6)*8)**2.5/120
+          X=S(p=Math.PI*2/rw*i)*ls*(l=S(q=Math.PI*2/col*j))+l*50
+          Y=C(p)*ls
+          Z=C(q)*50+S(p)*C(q)*ls
+          B = [...B, [X,Y,Z]]
+        }
+        
+        Rl=Math.PI/2,Pt=t/8,Yw=t/3
+        oX=0,oY=-51,oZ=20-C(t/1.5)*20
+        
+        tt=-t/2
+        
+        B.map((v,i)=>{
+          //if(!(i%rw)) x.beginPath()
+          x.beginPath()
+          X=v[0]
+          Y=v[1]
+          Z=v[2]
+          R(0,0,tt)
+          R(Rl,Pt,Yw,1)
+          lz=Z
+          if(Y>-45&&Z>0){
+            x.lineTo(...Q())
+            if((i+1)%rw){
+              X=B[i+1][0]
+              Y=B[i+1][1]
+              Z=B[i+1][2]
+              R(0,0,tt)
+              R(Rl,Pt,Yw,1)
+              if(Y>-45&&Z>0)x.lineTo(...Q())
+            } else {
+              X=B[i-rw+1][0]
+              Y=B[i-rw+1][1]
+              Z=B[i-rw+1][2]
+              R(0,0,tt)
+              R(Rl,Pt,Yw,1)
+              if(Y>-45&&Z>0)x.lineTo(...Q())
+            }
+            if(1&&i<B.length-rw-1){
+              if((i+1)%(rw*2)){
+                X=B[i+rw+1][0]
+                Y=B[i+rw+1][1]
+                Z=B[i+rw+1][2]
+                R(0,0,tt)
+                R(Rl,Pt,Yw,1)
+                if(Y>-45&&Z>0)x.lineTo(...Q())
+              }
+            } else {
+              X=B[(i+rw+1)%rw][0]
+              Y=B[(i+rw+1)%rw][1]
+              Z=B[(i+rw+1)%rw][2]
+              R(0,0,tt)
+              R(Rl,Pt,Yw,1)
+              if(Y>-45&&Z>.15)x.lineTo(...Q())
+            }
+          }
+          //if(i%rw==rw-1){
+            x.strokeStyle=`hsla(${200},99%,99%,${.35-((1+Math.min(0,Y/2+8))**2/200)})`
+            x.lineWidth=Math.min(50, 1+150/lz)
+            x.stroke()
+            x.strokeStyle=`hsla(${180+t*200},99%,65%,${.07-((1+Math.min(0,Y/2+8))**2/200)})`
+            x.lineWidth=Math.min(100, 1+1000/lz)
+            x.stroke()
+         // }
+        })
+
+          t+=1/60
+          requestAnimationFrame(Draw)
+        }
+      Draw()
+    </script>
+  
+
+</body></html>

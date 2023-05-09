@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html><head>
+    <meta property="og:image" content="8RFVw.jpg">
+    <style>
+      body, html{
+        margin: 0;
+        width: 100%;
+        height: 100vh;
+        overflow: hidden;
+        background: #000;
+      }
+      #c{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 100%;
+        height: 100%;
+        background: url(8RFVw.jpg);
+        background-position: center center;
+        background-size: cover;
+        transform: translate(-50%, -50%);
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="c" width="1920" height="1079" style="height: 587.812px; width: 100vw;"></canvas>
+    <script>
+      c=document.querySelector('#c')
+      x=c.getContext('2d')
+      S=Math.sin
+      C=Math.cos
+      t=playing=0
+      window.onclick=()=>{if(!playing)mp3.play()}
+      rsz=window.onresize=()=>{
+        setTimeout(()=>{
+          if(document.body.clientWidth > document.body.clientHeight*1.77777778){
+            c.style.height = '100vh'
+            setTimeout(()=>c.style.width = c.clientHeight*1.77777778+'px',0)
+          }else{
+            c.style.width = '100vw'
+            setTimeout(()=>c.style.height = c.clientWidth/1.77777778 + 'px',0)
+          }
+          c.width=1920
+          c.height=c.width/1.777777778
+        },0)
+      }
+      rsz()
+      Draw=()=>{
+        if(!t){
+          mp3 = new Audio()
+          mp3.loop=true
+          mp3.onplaying=()=>{playing=true}
+          mp3.oncanplay=()=>{if(!playing)mp3.play()}
+          mp3.src='41b7a9863bd04b454ed6a0f4b8925dee.MP3'
+          Rn=Math.random
+          R=(Rl,Pt,Yw,o)=>{
+            X=S(p=(A=(M=Math).atan2)(X,Y)+Rl)*(d=(H=M.hypot)(X,Y)),Y=C(p)*d,Y=S(p=A(Y,Z)+Pt)*(d=H(Y,Z)),Z=C(p)*d,X=S(p=A(X,Z)+Yw)*(d=H(X,Z)),Z=C(p)*d
+            if(o)X+=oX,Y+=oY,Z+=oZ
+          }
+          I=(A,B,M,D,E,F,G,H)=>(K=((G-E)*(B-F)-(H-F)*(A-E))/(J=(H-F)*(M-A)-(G-E)*(D-B)))>=0&&K<=1&&(L=((M-A)*(B-F)-(D-B)*(A-E))/J)>=0&&L<=1?[A+K*(M-A),B+K*(D-B)]:0
+          Q=q=>[c.width/2+X/Z*800,c.height/2+Y/Z*800]
+          bgimg = new Image()
+          go=playing=false
+          bgimg.onload=()=>{
+            go=true
+          }
+          bgimg.src='8RFVw.jpg'
+          iBc=12
+          G=.8
+          B=Array(iBc).fill().map(v=>{
+            a=[]
+            ls=(.5+Rn()*(G-1))/3
+            tr=Rn()*Math.PI*2
+            tp=Rn()*Math.PI*2
+            ty=Rn()*Math.PI*2
+            tx=(Rn()-.5)*G
+            ty=(Rn()-.5)*G
+            tz=(Rn()-.5)*G
+            sd=3+(Rn()*5|0)
+            for(m=sd;m--;){
+              X=tx+S(p=Math.PI*2/sd*m)*ls
+              Y=ty+C(p)*ls
+              Z=tz
+              R(tr,tp,ty)
+              a=[...a, [X,Y,Z]]
+            }
+            return a
+          })
+          P=[]
+        }
+        
+        if(go){
+          x.lineCap=x.lineJoin='round'
+                    
+          oX=0,oY=0,oZ=1
+          Rl=t/6,Pt=-t/2,Yw=S(t/4)*3
+          
+          x.globalAlpha = .3
+          x.drawImage(bgimg,0,0,c.width,c.height)
+          x.globalAlpha=1
+          x.fillStyle='#0003',x.fillRect(0,0,c.width,c.height)
+          
+          B.map(v=>{
+
+            ax=ay=az=0
+            x.beginPath()
+            for(i=v.length;i--;){
+              ax+=X=v[i][0]
+              ay+=Y=v[i][1]
+              az+=Z=v[i][2]
+              R(Rl,Pt,Yw,1)
+              x.lineTo(...Q())
+            }
+            x.closePath()
+            x.strokeStyle='#fff6'
+            x.lineWidth=5/Z
+            x.stroke()
+            x.strokeStyle='#4fa2'
+            x.lineWidth=20/Z
+            x.stroke()
+            ax/=v.length
+            ay/=v.length
+            az/=v.length
+            X1=v[0][0]-ax
+            Y1=v[0][1]-ay
+            Z1=v[0][2]-az
+            X2=v[1][0]-ax
+            Y2=v[1][1]-ay
+            Z2=v[1][2]-az
+            nx=Y1*Z2-Z1*Y2
+            ny=Z1*X2-X1*Z2
+            nz=X1*Y2-Y1*X2
+            p1=Math.atan2(nx,nz)
+            p2=Math.PI/2-Math.acos(ny/Math.hypot(nx,ny,nz))
+            for(i=v.length;i--;){
+              for(m=5;m--;){
+                X=v[i][0]-ax
+                Y=v[i][1]-ay
+                Z=v[i][2]-az
+                R(0,0,-p1)
+                R(0,-p2,0)
+                Z=0
+                X1=0
+                Y1=0
+                X2=S(p=Math.PI*2*Rn())*G
+                Y2=C(p)*G
+                X3=X
+                Y3=Y
+                X=v[l=(i+1)%v.length][0]-ax
+                Y=v[l][1]-ay
+                Z=v[l][2]-az
+                R(0,0,-p1)
+                R(0,-p2,0)
+                X4=X
+                Y4=Y
+                pt=I(X1,Y1,X2,Y2,X3,Y3,X4,Y4)
+                X=pt[0]*(d=Rn()**.5)
+                Y=pt[1]*d
+                Z=0
+                R(0,p2,p1)
+                X+=ax,Y+=ay,Z+=az
+                P=[...P,[X,Y,Z,1]]
+              }
+            }
+          })
+         
+          x.fillStyle='#fff8'
+          P=P.map(v=>{
+            X=v[0]
+            Y=v[1]
+            Z=v[2]
+            R(Rl,Pt,Yw,1)
+            s=7/Z*(v[3]/=1.1)
+            l=Q()
+            x.fillRect(l[0]-s/2,l[1]-s/2,s,s)
+            return v
+          }).filter(v=>v[3]>.2)
+        }
+
+        t+=1/60
+        requestAnimationFrame(Draw)
+      }
+      Draw()
+    </script>
+  
+
+</body></html>

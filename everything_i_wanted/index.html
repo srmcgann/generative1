@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html><head>
+    <meta property="og:image" content="1Y86hU.jpg">
+    <style>
+      body, html{
+        margin: 0;
+        width: 100%;
+        height: 100vh;
+        overflow: hidden;
+        background: #000;
+      }
+      #c{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 100%;
+        height: 100%;
+        background: url(1Y86hU.jpg);
+        background-position: center center;
+        backgroun-size: fill;
+        transform: translate(-50%, -50%);
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="c" width="1920" height="1079" style="height: 732.375px; width: 100vw;"></canvas>
+    <script>
+      c=document.querySelector('#c')
+      x=c.getContext('2d')
+      S=Math.sin
+      C=Math.cos
+      t=playing=0
+      window.onclick=()=>{if(!playing)mp3.play()}
+      rsz=window.onresize=()=>{
+        setTimeout(()=>{
+          if(document.body.clientWidth > document.body.clientHeight*1.77777778){
+            c.style.height = '100vh'
+            setTimeout(()=>c.style.width = c.clientHeight*1.77777778+'px',0)
+          }else{
+            c.style.width = '100vw'
+            setTimeout(()=>c.style.height = c.clientWidth/1.77777778 + 'px',0)
+          }
+          c.width=1920
+          c.height=c.width/1.777777778
+        },0)
+      }
+      rsz()
+      Draw=()=>{
+        if(!t){
+          mp3 = new Audio()
+          mp3.loop=true
+          mp3.onplaying=()=>{playing=true}
+          mp3.oncanplay=()=>{go=true;if(!playing)mp3.play()}
+          mp3.src='f564d89e55e95fd2967d220056e9e66c.MP3'
+          Rn=Math.random
+          R=(Rl,Pt,Yw,o)=>{
+            X=S(p=(A=(M=Math).atan2)(X,Y)+Rl)*(d=(H=M.hypot)(X,Y)),Y=C(p)*d,Y=S(p=A(Y,Z)+Pt)*(d=H(Y,Z)),Z=C(p)*d,X=S(p=A(X,Z)+Yw)*(d=H(X,Z)),Z=C(p)*d
+            if(o)X+=oX,Y+=oY,Z+=oZ
+          }
+          Q=q=>[c.width/2+X/Z*800,c.height/2+Y/Z*800]
+          bgimg = new Image()
+          go=playing=false
+          bgimg.addEventListener('load',()=>{
+            go=true
+          })
+          bgimg.src = '1Y86hU.jpg'
+          iBc=4e3,iBs=99
+          iPc=20,iPs=2e4,iPsd=12
+          G=80,G2=50,g=.1,g2=6
+          B=Array(iBc).fill().map(v=>{
+            X=(Rn()-.5)*G
+            Y=(Rn()-.5)*G/1.7777777778
+            Z=Rn()*G/1.5
+            return [X,Y,Z]
+          })
+          P=Array(iPc).fill().map(v=>{
+            X=(Rn()-.5)*G2*3
+            Y=(Rn()-.5)*G2*3/1.25
+            Z=Rn()*G2*4
+            return [X,Y,Z,iPs/16+(iPs*Rn())*2]
+          })
+        }
+        if(go){
+          x.globalAlpha=.2
+          x.drawImage(bgimg,0,0,c.width,c.height)
+          x.globalAlpha=1
+          x.fillStyle='#0012',x.fillRect(0,0,c.width,c.height)
+
+          Rl=0,Pt=0,Yw=0
+          oX=0,oY=0,oZ=0
+
+          B.map(v=>{3333
+            X=v[0]+=C(t/8)/12
+            Y=v[1]+=g
+            Z=v[2]
+            if(v[1]>G/2/1.7777777778)v[1]=-G/1.777777777778/2
+            if(v[0]>G/2)v[0]=-G/2
+            if(v[0]<-G/2)v[0]=G/2
+            R(Rl,Pt,Yw,1)
+            s=Math.min(40, iBs/Z)
+            l=Q()
+            x.fillStyle='#aff3'
+            x.fillRect(l[0]-s/2,l[1]-s/2,s,s)
+          })
+        
+          P.map((v,i)=>{
+            X=v[0]
+            Y=v[1]
+            Z=v[2]-=g2
+            if(v[2]<0){
+              v[0]=(Rn()-.5)*G2*3
+              v[1]=(Rn()-.5)*G2*3/1.25
+              v[2]=G2*4
+            }
+            R(Rl,Pt,Yw,1)
+            for(m=iPsd;m--;){
+               x.beginPath()
+               s=Math.min(1e3, (v[3]+m*2e3)/Z)
+               if(Z>0&&s<1e3){
+                 x.arc(...Q(),s,0,7)
+                 x.lineWidth=2e3/Z
+                 x.strokeStyle=`hsla(${360/iPsd*m},99%,50%,${20*(Z**2/4e4)*((G2*4-Z)**2/2e6)}`
+                 x.stroke()
+               }
+            }
+          })
+        }
+        t+=1/60
+        requestAnimationFrame(Draw)
+      }
+      Draw()
+    </script>
+  
+
+</body></html>

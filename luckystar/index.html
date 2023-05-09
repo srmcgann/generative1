@@ -1,0 +1,228 @@
+<html><head>
+    <meta property="og:image" content="26a7bw.jpg">
+    <style>
+      body, html{
+        margin: 0;
+        width: 100%;
+        height: 100vh;
+        overflow: hidden;
+        background: #000;
+      }
+      #c{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 100%;
+        height: 100%;
+        background: url(26a7bw.jpg);
+        background-position: center center;
+        background-size: cover;
+        transform: translate(-50%, -50%);
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="c" width="1920" height="1079" style="width: 100vw; height: 325.687px;"></canvas>
+    <script>
+      c=document.querySelector('#c')
+      x=c.getContext('2d')
+      S=Math.sin
+      C=Math.cos
+      t=playing=0
+      window.onclick=()=>{if(!playing)mp3.play()}
+      rsz=window.onresize=()=>{
+        setTimeout(()=>{
+          if(document.body.clientWidth > document.body.clientHeight*1.77777778){
+            c.style.height = '100vh'
+            setTimeout(()=>c.style.width = c.clientHeight*1.77777778+'px',0)
+          }else{
+            c.style.width = '100vw'
+            setTimeout(()=>c.style.height = c.clientWidth/1.77777778 + 'px',0)
+          }
+          c.width=1920
+          c.height=c.width/1.777777778
+        },0)
+      }
+      rsz()
+      Draw=()=>{
+        if(!t){
+          mp3 = new Audio()
+          mp3.loop=true
+          mp3.onplaying=()=>{playing=true}
+          mp3.oncanplay=()=>{go=true;if(!playing)mp3.play()}
+          mp3.src='c6cbe194a8cc6da1b896a350ded06c76.MP3'
+          Rn=Math.random
+          R=(Rl,Pt,Yw,o)=>{
+            X=S(p=(A=(M=Math).atan2)(X,Y)+Rl)*(d=(H=M.hypot)(X,Y)),Y=C(p)*d,Y=S(p=A(Y,Z)+Pt)*(d=H(Y,Z)),Z=C(p)*d,X=S(p=A(X,Z)+Yw)*(d=H(X,Z)),Z=C(p)*d
+            if(o)X+=oX,Y+=oY,Z+=oZ
+          }
+          I=(A,B,M,D,E,F,G,H)=>(K=((G-E)*(B-F)-(H-F)*(A-E))/(J=(H-F)*(M-A)-(G-E)*(D-B)))>=0&&K<=1&&(L=((M-A)*(B-F)-(D-B)*(A-E))/J)>=0&&L<=1?[A+K*(M-A),B+K*(D-B)]:0
+          Q=q=>[c.width/2+X/Z*800,c.height/2+Y/Z*800]
+          sd=10
+          shp=[]
+          G=2.75
+          iBc=7
+          lsi=.2
+          for(i=sd;i--;){
+            ls=lsi*(i%2?.5:1.25)
+            X1=S(p=Math.PI*2/sd*i)*ls
+            Y1=0
+            Z1=C(p)*ls
+            ls=lsi*((i+1)%2?.5:1.25)
+            X2=S(p=Math.PI*2/sd*(i+1))*ls
+            Y2=0
+            Z2=C(p)*ls
+            X3=0
+            Y3=lsi/3
+            Z3=0
+            shp=[...shp, [[X1,Y1,Z1],[X2,Y2,Z2],[X3,Y3,Z3]]]
+          }
+          
+          B=Array(iBc).fill().map(v=>{
+            ls=2//+Rn()*3
+            tx=(Rn()-.5)*G
+            ty=(Rn()-.5)*G
+            tz=(Rn()-.5)*G
+            P=[]
+            trl=Math.PI*Rn()*2
+            tpt=Math.PI*Rn()*2
+            tyw=Math.PI*Rn()*2
+            for(j=2;j--;){
+              shp.map(q=>{
+                a=[]
+                for(m=3;m--;){
+                  X=q[m][0]*ls
+                  Y=q[m][1]*ls*(j%2?1:-1)
+                  Z=q[m][2]*ls
+                  R(trl,tpt,tyw)
+                  a=[...a,[X,Y,Z]]
+                }
+                P=[...P, a]
+              })
+            }
+            return JSON.parse(JSON.stringify([tx,ty,tz,P]))
+          })
+          P=[]
+          bgimg = new Image()
+          go=playing=false
+          bgimg.addEventListener('load',()=>{
+            go=true
+          })
+          bgimg.src='26a7bw.jpg'
+        }
+
+        if(go){
+          x.lineJoin=x.lineCap='round'
+          x.globalAlpha=.35
+          x.drawImage(bgimg,0,0,c.width,c.height)
+          x.globalAlpha=1
+          x.fillStyle='#1021',x.fillRect(0,0,c.width,c.height)
+          oX=0,oY=0,oZ=2.5
+          Rl=-t/10,Pt=-t/6,Yw=S(t/8)*6
+          
+
+          RP=q=>{
+            R(0,-t,S(t/2+q)*6)
+          }
+
+          B.map((q,j)=>{
+            tx=q[0]
+            ty=q[1]
+            tz=q[2]
+            q[3].map(v=>{
+              ax=ay=az=0
+              x.beginPath()
+              for(i=v.length;i--;){
+                ax+=X=v[i][0]
+                ay+=Y=v[i][1]
+                az+=Z=v[i][2]
+                RP(j)
+                X+=tx
+                Y+=ty
+                Z+=tz
+                R(Rl,Pt,Yw,1)
+                x.lineTo(...Q())
+              }
+              x.closePath()
+              x.strokeStyle='#ffffff20'
+              x.lineWidth=10/Z
+              x.stroke()
+              x.strokeStyle='#2fc1'
+              x.lineWidth=30/Z
+              x.stroke()
+              x.fillStyle='#00ffee0a'
+              x.fill()
+              ax/=v.length
+              ay/=v.length
+              az/=v.length
+              X1=v[0][0]-ax
+              Y1=v[0][1]-ay
+              Z1=v[0][2]-az
+              X2=v[1][0]-ax
+              Y2=v[1][1]-ay
+              Z2=v[1][2]-az
+              nx=Y1*Z2-Z1*Y2
+              ny=Z1*X2-X1*Z2
+              nz=X1*Y2-Y1*X2
+              p1=Math.atan2(nx,nz)
+              p2=Math.PI/2-Math.acos(ny/Math.hypot(nx,ny,nz))
+              for(i=v.length;i--;){
+                if(Rn()<.4){
+                  for(m=1;m--;){
+                    X=v[i][0]-ax
+                    Y=v[i][1]-ay
+                    Z=v[i][2]-az
+                    R(0,0,-p1)
+                    R(0,-p2,0)
+                    Z=0
+                    X1=0
+                    Y1=0
+                    X2=S(p=Math.PI*2*Rn())*G
+                    Y2=C(p)*G
+                    X3=X
+                    Y3=Y
+                    X=v[l=(i+1)%v.length][0]-ax
+                    Y=v[l][1]-ay
+                    Z=v[l][2]-az
+                    R(0,0,-p1)
+                    R(0,-p2,0)
+                    X4=X
+                    Y4=Y
+                    pt=I(X1,Y1,X2,Y2,X3,Y3,X4,Y4)
+                    X=pt[0]*(d=Rn()**.5)
+                    Y=pt[1]*d
+                    Z=0
+                    R(0,p2,p1)
+                    X+=ax,Y+=ay,Z+=az
+                    P=[...P,[tx,ty,tz,X,Y,Z,1,j]]
+                  }
+                }
+              }
+            })
+          })
+         
+          P=P.map(v=>{
+            X=v[3]
+            Y=v[4]
+            Z=v[5]
+            RP(v[7])
+            X+=v[0]
+            Y+=v[1]
+            Z+=v[2]
+            R(Rl,Pt,Yw,1)
+            s=20/Z*(v[6]/=1.05)
+            l=Q()
+            x.fillStyle=`hsla(${180},99%,${50+((2+v[6])**5)/4}%,.4`
+            x.fillRect(l[0]-s/2,l[1]-s/2,s,s)
+            return v
+          }).filter(v=>v[6]>.2)
+        }
+              
+        t+=1/60
+        requestAnimationFrame(Draw)
+      }
+      Draw()
+    </script>
+  
+
+</body></html>

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html><head>
+    <meta property="og:image" content="IXgea.jpg">
+    <style>
+      body, html{
+        margin: 0;
+        width: 100%;
+        height: 100vh;
+        overflow: hidden;
+        background: #000;
+      }
+      #c{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 100%;
+        height: 100%;
+        background: url(IXgea.jpg);
+        background-position: center center;
+        background-size: cover;
+        transform: translate(-50%, -50%);
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="c" width="1920" height="1079" style="height: 732.375px; width: 100vw;"></canvas>
+    <script>
+      c=document.querySelector('#c')
+      x=c.getContext('2d')
+      S=Math.sin
+      C=Math.cos
+      t=playing=0
+      window.onclick=()=>{if(!playing)mp3.play()}
+      rsz=window.onresize=()=>{
+        setTimeout(()=>{
+          if(document.body.clientWidth > document.body.clientHeight*1.77777778){
+            c.style.height = '100vh'
+            setTimeout(()=>c.style.width = c.clientHeight*1.77777778+'px',0)
+          }else{
+            c.style.width = '100vw'
+            setTimeout(()=>c.style.height = c.clientWidth/1.77777778 + 'px',0)
+          }
+          c.width=1920
+          c.height=c.width/1.777777778
+        },0)
+      }
+      rsz()
+      Draw=()=>{
+        if(!t){
+          mp3 = new Audio()
+          mp3.loop=true
+          mp3.onplaying=()=>{playing=true}
+          mp3.oncanplay=()=>{go=true;if(!playing)mp3.play()}
+          mp3.src='a885b9faa692aebf48fa81b5718fa63d.MP3'
+          Rn=Math.random
+          bgimg = new Image()
+          go=false
+          bgimg.onload=()=>{
+            go=true
+          }
+          bgimg.src='IXgea.jpg'
+        }
+        
+        if(go){
+          x.globalAlpha=.3
+          x.drawImage(bgimg,0,0,c.width,c.height)
+          x.globalAlpha=1
+          x.fillStyle='#0002',x.fillRect(0,0,w=c.width,w)
+          P=R(P)
+        }else{
+          x.fillStyle='#0008',x.fillRect(0,0,w=c.width,w)
+        }
+        
+        initV=10,initR=60,squirreliness=.1
+        
+        P=t?P:Array(12).fill().map(v=>[960,540,initR,S(p=Rn()*Math.PI*2)*initV,C(p)*initV,[],0])
+        
+        x.globalAlpha=.6
+        R=P=>{
+          P=P.filter(v=>v[2]>10).map(v=>{
+            if(v[2]<initR)v[2]/=1.08
+            d=Math.hypot(v[3],v[4])
+            p=Math.atan2(v[3],v[4])+((v[6]+=Rn()-.5)*squirreliness)
+            v[6]=Math.min(1,Math.max(-1,v[6]))
+            v[3]=S(p)*d
+            v[4]=C(p)*d
+            v[0]+=v[3]
+            v[1]+=v[4]
+            if(v[0]>w)v[0]-=w
+            if(v[0]<0)v[0]+=w
+            if(v[1]>1080)v[1]-=1080
+            if(v[1]<0)v[1]+=1080
+            x.beginPath()
+            x.fillStyle=`hsla(${v[2]*1.5+5},99%,${30+v[2]}%,${(v[2]**2/500)}`
+            x.arc(v[0],v[1],v[2],0,7)
+            x.fill()
+            if(!((v[2]|0)%10)){
+              for(m=2;m--;)v[5].push([v[0],v[1],v[2]/2+Rn()*v[2]/2,S(p=Math.atan2(v[3],v[4])-Math.PI+(Rn()-.5)/10)/2*initV,C(p)/2*initV,[],0])
+            }
+            v[5]=R(v[5])
+            return v
+          })
+          return P
+        }
+  
+        t+=1/60
+        requestAnimationFrame(Draw)
+      }
+      Draw()
+    </script>
+  
+
+</body></html>

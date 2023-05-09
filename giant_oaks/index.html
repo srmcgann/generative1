@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html><head>
+    <meta property="og:image" content="1il6qi.jpg">
+    <style>
+      body, html{
+        margin: 0;
+        width: 100%;
+        height: 100vh;
+        overflow: hidden;
+        background: #000;
+      }
+      #c{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 100%;
+        height: 100%;
+        background: url(1il6qi.jpg);
+        background-position: center center;
+        background-size: fill;
+        transform: translate(-50%, -50%);
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="c" width="1920" height="1079" style="height: 587.812px; width: 100vw;"></canvas>
+    <script>
+      c=document.querySelector('#c')
+      x=c.getContext('2d')
+      S=Math.sin
+      C=Math.cos
+      t=playing=0
+      window.onclick=()=>{if(!playing)mp3.play()}
+      rsz=window.onresize=()=>{
+        setTimeout(()=>{
+          if(document.body.clientWidth > document.body.clientHeight*1.77777778){
+            c.style.height = '100vh'
+            setTimeout(()=>c.style.width = c.clientHeight*1.77777778+'px',0)
+          }else{
+            c.style.width = '100vw'
+            setTimeout(()=>c.style.height = c.clientWidth/1.77777778 + 'px',0)
+          }
+          c.width=1920
+          c.height=c.width/1.777777778
+        },0)
+      }
+      rsz()
+      Draw=()=>{
+        if(!t){
+          bgvid = document.createElement('video')
+          vidplaying=false
+          bgvid.oncanplay=()=>{
+            if(!vidplaying){
+              vidplaying=1
+              bgvid.loop=true
+              bgvid.muted=true
+              bgvid.play()
+            }
+          }
+          bgvid.src = 'Es7Gl.mp4'
+          mp3 = new Audio()
+          mp3.loop=true
+          mp3.onplaying=()=>{playing=true}
+          mp3.oncanplay=()=>{go=true;if(!playing)mp3.play()}
+          mp3.src='b99f30cd799cb8987a009e7e826b836a.MP3'
+          Rn=Math.random
+
+          R=(Rl,Pt,Yw,o)=>{
+            X=S(p=(A=(M=Math).atan2)(X,Y)+Rl)*(d=(H=M.hypot)(X,Y)),Y=C(p)*d,Y=S(p=A(Y,Z)+Pt)*(d=H(Y,Z)),Z=C(p)*d,X=S(p=A(X,Z)+Yw)*(d=H(X,Z)),Z=C(p)*d
+            if(o)X+=oX,Y+=oY,Z+=oZ
+          }
+          Q=q=>[c.width/2+X/Z*700,c.height/2+Y/Z*700]
+          x.lineJoin=x.lineCap='round'
+          cl=3,rw=16*3,s=6
+        }
+
+        if(typeof bgvid !== 'undefined'){
+          x.globalAlpha=.8
+          x.drawImage(bgvid,0,0,w=c.width,c.height)
+          x.globalAlpha=1
+          x.fillStyle='#0004'
+          x.fillRect(0,0,w=c.width,w)
+        }else{
+          x.fillStyle='#0006'
+          x.fillRect(0,0,w=c.width,w)
+        }
+        if(vidplaying){
+          Rl=t/4,Pt=-t,Yw=t/2
+          oX=0,oY=0,oZ=60+S(t*2)*16
+          
+          P=Array(cl).fill().map((v,j)=>{
+            return Array(rw).fill().map((v,i)=>{
+              l2=1
+              l1=rw*l2/16
+              d=s+S(Math.PI*2/rw*l1*i)*(.15+C(Math.PI*8/rw*l1*i))**3*2
+              X=S(p=Math.PI*2/(rw)*l2*i)*d
+              Y=C(p)*d
+              Z=0
+              R(0,0,Math.PI*2/cl*j,0)
+              return [X,Y,Z]
+            })
+          })
+          
+          for(k=3**3;k--;){
+            tx=((k%3)-1.5+.5)*s*4
+            ty=(((k/3|0)%3)-1.5+.5)*s*4
+            tz=((k/3/3|0)-1.5+.5)*s*4
+            d3=Math.hypot(tx,ty,tz)/16+t*2
+            P.map((v,j)=>{
+              v.map((q,i)=>{
+                x.beginPath()
+                X=q[0]
+                Y=q[1]
+                Z=q[2]
+                R(t+d3,-t/2+d3,t/3+d3,0)
+                X+=tx,Y+=ty,Z+=tz
+                R(Rl,Pt,Yw,1)
+                x.lineTo(...Q())
+                if(i<v.length-1){
+                  X=v[i+1][0]
+                  Y=v[i+1][1]
+                  Z=v[i+1][2]
+                }else{
+                  X=v[0][0]
+                  Y=v[0][1]
+                  Z=v[0][2]
+                }
+                R(t+d3,-t/2+d3,t/3+d3,0)
+                X+=tx,Y+=ty,Z+=tz
+                R(Rl,Pt,Yw,1)
+                if(Z>5){
+                  x.lineTo(...Q())
+                  x.strokeStyle='#8fb3'
+                  x.lineWidth=Math.min(32,1+30000/Z/Z)
+                  x.stroke()
+                  x.strokeStyle='#eef8'
+                  x.lineWidth=Math.min(12,1+5000/Z/Z)
+                  x.stroke()
+                }
+              })
+            })
+          }
+        }
+        t+=1/60
+        requestAnimationFrame(Draw)
+      }
+      Draw()
+    </script>
+  
+
+</body></html>

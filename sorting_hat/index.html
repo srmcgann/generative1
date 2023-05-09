@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html><head>
+    <meta property="og:image" content="K6k4Z.jpg">
+    <style>
+      body, html{
+        margin: 0;
+        width: 100%;
+        height: 100vh;
+        overflow: hidden;
+        background: #000;
+      }
+      #c{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 100%;
+        height: 100%;
+        background: url(K6k4Z.jpg);
+        background-position: center center;
+        backgroun-size: fill;
+        transform: translate(-50%, -50%);
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="c" width="1920" height="1079" style="height: 732.375px; width: 100vw;"></canvas>
+    <script>
+      c=document.querySelector('#c')
+      x=c.getContext('2d')
+      c.width=1920
+      go=playing=false
+      c.height=c.width/1.777777778
+      S=Math.sin
+      C=Math.cos
+      t=playing=0
+      window.onclick=()=>{if(!playing)mp3.play()}
+      rsz=window.onresize=()=>{
+        setTimeout(()=>{
+          if(document.body.clientWidth > document.body.clientHeight*1.77777778){
+            c.style.height = '100vh'
+            setTimeout(()=>c.style.width = c.clientHeight*1.77777778+'px',0)
+          }else{
+            c.style.width = '100vw'
+            setTimeout(()=>c.style.height = c.clientWidth/1.77777778 + 'px',0)
+          }
+          c.width=1920
+          c.height=c.width/1.777777778
+        },0)
+      }
+      rsz()
+
+      Draw=()=>{
+        if(go){
+          x.globalAlpha=.2
+          x.drawImage(bgimg,0,0,c.width,c.height)
+          x.globalAlpha=1
+          x.fillStyle='#0005',x.fillRect(0,0,w=c.width,w)
+        } else {
+          x.globalAlpha=1
+          x.fillStyle='#0003',x.fillRect(0,0,w=c.width,w)
+        }
+        if(!t){
+          mp3 = new Audio()
+          mp3.loop=true
+          mp3.onplaying=()=>{playing=true}
+          mp3.oncanplay=()=>{go=true;if(!playing)mp3.play()}
+          mp3.src='d2d98cb3b9915031fc99900d7f4b3482.MP3'
+          Rn=Math.random
+          bgimg = new Image()
+          go=playing=false
+          bgimg.onload=()=>{
+            go=true
+          }
+          bgimg.src='K6k4Z.jpg'
+          R=(Rl,Pt,Yw,o)=>{
+            X=S(p=(A=(M=Math).atan2)(X,Y)+Rl)*(d=(H=M.hypot)(X,Y)),Y=C(p)*d,Y=S(p=A(Y,Z)+Pt)*(d=H(Y,Z)),Z=C(p)*d,X=S(p=A(X,Z)+Yw)*(d=H(X,Z)),Z=C(p)*d
+            if(o)X+=oX,Y+=oY,Z+=oZ
+          }
+          Q=q=>[c.width/2+X/Z*800,c.height/2+Y/Z*800]
+          G=7,x.lineJoin=x.lineCap='round'
+          fixedlen=0
+          rw=5,cl=5
+          iPl=11,iPsl=.1
+          iPx=0,iPy=-4,iPz=0
+          iBx=0,iBy=iPy-5,iBz=0,iBv=.2,iBr=G*1.5,iBs=180
+          iSTG=300
+          B=[]
+          Rn2=q=>(q+99)**3.25/72%1
+          j=0
+          ST=Array(w*2).fill().map((v,i)=>{
+            X=Y=Z=0
+            while(Math.hypot(X,Y,Z)<G*7){
+              j++
+              X=(Rn2(j)-.5)*iSTG
+              Y=(Rn2(j+1)-.5)*iSTG
+              Z=(Rn2(j+2)-.5)*iSTG              
+            }
+            return [X,Y,Z]
+          })
+        }
+        
+
+        Rl=S(t)/6,Pt=-C(t/2.5)/1.5,Yw=S(t/9)*6
+        oX=0,oY=0,oZ=12+S(t/1.5)*5
+      
+      x.fillStyle='#def5'
+      ST.map(v=>{
+        X=v[0]
+        Y=v[1]
+        Z=v[2]
+        R(Rl,0,Yw,0)
+        R(Rl,Pt,0,1)
+        if(Z>0){
+          s=.25+Math.min(50,400/Z)
+          l=Q()
+          x.fillRect(l[0]-s/2,l[1]-s/2,s,s)
+        }
+      })
+
+      F=[
+        [-G/2+iPx,+iPy,-G/2+iPz],
+        [-G/2+iPx,+iPy,G/2+iPz],
+        [G/2+iPx,+iPy,G/2+iPz],
+        [G/2+iPx,+iPy,-G/2+iPz]
+      ]
+      Q1=q=>{
+        for(m=0;m<iPl/2;++m){
+          if(m&&fixedlen){
+            d=Math.hypot(tx-tx_,ty-ty_,tz-tz_)
+            tx_=tx_+(tx-tx_)/d*iPsl
+            ty_=ty_+(ty-ty_)/d*iPsl
+            tz_=tz_+(tz-tz_)/d*iPsl
+          }else{
+            tx_=tx
+            ty_=ty
+            tz_=tz
+          }
+          a=[...a,[tx_,ty_,tz_]]
+          tx=tx
+          ty=ty+iPsl
+          tz=tz
+        }            
+      }
+      P=Array(rw*cl).fill().map((v,i)=>{
+        tx=X=iPx+((1+i%cl)/(cl+1)-.5)*G
+        ty=Y=iPy
+        tz=Z=iPz+((1+i/cl|0)/(rw+1)-.5)*G
+        a=[]
+        Q1()
+        for(m=0;m<iPl;++m){
+          if(fixedlen){
+            d=Math.hypot(tx-tx_,ty-ty_,tz-tz_)
+            tx_=tx_+(tx-tx_)/d*iPsl
+            ty_=ty_+(ty-ty_)/d*iPsl
+            tz_=tz_+(tz-tz_)/d*iPsl
+          }else{
+            tx_=tx
+            ty_=ty
+            tz_=tz
+          }
+          a=[...a,[tx_,ty_,tz_]]
+          p=Math.atan2(tx_,tz_)
+          d_=Math.hypot(tx_,tz_)
+          d=0
+          tx=tx+S(p)*d
+          ty=ty+iPsl
+          tz=tz+C(p)*d
+          q=Math.atan2(tx,tz)+S(t)*Math.PI/4/iPl*(1+C(Math.PI*2/iPl*m-Math.PI))
+          d=Math.hypot(tx,tz)
+          tx=S(q)*d
+          tz=C(q)*d
+        }
+        Q1()
+        for(m=0;m<iPl*2;++m){
+          if(fixedlen){
+            d=Math.hypot(tx-tx_,ty-ty_,tz-tz_)
+            tx_=tx_+(tx-tx_)/d*iPsl
+            ty_=ty_+(ty-ty_)/d*iPsl
+            tz_=tz_+(tz-tz_)/d*iPsl
+          }else{
+            tx_=tx
+            ty_=ty
+            tz_=tz
+          }
+          a=[...a,[tx_,ty_,tz_]]
+          p=Math.atan2(tx_,tz_)
+          d_=Math.hypot(tx_,tz_)*.5
+          d=(S(Math.PI/iPl*m)/12)*d_
+          tx=tx+S(p)*d
+          ty=ty+iPsl
+          tz=tz+C(p)*d
+          q=Math.atan2(tx,tz)
+          d=Math.hypot(tx,tz)
+          tx=S(q)*d
+          tz=C(q)*d
+        }
+        Q1()
+        for(m=0;m<iPl;++m){
+          if(fixedlen){
+            d=Math.hypot(tx-tx_,ty-ty_,tz-tz_)
+            tx_=tx_+(tx-tx_)/d*iPsl
+            ty_=ty_+(ty-ty_)/d*iPsl
+            tz_=tz_+(tz-tz_)/d*iPsl
+          }else{
+            tx_=tx
+            ty_=ty
+            tz_=tz
+          }
+          a=[...a,[tx_,ty_,tz_]]
+          p=Math.atan2(tx_,tz_)
+          d_=Math.hypot(tx_,tz_)*1
+          d=0
+          tx=tx+S(p)*d
+          ty=ty+iPsl
+          tz=tz+C(p)*d
+          q=Math.atan2(tx,tz)-S(t)*Math.PI/4/iPl*(1+C(Math.PI*2/iPl*m-Math.PI))
+          d=Math.hypot(tx,tz)
+          tx=S(q)*d
+          tz=C(q)*d
+        }
+        for(k=3;k--;)Q1()
+        return [X,Y,Z,a]
+      })
+
+      if(!((t*60|0)%6)){
+        v=iBv*(.71+Rn()/4)
+        B=[...B,[iBx+S(p=Math.PI*2*Rn())*iBr,iBy,iBz+C(p)*iBr,S(p+Math.PI+(Rn()-.5)/9)*v,0,C(p+Math.PI)*v,0,0]]
+      }
+      
+
+      for(m=2;m--;){
+        x.beginPath()
+        F.map(v=>{
+          X=v[0]
+          Y=v[1]+G*1.12*(m?1:0)
+          Z=v[2]
+          R(Rl,0,Yw,0)
+          R(Rl,Pt,0,1)
+          x.lineTo(...Q())
+        })
+        x.strokeStyle='#ace4'
+        x.lineWidth=4
+        x.closePath()
+        x.stroke()
+      }
+
+      P.map(v=>{
+        v[3].map((q,j)=>{
+          if(j){
+            x.beginPath()
+            X=q[0]
+            Y=q[1]
+            Z=q[2]
+            R(Rl,0,Yw,0)
+            R(Rl,Pt,0,1)
+            x.lineTo(...Q())
+            X=v[3][j-1][0]
+            Y=v[3][j-1][1]
+            Z=v[3][j-1][2]
+            R(Rl,0,Yw,0)
+            R(Rl,Pt,0,1)
+            if(Z>1){
+              x.lineTo(...Q())
+              x.strokeStyle='#66ffaa18'
+              x.lineWidth=1+Math.min(20,500/(Z**1.4))
+              x.stroke()
+              x.strokeStyle='#fff5'
+              x.lineWidth/=6
+              x.stroke()
+            }
+          }
+        })
+      })
+
+      B.map((v,j)=>{
+        v[6]=0
+        X3=v[0]+v[3]
+        Y3=v[1]+v[4]+.001
+        Z3=v[2]+v[5]
+        P.map(n=>{
+          n[3].map((q,i)=>{
+            X1=q[0]
+            Y1=q[1]
+            Z1=q[2]
+            if(i<n[3].length-1){
+              X2=n[3][i+1][0]
+              Y2=n[3][i+1][1]
+              Z2=n[3][i+1][2]
+              u=((X3-X1)*(X2-X1)+(Y3-Y1)*(Y2-Y1)+(Z3-Z1)*(Z2-Z1))/(Math.hypot(X2-X1,Y2-Y1,Z2-Z1))
+              if(u<=1&&u>=0){
+                px=X2+u*(X1-X2)
+                py=Y2+u*(Y1-Y2)
+                pz=Z2+u*(Z1-Z2)
+                if(d=Math.hypot(px-X3,py-Y3,pz-Z3)<.4){
+                  if(i==n[3].length-2){
+                    v[1]+=.1
+                    v[4]=.2
+                  }else{
+                    v[0]=(v[0]+px)/2
+                    v[1]=(v[1]+py)/2
+                    v[2]=(v[2]+pz)/2
+                    v[3]/=5
+                    v[4]/=5
+                    v[5]/=5
+                    v[3]+=(X2-X1)/2.2
+                    v[4]+=(Y2-Y1)/2.2
+                    v[5]+=(Z2-Z1)/2.2
+                    v[0]+=(X2-X1)/30
+                    v[1]+=(Y2-Y1)/30
+                    v[2]+=(Z2-Z1)/30
+                    v[6]=1
+                  }
+                }
+              }
+            }
+          })
+        })
+        X=v[0]+=v[3]
+        Y=v[1]+=v[4]+=.004
+        Z=v[2]+=v[5]
+        R(Rl,0,Yw,0)
+        R(Rl,Pt,0,1)
+        if(Z>1){
+          if(v[6]){
+            x.beginPath()
+            x.arc(...Q(),iBs/Z*1.5,0,7)
+            x.fillStyle=`hsla(${col=t*300+360/B.length*j},99%,50%,.2`
+            x.fill()
+            x.beginPath()
+            x.arc(...Q(),iBs/Z,0,7)
+            x.fillStyle=`hsla(${col},99%,85%,.3`
+            x.fill()
+            x.beginPath()
+            x.arc(...Q(),iBs/Z/1.6,0,7)
+            x.fillStyle=`hsla(${col},99%,99%,.5`
+            x.fill()
+          }else{
+            x.beginPath()
+            x.arc(...Q(),iBs/Z,0,7)
+            x.fillStyle=`hsla(${180},99%,50%,${v[7]/1.5}`
+            x.fill()
+          }
+        }
+        v[7]=Math.min(.5,v[7]+.02)
+      })
+      
+      B=B.filter(v=>v[1]<G*3)
+
+        t+=1/60
+        requestAnimationFrame(Draw)
+      }
+      Draw()
+    </script>
+  
+
+</body></html>

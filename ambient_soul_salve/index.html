@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html><head>
+    <meta property="og:image" content="LbEnV.jpg">
+    <style>
+      body, html{
+        margin: 0;
+        width: 100%;
+        height: 100vh;
+        overflow: hidden;
+        background: #000;
+      }
+      #c{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 100%;
+        height: 100%;
+        background: url(LbEnV.jpg);
+        background-position: center center;
+        background-size: fill;
+        transform: translate(-50%, -50%);
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="c" width="1920" height="1079" style="height: 411.75px; width: 100vw;"></canvas>
+    <script>
+      c=document.querySelector('#c')
+      x=c.getContext('2d')
+      S=Math.sin
+      C=Math.cos
+      t=playing=0
+      window.onclick=()=>{if(!playing)mp3.play()}
+      rsz=window.onresize=()=>{
+        setTimeout(()=>{
+          if(document.body.clientWidth > document.body.clientHeight*1.77777778){
+            c.style.height = '100vh'
+            setTimeout(()=>c.style.width = c.clientHeight*1.77777778+'px',0)
+          }else{
+            c.style.width = '100vw'
+            setTimeout(()=>c.style.height = c.clientWidth/1.77777778 + 'px',0)
+          }
+          c.width=1920
+          c.height=c.width/1.777777778
+        },0)
+      }
+      rsz()
+      Draw=()=>{
+        if(!t){
+          mp3 = new Audio()
+          mp3.loop=true
+          mp3.onplaying=()=>{playing=true}
+          mp3.oncanplay=()=>{go=true;if(!playing)mp3.play()}
+          mp3.src='e1d93fbc3d899669733a24e31a435d35.MP3'
+          Rn=Math.random
+    bgimg = new Image()
+    go=playing=false
+    bgimg.addEventListener('load', ()=>{
+      go=true
+    })
+    bgimg.src='LbEnV.jpg'
+    R=(Rl,Pt,Yw,o)=>{
+      X=S(p=(A=(M=Math).atan2)(X,Y)+Rl)*(d=(H=M.hypot)(X,Y)),Y=C(p)*d,Y=S(p=A(Y,Z)+Pt)*(d=H(Y,Z)),Z=C(p)*d,X=S(p=A(X,Z)+Yw)*(d=H(X,Z)),Z=C(p)*d
+      if(o)X+=oX,Y+=oY,Z+=oZ
+    }
+    Q=q=>[c.width/2+X/Z*800,c.height/2+Y/Z*800]
+    redepth=()=>{
+      oy=3
+      B.map(q=>{
+        bX=q[0]
+        //bY=q[1]
+        bZ=q[2]
+        d=(1+Math.hypot(bX-X,bZ-Z))**1.25
+        oy+=(S(d/(50+S(t*1.5)*20)-t*2)*130)/(1+d/30)//+30/d
+      })
+      oy=Math.max(-3,Math.min(3,oy))*2
+      Y+=oy
+    }
+    DH = (tx,ty,tz,rl,pt,yw,s,col1,col2) =>{
+      mz=0
+      x.beginPath()
+      for(let i=6;i--;){
+        X=S(p=Math.PI*2/6*i+Math.PI/6)*s
+        Y=0
+        Z=C(p)*s
+        R(rl,pt,yw)
+        X+=tx
+        Y+=ty
+        Z+=tz
+        redepth()
+        if((d1=Math.hypot(X,Y,Z))<sp*cl*rw/(260/2.25*mul)){
+          R(0,0,Yw,0)
+          R(Rl,Pt,0,1)
+          if(Z>0){
+            mz=Z
+            x.lineTo(...Q())
+          } 
+        }
+      }
+      if(mz>0){
+        x.closePath()
+        if((lw=(.5+160000/(1+mz)/(1+mz)))>2)lw|=0
+        x.lineWidth=Math.min(80,2+lw)
+        x.strokeStyle=`hsla(${col1-oy*10},99%,50%,.16)`
+        x.stroke()
+        x.lineWidth=Math.min(80/5,1+lw/5.5)
+        x.strokeStyle=`hsla(${col1-oy*10},99%,90%,.9)`
+        x.stroke()
+      }
+      if(mz>0){
+        x.fillStyle=`hsla(${col2-oy*10},99%,40%,.2)`
+        x.fill()
+      }
+    }
+    iBc=4,iBv=2
+    mul=1,cl=18*mul|0,rw=60*mul|0,sp=24
+    B=Array(iBc).fill().map(v=>{
+      X=S(p=Math.PI*2*Rn())*(d=Rn()*sp*cl*rw/(260/2*mul))
+      Y=-27
+      Z=C(p)*d
+      return [X,Y,Z,(Rn()-.5)*iBv,0,(Rn()-.5)*iBv]
+    })
+    x.lineJoin=x.lineCap='butt'
+  }
+  
+  if(go){
+   // x.lineJoin=x.lineCap='round'
+    x.globalAlpha=.3
+    x.drawImage(bgimg,0,0,c.width,c.height)
+    x.globalAlpha=1
+    x.fillStyle='#0001',x.fillRect(0,0,c.width,c.height)
+    oX=0
+    oY=-49
+    oZ=200+S(t/2)*80
+    Rl=0,Pt=-1+S(t/2.5)/2.75,Yw=t/4
+    B.map(q=>{
+      X=q[0]+=q[3]
+      Y=q[1]+=q[4]
+      Z=q[2]+=q[5]
+      if((d1=Math.hypot(X,Z))>sp*cl*rw/(260/2.25*mul)){
+        q[3]*=-1
+        q[4]*=-1
+        q[5]*=-1
+      }
+    })
+    for(i=cl*rw;i--;){
+      tx=((i%cl)-cl/2+.5)*sp+((i/cl|0)%2?(sp/2):0)
+      ty=0
+      tz=((i/cl|0)-rw/2+.5)*(sp/3)*0.8660254037844386
+      DH(tx,ty,tz,0,0,0,sp/3,t*200+S(t*1.5)*30,t*200+S(t*1.5)*30)
+    }
+    
+  }
+
+  t+=1/30
+        requestAnimationFrame(Draw)
+      }
+      Draw()
+    </script>
+  
+
+</body></html>

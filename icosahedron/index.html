@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html><head>
+</script>
+    <meta property="og:image" content="12ddK3.jpg">
+    <style>
+      body, html{
+        margin: 0;
+        width: 100%;
+        height: 100vh;
+        overflow: hidden;
+        background: #000;
+      }
+      #c{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 100%;
+        height: 100%;
+        background: url(12ddK3.jpg);
+        background-position: center center;
+        background-size: cover;
+        transform: translate(-50%, -50%);
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="c" width="1920" height="1079" style="height: 411.75px; width: 100vw;"></canvas>
+    <script>
+      c=document.querySelector('#c')
+      x=c.getContext('2d')
+      S=Math.sin
+      C=Math.cos
+      t=playing=0
+      window.onclick=()=>{if(!playing)mp3.play()}
+      rsz=window.onresize=()=>{
+        setTimeout(()=>{
+          if(document.body.clientWidth > document.body.clientHeight*1.77777778){
+            c.style.height = '100vh'
+            setTimeout(()=>c.style.width = c.clientHeight*1.77777778+'px',0)
+          }else{
+            c.style.width = '100vw'
+            setTimeout(()=>c.style.height = c.clientWidth/1.77777778 + 'px',0)
+          }
+          c.width=1920
+          c.height=c.width/1.777777778
+        },0)
+      }
+      rsz()
+      Draw=()=>{
+        if(!t){
+          mp3 = new Audio()
+          mp3.loop=true
+          mp3.onplaying=()=>{playing=true}
+          mp3.oncanplay=()=>{go=true;if(!playing)mp3.play()}
+          mp3.src='8a080f0538ea65de0a6425018a0da69c.MP3'
+          Rn=Math.random
+          R=(Rl,Pt,Yw,o)=>{
+            X=S(p=(A=(M=Math).atan2)(X,Y)+Rl)*(d=(H=M.hypot)(X,Y)),Y=C(p)*d,Y=S(p=A(Y,Z)+Pt)*(d=H(Y,Z)),Z=C(p)*d,X=S(p=A(X,Z)+Yw)*(d=H(X,Z)),Z=C(p)*d
+            if(o)X+=oX,Y+=oY,Z+=oZ
+          }
+          Q=q=>[c.width/2+X/Z*700,c.height/2+Y/Z*700]
+          phi = 1.618033988749895
+          bgimg = new Image()
+          go=false
+          bgimg.addEventListener('load',()=>{
+            go=true
+          })
+          bgimg.src = '12ddK3.jpg'
+          a = [], B=[], ls=10
+          for(j=3;j--;)for(i=4;i--;)B=[...B,[(a=[S(p=Math.PI*2/4*i+Math.PI/4)*phi/2, C(p)*.5, 0])[j%3]*ls,a[(j+1)%3]*ls,a[(j+2)%3]*ls]]
+          P = [
+            [3,6,8],
+            [2,3,8],
+            [4,11,2],
+            [4,11,10],
+            [4,1,10],
+            [4,1,5],
+            [4,2,5],
+            [1,9,5],
+            [6,9,8],
+            [0,1,10],
+            [10,7,0],
+            [10,7,11],
+            [6,7,0],
+            [7,11,3],
+            [8,2,5],
+            [9,0,6],
+            [8,9,5],
+            [3,11,2],
+            [0,9,1],
+            [6,3,7]
+          ]
+          a=[]
+          P.map((v, j)=>{
+            for(let m=3;m--;){
+              X=B[v[m]][0]
+              Y=B[v[m]][1]
+              Z=B[v[m]][2]
+              if(!a.filter(v=>v[0]==X&&v[1]==Y&&v[2]==Z).length) a=[...a, [X,Y,Z]]
+            }
+          })
+        }
+        
+        if(go){
+          x.globalAlpha=.4
+          x.drawImage(bgimg,0,0,c.width,c.height)
+          x.globalAlpha=1
+          x.fillStyle='#0006', x.fillRect(0,0,w=c.width,w)
+
+          oX=0,oY=0,oZ=(16-S(t)*3)*1.15
+          Rl=t/3,Pt=-t/2,Yw=S(t/2.5)*6
+
+          
+          RPR=(tx,ty,tz,s)=>{
+            P.map((v, j)=>{
+              x.beginPath()
+              for(let m=3;m--;){
+                X=tx+B[v[m]][0]*s
+                Y=ty+B[v[m]][1]*s
+                Z=tz+B[v[m]][2]*s
+                R(Rl,Pt,Yw,1)
+                x.lineTo(...Q())
+              }
+              if(s<.2){
+                x.lineJoin=x.lineCap='round'
+                x.lineWidth = 1+2500*s/Z**1.5
+                //x.closePath()
+                //x.strokeStyle=`hsla(${s*400+t*200},99%,${50}%,.125)`
+                //x.stroke()
+                x.lineWidth/=6
+                x.strokeStyle=`#fff6`
+                x.stroke()
+              } else {
+                x.lineJoin=x.lineCap='butt'
+                x.lineWidth = 1+2500*s/Z**1.5
+                if(s>.5)x.closePath()
+                x.strokeStyle=`hsla(${s*400+t*200},99%,${50}%,.125)`
+                x.stroke()
+                x.lineWidth/=6
+                x.strokeStyle=`#fff6`
+                x.stroke()
+                x.fillStyle=`hsla(${s*400+t*200},99%,${Math.max(40,220*s)}%,${.1})`
+                x.fill()
+              }
+            })
+          }
+          
+
+          RP=(tx,ty,tz,s)=>{
+            if(s<.1) return
+            RPR(tx,ty,tz,s)
+            a.map(v=>{
+              RP(tx+v[0]*s,ty+v[1]*s,tz+v[2]*s,s/3)
+            })
+          }
+          RP(0,0,0,1)
+        }else{
+          x.fillStyle='#0008', x.fillRect(0,0,w=c.width,w)
+        }
+              
+        t+=1/60
+        requestAnimationFrame(Draw)
+      }
+      Draw()
+    </script>
+  
+
+</body></html>

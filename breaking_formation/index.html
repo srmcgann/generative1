@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html><head>
+    <meta property="og:image" content="uJDKE.jpg">
+    <style>
+      body, html{
+        margin: 0;
+        width: 100%;
+        height: 100vh;
+        overflow: hidden;
+        background: #000;
+      }
+      #c{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 100%;
+        height: 100%;
+        background: url(uJDKE.jpg);
+        background-position: center center;
+        background-size: cover;
+        transform: translate(-50%, -50%);
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="c" width="1920" height="1079" style="height: 411.75px; width: 100vw;"></canvas>
+    <script>
+      c=document.querySelector('#c')
+      x=c.getContext('2d')
+      S=Math.sin
+      C=Math.cos
+      t=playing=0
+      window.onclick=()=>{if(!playing)mp3.play()}
+      rsz=window.onresize=()=>{
+        setTimeout(()=>{
+          if(document.body.clientWidth > document.body.clientHeight*1.77777778){
+            c.style.height = '100vh'
+            setTimeout(()=>c.style.width = c.clientHeight*1.77777778+'px',0)
+          }else{
+            c.style.width = '100vw'
+            setTimeout(()=>c.style.height = c.clientWidth/1.77777778 + 'px',0)
+          }
+          c.width=1920
+          c.height=c.width/1.777777778
+        },0)
+      }
+      rsz()
+      Draw=()=>{
+        if(!t){
+          mp3 = new Audio()
+          mp3.loop=true
+          mp3.onplaying=()=>{playing=true}
+          mp3.oncanplay=()=>{go=true;if(!playing)mp3.play()}
+          mp3.src='5f6b4895e74000c437fdf29253cf0c5f.MP3'
+          Rn=Math.random
+  R=(Rl,Pt,Yw,o)=>{
+    X=S(p=(A=(M=Math).atan2)(X,Y)+Rl)*(d=(H=M.hypot)(X,Y)),Y=C(p)*d,Y=S(p=A(Y,Z)+Pt)*(d=H(Y,Z)),Z=C(p)*d,X=S(p=A(X,Z)+Yw)*(d=H(X,Z)),Z=C(p)*d
+    if(o)X+=oX,Y+=oY,Z+=oZ
+  }
+  Q=q=>[960+X/Z*800,540+Y/Z*800]
+
+    bgimg = new Image()
+    go=false
+    bgimg.onload= ()=>{
+      go=true
+    }
+    bgimg.src='uJDKE.jpg'
+    x.lineCap=x.lineJoin='butt'
+    init=()=>{
+      B=[0,0,0,0,0,0]
+      for(i=6;i--;){
+        p=Math.PI*2/6*i
+        d=1
+        X=S(p)*d
+        Y=C(p)*d
+        Z=0
+        B=[...B,[X,Y,Z,0,0,0]]
+      }
+      for(i=3;i--;){
+        p=Math.PI*2/3*i+Math.PI/6
+        d=.58
+        X=S(p)*d
+        Y=C(p)*d
+        Z=.8
+        B=[...B,[X,Y,Z,0,0,0]]
+      }
+      for(i=3;i--;){
+        p=Math.PI*2/3*i+Math.PI/6
+        d=.58
+        X=S(p)*d
+        Y=C(p)*d
+        Z=-.8
+        B=[...B,[X,Y,Z,0,0,0]]
+      }
+      B=[...B,
+        ...JSON.parse(JSON.stringify(B)).map(v=>{
+          v[2]-=6
+          v[0]+=10
+          return v
+        }),
+        ...JSON.parse(JSON.stringify(B)).map(v=>{
+          v[2]+=6
+          v[0]+=10
+          return v
+        }),
+      /*
+        ...JSON.parse(JSON.stringify(B)).map(v=>{
+          v[0]-=6
+          return v
+        }),
+        ...JSON.parse(JSON.stringify(B)).map(v=>{
+          v[0]+=6
+          return v
+        }),
+        */
+        ...JSON.parse(JSON.stringify(B)).map(v=>{
+          v[1]+=6
+          v[0]+=10
+          return v
+        }),
+        ...JSON.parse(JSON.stringify(B)).map(v=>{
+          v[1]-=6
+          v[0]+=10
+          return v
+        }),
+      ]
+      P=Array(1).fill().map((v,j)=>{
+        return [-50,S(p=Math.PI*2/3*j)*.35,C(p)*.35,2,(Rn()-.5)/20,(Rn()-.5)/20]
+      })
+    }
+  }
+
+  if(!((t*60|0)%120)){
+    init()
+    Rl=0,Pt=t/2,Yw=Math.PI/6+Math.PI/1.5*Rn()
+    Rl=-.25+(Rn()-.5)*.5
+  }
+
+  if(go){
+    x.globalAlpha=.25
+    x.drawImage(bgimg,c.width/2-(s=bgimg.width*(c.height/bgimg.height))/2,0,s,c.height)
+    x.globalAlpha=1
+    x.fillStyle='#0003',x.fillRect(0,0,c.width,c.height)
+  }else{
+    x.fillStyle='#000a',x.fillRect(0,0,c.width,c.height)
+  }
+  iPr=2, iBr=.5
+  Pt-=.02
+  oX=0,oY=0,oZ=28+S(t*2)*12
+  
+  DC=(tx,ty,tz,r,rl,pt,yw)=>{
+    cx=X,cy=Y,cz=Z
+    for(m=18;m--;){
+      x.beginPath()
+      for(let i=8;i--;){
+        X=S(p=Math.PI*2/8*i)*r
+        Y=C(p)*r
+        Z=0
+        if(m<6){
+          R(0,0,Math.PI*2/12*m,0)
+        }else if(m<12){
+          R(0,Math.PI*2/12*m,0,0)
+        }else{
+          R(0,Math.PI*2/12*m,Math.PI/2,0)
+        }
+        R(rl,pt,yw,0)
+        X+=tx
+        Y+=ty
+        Z+=tz
+        R(Rl,Pt,Yw,1)
+        if(Z>.1)x.lineTo(...Q())
+      }
+      x.closePath()
+      x.lineWidth=1+Math.min(60, 100/Z/Z)
+      x.stroke()
+    }
+    X=cx,Y=cy,Z=cz
+  }
+
+
+  P.map(v=>{
+    X=v[0]+=v[3]
+    Y=v[1]+=v[4]
+    Z=v[2]+=v[5]
+    //R(Rl,Pt,Yw,1)
+    x.strokeStyle='#2cd8'
+    DC(X,Y,Z,iPr,0,0,0)
+  })
+  B.map((v,i)=>{
+    P.map(q=>{
+      d=Math.hypot(mx=v[0]-q[0],my=v[1]-q[1],mz=v[2]-q[2])
+      if(d<iBr+iPr){
+        q[3]+=v[3]/4/iPr
+        q[4]+=v[4]/4/iPr
+        q[5]+=v[5]/4/iPr
+        q[3]-=mx/4/iPr
+        q[4]-=my/4/iPr
+        q[5]-=mz/4/iPr
+        v[3]+=q[3]/8/iBr
+        v[4]+=q[4]/8/iBr
+        v[5]+=q[5]/8/iBr
+        v[3]+=mx/8/iBr
+        v[4]+=my/8/iBr
+        v[5]+=mz/8/iBr
+      }
+    })
+    B.map((q,j)=>{
+      if(i!=j){
+        d=Math.hypot(mx=v[0]-q[0],my=v[1]-q[1],mz=v[2]-q[2])
+        if(d<iBr*1.95){
+          q[3]+=v[3]/6/iBr
+          q[4]+=v[4]/6/iBr
+          q[5]+=v[5]/6/iBr
+          q[3]-=mx/8/iBr
+          q[4]-=my/8/iBr
+          q[5]-=mz/8/iBr
+          v[3]+=mx/8/iBr
+          v[4]+=my/8/iBr
+          v[5]+=mz/8/iBr
+        }
+      }
+    })
+    X=v[0]+=v[3]
+    Y=v[1]+=v[4]
+    Z=v[2]+=v[5]
+    x.strokeStyle='#1f83'
+    DC(X,Y,Z,iBr,0,0,0)
+  })
+              
+        t+=1/60
+        requestAnimationFrame(Draw)
+      }
+      Draw()
+    </script>
+  
+
+</body></html>

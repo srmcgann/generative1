@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html><head>
+    <meta property="og:image" content="HLipP.jpg">
+    <style>
+      body, html{
+        margin: 0;
+        width: 100%;
+        height: 100vh;
+        overflow: hidden;
+        background: #000;
+      }
+      #c{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 100%;
+        height: 100%;
+        background: url(HLipP.jpg);
+        background-position: center center;
+        backgroun-size: fill;
+        transform: translate(-50%, -50%);
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="c" width="1920" height="1079" style="height: 587.812px; width: 100vw;"></canvas>
+    <script>
+      c=document.querySelector('#c')
+      x=c.getContext('2d')
+      S=Math.sin
+      C=Math.cos
+      t=playing=0
+      window.onclick=()=>{if(!playing)mp3.play()}
+      rsz=window.onresize=()=>{
+        setTimeout(()=>{
+          if(document.body.clientWidth > document.body.clientHeight*1.77777778){
+            c.style.height = '100vh'
+            setTimeout(()=>c.style.width = c.clientHeight*1.77777778+'px',0)
+          }else{
+            c.style.width = '100vw'
+            setTimeout(()=>c.style.height = c.clientWidth/1.77777778 + 'px',0)
+          }
+          c.width=1920
+          c.height=c.width/1.777777778
+        },0)
+      }
+      rsz()
+      Draw=()=>{
+        if(!t){
+          mp3 = new Audio()
+          mp3.loop=true
+          mp3.onplaying=()=>{playing=true}
+          mp3.oncanplay=()=>{go=true;if(!playing)mp3.play()}
+          mp3.src='20f61ee417109dfd370494597e8b0b18.MP2'
+
+          Rn=Math.random
+          bgimg = new Image()
+          go=playing=false
+          bgimg.onload=()=>{
+            go=true
+          }
+          bgimg.src='HLipP.jpg'
+   
+    }
+
+
+
+  R=(Rl,Pt,Yw,o)=>{
+    X=S(p=(A=(M=Math).atan2)(X,Y)+Rl)*(d=(H=M.hypot)(X,Y)),Y=C(p)*d,Y=S(p=A(Y,Z)+Pt)*(d=H(Y,Z)),Z=C(p)*d,X=S(p=A(X,Z)+Yw)*(d=H(X,Z)),Z=C(p)*d
+    if(o)X+=oX,Y+=oY,Z+=oZ
+  }
+  Q=q=>[c.width/2+X/Z*800,c.height/2+Y/Z*800]
+
+  G=10,w=1920
+  Rl=0,Pt=Math.PI/2+t/4,Yw=Math.PI/2+t/2
+  oX=0,oY=0,oZ=G
+  
+  if(!t){
+    P=Array(w*2).fill().map((v, i)=>{
+      X=((i**3.1/9)%G)-G/2
+      Y=((i**1.6/9)%G)-G/2
+      Z=(((G/3*i)%G))-G/3
+      return [X,Y,Z]
+    })
+    go=false
+  }
+  
+  if(go){
+    x.globalAlpha = .2
+    x.drawImage(bgimg,0,0,c.width,c.height)
+    x.globalAlpha = 1
+    x.fillStyle='#0003', x.fillRect(0,0,w,w)
+  }else{
+    x.fillStyle='#0008', x.fillRect(0,0,w,w)
+  }
+  P.map((v,i)=>{
+    X=v[0]
+    Y=v[1]
+    d=Math.hypot(X,Y)
+    Z=v[2]+(l=S(d*3-t*10+Math.PI*2/3*i)/(1+d**1.5)*3)/1.5
+    R(Rl,Pt,Yw,1)
+    x.fillStyle=`hsla(${360*9+l*199+t*150},99%,${Math.max(50, 85+l*150)}%,.1)`
+    s=1+1e3/(Z**1.5)
+    l=Q()
+    x.fillRect(l[0]-s/2,l[1]-s/2,s,s)
+    x.fillStyle='#fff7'
+    s/=3
+    x.fillRect(l[0]-s/2,l[1]-s/2,s,s)
+  })
+
+
+        t+=1/60
+        requestAnimationFrame(Draw)
+      }
+      Draw()
+    </script>
+  
+
+</body></html>

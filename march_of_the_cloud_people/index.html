@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html><head>
+    <meta property="og:image" content="VoZVF.jpg">
+    <style>
+      body, html{
+        margin: 0;
+        width: 100%;
+        height: 100vh;
+        overflow: hidden;
+        background: #000;
+      }
+      #c{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 100%;
+        height: 100%;
+        background: url(VoZVF.jpg);
+        background-position: center center;
+        background-size: fill;
+        transform: translate(-50%, -50%);
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="c" width="1920" height="1079" style="height: 411.75px; width: 100vw;"></canvas>
+    <script>
+      c=document.querySelector('#c')
+      x=c.getContext('2d')
+      S=Math.sin
+      C=Math.cos
+      t=playing=0
+      window.onclick=()=>{if(!playing)mp3.play()}
+      rsz=window.onresize=()=>{
+        setTimeout(()=>{
+          if(document.body.clientWidth > document.body.clientHeight*1.77777778){
+            c.style.height = '100vh'
+            setTimeout(()=>c.style.width = c.clientHeight*1.77777778+'px',0)
+          }else{
+            c.style.width = '100vw'
+            setTimeout(()=>c.style.height = c.clientWidth/1.77777778 + 'px',0)
+          }
+          c.width=1920
+          c.height=c.width/1.777777778
+        },0)
+      }
+      rsz()
+      Draw=()=>{
+        if(!t){
+          mp3 = new Audio()
+          mp3.loop=true
+          mp3.onplaying=()=>{playing=true}
+          mp3.oncanplay=()=>{go=true;if(!playing)mp3.play()}
+          mp3.src='b30b2cc2ff385692acfc2286be39aa92.MP3'
+          Rn=Math.random
+    R=(Rl,Pt,Yw,o)=>{
+      X=S(p=(A=(M=Math).atan2)(X,Y)+Rl)*(d=(H=M.hypot)(X,Y)),Y=C(p)*d,Y=S(p=A(Y,Z)+Pt)*(d=H(Y,Z)),Z=C(p)*d,X=S(p=A(X,Z)+Yw)*(d=H(X,Z)),Z=C(p)*d
+      if(o)X+=oX,Y+=oY,Z+=oZ
+    }
+    Q=q=>[c.width/2+X/Z*800,c.height/2+Y/Z*800]
+  }
+
+    x.fillStyle='#0004'
+    x.fillRect(0,0,w=c.width,w)
+
+  if(!t && typeof firstRun == 'undefined'){
+    firstRun=0,w=c.width
+    imgs=['flowers/IMG_0461.JPG', 'flowers/IMG_0462.JPG', 'flowers/IMG_0463.JPG', 'flowers/IMG_0464.JPG', 'flowers/IMG_0465.JPG', 'flowers/IMG_0466.JPG', 'flowers/IMG_0467.JPG', 'flowers/IMG_0468.JPG', 'flowers/IMG_0469.JPG', 'flowers/IMG_0470.JPG', 'flowers/IMG_0471.JPG', 'flowers/IMG_0472.JPG', 'flowers/IMG_0474.JPG', 'flowers/IMG_0475.JPG', 'flowers/IMG_0477.JPG', 'flowers/IMG_0478.JPG', 'flowers/IMG_0479.JPG', 'flowers/IMG_0480.JPG', 'flowers/IMG_0481.JPG', 'flowers/IMG_0482.JPG', 'flowers/IMG_0483.JPG']
+    imgs=imgs.map((v,i)=>{
+      img = new Image()
+      img.src = v
+      img.addEventListener('load', ()=>imgs[i].state=1)
+      return {img,state:0}
+    })
+    P=[]
+  }
+  
+  freq=60*.05
+  
+  if(!(imgs.filter(v=>!v.state).length) &&
+     !((t*60|0)%freq)){
+    if(typeof ci == 'undefined') ci=0
+    if(typeof simg !== 'undefined'){
+      bsimg=simg
+      simg=imgs[ci%imgs.length].img
+    }else{
+      bsimg=simg=imgs[ci%imgs.length].img
+    }
+    ia=w/simg.width
+    ib=1080/simg.height
+    if(ia>ib){
+      X=c.width/2-simg.width*ia/2
+      Y=c.height/2-simg.height*ia/2
+      a=ia
+    }else{
+      X=c.width/2-simg.width*ib/2
+      Y=c.height/2-simg.height*ib/2
+      a=ib
+    }
+    ci++
+  }
+  
+  if(typeof simg !== 'undefined'){
+    x.globalAlpha=1
+    x.drawImage(simg,X,Y,simg.width*a,simg.height*a)
+    
+    iR=c.width/1.5,iV=7,sql=.15,iS=20
+    for(m=8;m--;)P=[...P,[c.width/2+S(p=Math.PI*2*Rn())*iR,c.height/2+C(p)*iR*(c.height/c.width),-S(p)*iV,-C(p)*iV,iS]]
+    
+    x.globalAlpha=Math.max(0,S(Math.PI/2+Math.PI*2/freq*(t*60|0)))
+    if(typeof bsimg !== 'undefined'){
+      if((t*60|0)%freq<freq/2){
+        x.drawImage(bsimg,X,Y,bsimg.width*a,bsimg.height*a)
+      }else{
+        x.drawImage(simg,X,Y,simg.width*a,simg.height*a)
+      }
+    }else{
+      x.fillRect(0,0,w,w)
+    }
+    x.globalAlpha=1
+    P.map((v,i)=>{
+      aX=v[0]+=v[2]=S(p=Math.atan2(v[2],v[3])+(Rn()-.5)*sql)*iV
+      aY=v[1]+=v[3]=C(p)*iV
+      x.beginPath()
+      x.arc(aX,aY,Math.min(180,((v[4]/=1.01)+1)**2.65/26),0,7)
+      x.fillStyle=`hsla(${360/P.length*i+t*200},99%,${52+Math.hypot(c.width/2-aX,c.height/2-aY)/iR*60}%,${Math.hypot(c.width/2-aX,c.height/2-aY)/iR/3}`
+      x.fill()
+    })
+    P=P.filter(v=>v[4]>2)
+  }
+
+
+              
+        t+=1/60
+        requestAnimationFrame(Draw)
+      }
+      Draw()
+    </script>
+  
+
+</body></html>

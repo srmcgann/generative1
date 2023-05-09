@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      body, html{
+        margin: 0;
+        width: 100%;
+        height: 100vh;
+        overflow: hidden;
+        background: #000;
+      }
+      #c{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 100%;
+        height: 100%;
+        background: url(25HlU2.jpg);
+        background-position: center center;
+        background-size:cover;
+        transform: translate(-50%, -50%);
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="c" width="1920" height="1079" style="height: 599.625px; width: 100vw;"></canvas>
+    <script>
+      c=document.querySelector('#c')
+      x=c.getContext('2d')
+      S=Math.sin
+      C=Math.cos
+      t=playing=0
+      window.onclick=()=>{if(!playing)mp3.play()}
+      rsz=window.onresize=()=>{
+        setTimeout(()=>{
+          if(document.body.clientWidth > document.body.clientHeight*1.77777778){
+            c.style.height = '100vh'
+            setTimeout(()=>c.style.width = c.clientHeight*1.77777778+'px',0)
+          }else{
+            c.style.width = '100vw'
+            setTimeout(()=>c.style.height = c.clientWidth/1.77777778 + 'px',0)
+          }
+          t=0
+					c.width=1920
+          c.height=c.width/1.777777778
+        },0)
+      }
+      rsz()
+      Draw=()=>{
+      if(!t){
+        go1=go=false
+				if(!playing){
+          mp3 = new Audio()
+          mp3.loop=true
+          mp3.onplaying=()=>{playing=true}
+          mp3.oncanplay=()=>{if(!playing)mp3.play()}
+          mp3.src='491b77061496cea83c895a5c912c4daf.MP3'
+        }
+				Rn=Math.random
+        c.width=1920*2
+        c.height=1080*2
+        imgChoice=0
+        w=c.width
+        cl=8
+        rw=8
+        B=Array(cl*rw).fill().map((v,i)=>{
+          X=(i%cl)/cl*c.width
+          Y=(i/cl|0)*(c.height/rw)
+          return [X,Y]
+        })
+        imgs = [
+          {loaded: false, img: new Image(), src: 'rail_blazer.jpg'},
+          {loaded: false, img: new Image(), src: 'rail_blazer_color.jpg'},
+          {loaded: false, img: new Image(), src: 'shore.jpg'},
+          {loaded: false, img: new Image(), src: 'shore_color.jpg'},
+          {loaded: false, img: new Image(), src: 'flowers.jpg'},
+          {loaded: false, img: new Image(), src: 'flowers_color.jpg'},
+          {loaded: false, img: new Image(), src: 'flowers2.jpg'},
+          {loaded: false, img: new Image(), src: 'flowers2_color.jpg'},
+          {loaded: false, img: new Image(), src: 'barn_interior_3.jpg'},
+          {loaded: false, img: new Image(), src: 'barn_interior_3_color.jpg'},
+          {loaded: false, img: new Image(), src: 'barn_interior_2.jpg'},
+          {loaded: false, img: new Image(), src: 'barn_interior_2_color.jpg'},
+          {loaded: false, img: new Image(), src: 'bridge.jpg'},
+          {loaded: false, img: new Image(), src: 'bridge_color.jpg'},
+          {loaded: false, img: new Image(), src: 'dead trees sepia.jpg'},
+          {loaded: false, img: new Image(), src: 'dead trees_color.jpg'},
+          {loaded: false, img: new Image(), src: 'barn_exterior.jpg'},
+          {loaded: false, img: new Image(), src: 'barn_exterior_color.jpg'},
+          {loaded: false, img: new Image(), src: 'barn_interior.jpg'},
+          {loaded: false, img: new Image(), src: 'barn_interior_color.jpg'},
+          {loaded: false, img: new Image(), src: 'tv.jpg'},
+          {loaded: false, img: new Image(), src: 'tv_color.jpg'}
+        ]
+        loadImage=()=>{
+          img = imgs[Rn()*imgs.length|0].img
+          t=9.4
+          timer=setTimeout(()=>{
+            loadImage()
+          },loaded?6500:2000)
+          imgChoice++
+        }
+        loaded = false
+        loadImage()
+        imgs.map(v=>{
+          v.img.addEventListener('load', () => {
+            v.loaded = true
+            if(!imgs.filter(v=>!v.loaded).length){
+              loaded = true
+              mp3.play()
+              clearTimeout(timer)
+              loadImage()
+            }
+          })
+          v.img.src = v.src
+        })
+      }
+
+      if(!loaded){
+        x.fillStyle='#0008',x.fillRect(0,0,w=c.width,w)
+        x.font='64px arial'
+        x.fillStyle='#fff'
+        x.fillText('loading images' + '.'.repeat((t*10|0)%6),1700,1090)
+      } else {
+
+        oX=0,oY=0,oZ=0
+        Rl=0,Pt=0,Yw=0
+        
+        B.map((v,i)=>{
+          X=v[0]
+          Y=v[1]
+          if((i/cl|0)%2){
+            switch(i%2){
+              case 0: X2=0, l1=1, Y2=-c.height/rw, l2=-1; break
+              case 1: X2=-c.width/cl, l1=-1, Y2=-c.height/rw, l2=-1; break
+            }
+          } else {
+            switch(i%2){
+              case 0: X2=0, l1=1, Y2=0, l2=1; break
+              case 1: X2=-c.width/cl, l1=-1, Y2=0, l2=1; break
+            }
+          }
+          x.save()
+          x.translate(X,Y)
+          x.scale(l1,l2)
+          x.translate(X2,Y2)
+          x.drawImage(img,0,0,c.width/cl,c.height/rw)
+          x.restore()
+        })
+      }
+      x1=c.width+(2.8+S(t/2)*3.8)*c.width
+      y1=x1/1.777777777778
+
+      x.drawImage(c,-x1/2+(1+S(t/2))*c.width/1.23*(loaded?1:0),-y1/2+(1+S(t/2))*c.width/2.2*(loaded?1:0),c.width+x1,c.height+y1)
+      t+=1/60
+      requestAnimationFrame(Draw)
+    }
+      Draw()
+    </script>
+  </body>
+</html>

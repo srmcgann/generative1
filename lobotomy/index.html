@@ -1,0 +1,152 @@
+<!DOCTYPE HTML>
+<html><head>
+    <style>
+      body, html{
+        margin: 0;
+        width: 100%;
+        height: 100vh;
+        overflow: hidden;
+        background: #000;
+      }
+      #c{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        background: url(1CsTVH.png);
+        transform: translate(-50%, -50%);
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="c" width="1920" height="1079" style="width: 100vw; height: 210.937px;"></canvas>
+    <script>
+      c=document.querySelector('#c')
+      x=c.getContext('2d')
+      S=Math.sin
+      C=Math.cos
+      t=playing=0
+      window.onclick=()=>{if(!playing)mp3.play()}
+      rsz=window.onresize=()=>{
+        setTimeout(()=>{
+          if(document.body.clientWidth > document.body.clientHeight*1.77777778){
+            c.style.height = '100vh'
+            setTimeout(()=>c.style.width = c.clientHeight*1.77777778+'px',0)
+          }else{
+            c.style.width = '100vw'
+            setTimeout(()=>c.style.height = c.clientWidth/1.77777778 + 'px',0)
+          }
+          c.width=1920
+          c.height=c.width/1.777777778
+        },0)
+      }
+      rsz()
+      Draw=()=>{
+      if(!t){
+        mp3 = new Audio()
+        mp3.loop=true
+        mp3.onplaying=()=>{playing=true}
+        mp3.oncanplay=()=>{go=true;if(!playing)mp3.play()}
+        mp3.src='d30da3a45205c6550bc6bc472ff4a2ac.MP3'
+        Rn=Math.random
+        P=[]
+        W=[]
+        I=(A,B,M,D,E,F,G,H)=>(K=((G-E)*(B-F)-(H-F)*(A-E))/(J=(H-F)*(M-A)-(G-E)*(D-B)))>=0&&K<=1&&(L=((M-A)*(B-F)-(D-B)*(A-E))/J)>=0&&L<=1?[A+K*(M-A),B+K*(D-B)]:0;
+        bgimg = new Image()
+        go=playing=false
+        bgimg.addEventListener('load', ()=>{
+          go=true
+        })
+        bgimg.src='1CsTVH.png'
+      }
+      
+      if(go){
+        x.globalAlpha = .5
+        x.drawImage(bgimg,0,0,c.width,c.height)
+        x.globalAlpha = 1
+        x.fillStyle='#0005',x.fillRect(0,0,w=c.width,w),h=540,oPX=oPY=oPZ=0
+        x.lineCap=x.lineJoin='round'
+        
+        R=(roll,pitch,yaw)=>{Y=S(p=(A=(M=Math).atan2)(Y,Z)+pitch)*(d=(H=M.hypot)(Y,Z)),Z=C(p)*d,X=S(p=A(X,Y)+roll)*(d=H(X,Y)),Y=C(p)*d,X=S(p=A(X,Z)+yaw)*(d=H(X,Z)),Z=C(p)*d}
+        Q=q=>[960+X/Z*h,h+Y/Z*h]
+        x.lineJoin='round'
+
+        E=(X,Z,Y)=>Math.acos(Z/Math.hypot(X,Y,Z))-Math.PI/2
+        sd=6,tw=0,oR=3.25,yaw=0,iR=.4,cl=60,oX=0,oY=0,oZ=9+S(t)*2
+        l=sd+3
+        mR=t*2,mP=Math.PI/2-t,mY=t/2,iT=S(t/3)*4
+        
+        for(j=cl*4+1;j--;){
+          pitch=0
+          oYaw=yaw
+          PX=S(p=Math.PI*2/cl*j)*oR
+          PY=0
+          PZ=C(p)*oR
+          yaw=Math.atan2(PX,PZ)+Math.PI/2
+          for(i=sd;j<cl*4&&i--;){
+            x.beginPath()
+            for(k=2;k--;){
+              X=S(p=Math.PI*2/sd*i+Math.PI/sd+Math.PI*tw/cl*(v=k?j:j+1)+iT)*iR
+              Y=C(p)*iR
+              Z=0
+              vX=S(q=Math.PI/2/cl*v)*2
+              vY=S(p=Math.PI*3/cl*v)*3
+              vZ=C(q)*2
+              nX=S(q=Math.PI/2/cl*(v-l))*2
+              nY=S(p=Math.PI*3/cl*(v-l))*3
+              nZ=C(q)*2
+              R(0,E(nX,nY,nZ),Math.atan2(k?PX:oPX,k?PZ:oPZ)+Math.PI/2)
+              X+=(k?PX:oPX)+vX
+              Y+=(k?PY:oPY)+vY
+              Z+=(k?PZ:oPZ)+vZ
+              R(mR,mP,mY)
+              X+=oX
+              Y+=oY
+              Z+=oZ
+              x.lineTo(...Q())
+            }
+            x.strokeStyle=`hsla(${30+S(Math.PI*2/cl*j)*30},99%,${70+S(Math.PI*2/cl/4*j+t*16)*25}%,.3)`
+            x.lineWidth=1+300/Z/Z
+            x.stroke()
+            //x.strokeStyle=`hsla(${30+S(Math.PI*2/cl*j)*30},99%,${95+S(Math.PI*2/cl/4*j+t*16)*25}%,.4`
+            //x.lineWidth=1+100/Z/Z
+            //x.stroke()
+          }
+          x.beginPath()
+          for(i=sd;j&&i--;){
+            X=S(p=Math.PI*2/sd*i+Math.PI/sd+Math.PI*tw/cl*j+iT)*iR
+            Y=C(p)*iR
+            Z=0
+            v=j
+            vX=S(q=Math.PI/2/cl*v)*2
+            vY=S(p=Math.PI*3/cl*v)*3
+            vZ=C(q)*2
+            nX=S(q=Math.PI/2/cl*(v-l))*2
+            nY=S(p=Math.PI*3/cl*(v-l))*3
+            nZ=C(q)*2
+            R(0,E(nX,nY,nZ),Math.atan2(PX,PZ)+Math.PI/2)
+            X+=PX+vX
+            Y+=PY+vY
+            Z+=PZ+vZ
+            R(mR,mP,mY)
+            X+=oX
+            Y+=oY
+            Z+=oZ
+            x.lineTo(...Q())
+          }
+          x.closePath()
+          x.lineWidth=1+99/Z/Z
+          x.stroke()
+          
+          oPX=PX,oPY=PY,oPZ=PZ
+        }
+      }
+
+
+      t+= 1/60
+      requestAnimationFrame(Draw)
+    }
+    Draw()
+    </script>
+  
+
+</body></html>

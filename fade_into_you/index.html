@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html><head>
+    <meta property="og:image" content="VoZVF.jpg">
+    <style>
+      body, html{
+        margin: 0;
+        width: 100%;
+        height: 100vh;
+        overflow: hidden;
+        background: #000;
+      }
+      #c{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 100%;
+        height: 100%;
+        background: url(VoZVF.jpg);
+        background-position: center center;
+        background-size: fill;
+        transform: translate(-50%, -50%);
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="c" width="1920" height="1079" style="height: 411.75px; width: 100vw;"></canvas>
+    <script>
+      c=document.querySelector('#c')
+      x=c.getContext('2d')
+      S=Math.sin
+      C=Math.cos
+      t=playing=0
+      window.onclick=()=>{if(!playing)mp3.play()}
+      rsz=window.onresize=()=>{
+        setTimeout(()=>{
+          if(document.body.clientWidth > document.body.clientHeight*1.77777778){
+            c.style.height = '100vh'
+            setTimeout(()=>c.style.width = c.clientHeight*1.77777778+'px',0)
+          }else{
+            c.style.width = '100vw'
+            setTimeout(()=>c.style.height = c.clientWidth/1.77777778 + 'px',0)
+          }
+          c.width=1920
+          c.height=c.width/1.777777778
+        },0)
+      }
+      rsz()
+      Draw=()=>{
+        if(!t){
+          mp3 = new Audio()
+          mp3.loop=true
+          mp3.onplaying=()=>{playing=true}
+          mp3.oncanplay=()=>{go=true;if(!playing)mp3.play()}
+          mp3.src='9422fc346614f26ae49a693aa8d6b7dc.MP3'
+          Rn=Math.random
+          R=(Rl,Pt,Yw,o)=>{
+            X=S(p=(A=(M=Math).atan2)(X,Y)+Rl)*(d=(H=M.hypot)(X,Y)),Y=C(p)*d,Y=S(p=A(Y,Z)+Pt)*(d=H(Y,Z)),Z=C(p)*d,X=S(p=A(X,Z)+Yw)*(d=H(X,Z)),Z=C(p)*d
+            if(o)X+=oX,Y+=oY,Z+=oZ
+          }
+          Q=q=>[c.width/2+X/Z*800,c.height/2+Y/Z*800]
+          dr=new Image()
+          dr2=new Image()
+          dr.src='2ypmk.png'
+          dr2.src='1ZPco1.png'
+          B=[]
+          drawRotatedImage=(img, X, Y, W, H, a)=>{
+            x.save()
+            x.translate(X,Y)
+            x.rotate(a)
+            x.drawImage(img, -W/2, -H/2, W, H)
+            x.translate(-X,-Y)
+            x.restore()
+          }
+          bgimg = new Image()
+          go=playing=false
+          bgimg.addEventListener('load',()=>{
+            go=true
+          })
+          bgimg.src='1zotP8.jpg'
+          G=10
+        }
+        if(go){
+          for(m=25;m--;)B=[...B, [(Rn()-.5)*G*2,-G,(Rn()-.5)*G*2,0,0,0]]
+          x.globalAlpha=.2
+          x.drawImage(bgimg,0,0,c.width,c.height)
+          x.globalAlpha=1
+          x.fillStyle='#1016',x.fillRect(0,0,c.width,c.height)
+
+          oX=0,oY=0,oZ=G/1.5+S(t)*G/6
+          Rl=S(t/2)/2,Pt=0,Yw=t*4
+          
+          B=B.map(v=>{
+            tx=X=v[0]
+            Y=v[1]+=v[4]+=.002
+            tz=Z=v[2]
+            R(0,0,Yw,0)
+            R(Rl,Pt,0,1)
+            if(Z>1){
+              iw=dr.width/Z**2*20
+              ih=dr.height/Z**2*20
+              a=x.globalAlpha=.5/(1+(3+H(tx,tz))**4/499)
+              //if(a>.1)drawRotatedImage(dr,...Q(),iw,ih,0)
+              if(a>.1){
+                l=Q()
+                x.drawImage(dr,...l,iw,ih)
+                x.drawImage(dr2,l[0]+iw/4,l[1]+ih/4,iw/2,ih/2)
+              }
+            }
+            return v
+          }).filter(v=>v[1]<G)
+          x.globalAlpha=1
+        }
+              t+=1/60
+        requestAnimationFrame(Draw)
+      }
+      Draw()
+    </script>
+  
+
+</body></html>

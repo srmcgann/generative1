@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html><head>
+    <meta property="og:image" content="1f3KSc.jpg">
+    <style>
+      body, html{
+        margin: 0;
+        width: 100%;
+        height: 100vh;
+        overflow: hidden;
+        background: #000;
+      }
+      #c{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 100%;
+        height: 100%;
+        background: url(1f3KSc.jpg);
+        background-position: center center;
+        background-size: fill;
+        transform: translate(-50%, -50%);
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="c" width="1920" height="1079" style="height: 411.75px; width: 100vw;"></canvas>
+    <script>
+      c=document.querySelector('#c')
+      x=c.getContext('2d')
+      S=Math.sin
+      C=Math.cos
+      t=playing=0
+      window.onclick=()=>{if(!playing)mp3.play()}
+      rsz=window.onresize=()=>{
+        setTimeout(()=>{
+          if(document.body.clientWidth > document.body.clientHeight*1.77777778){
+            c.style.height = '100vh'
+            setTimeout(()=>c.style.width = c.clientHeight*1.77777778+'px',0)
+          }else{
+            c.style.width = '100vw'
+            setTimeout(()=>c.style.height = c.clientWidth/1.77777778 + 'px',0)
+          }
+          c.width=1920
+          c.height=c.width/1.777777778
+        },0)
+      }
+      rsz()
+      Draw=()=>{
+        if(!t){
+          mp3 = new Audio()
+          mp3.loop=true
+          mp3.onplaying=()=>{playing=true}
+          mp3.oncanplay=()=>{go=true;if(!playing)mp3.play()}
+          mp3.src='3053e57b4d22bec870aa0401ec1a8edc.MP3'
+          Rn=Math.random
+    R=(Rl,Pt,Yw,o)=>{
+      if(o)Y+=oY
+      X=S(p=(A=(M=Math).atan2)(X,Y)+Rl)*(d=(H=M.hypot)(X,Y)),Y=C(p)*d,Y=S(p=A(Y,Z)+Pt)*(d=H(Y,Z)),Z=C(p)*d,X=S(p=A(X,Z)+Yw)*(d=H(X,Z)),Z=C(p)*d
+      if(o)X+=oX,Y+=1,Z+=oZ
+    }
+    I=(A,B,M,D,E,F,G,H)=>(K=((G-E)*(B-F)-(H-F)*(A-E))/(J=(H-F)*(M-A)-(G-E)*(D-B)))>=0&&K<=1&&(L=((M-A)*(B-F)-(D-B)*(A-E))/J)>=0&&L<=1?[A+K*(M-A),B+K*(D-B)]:0
+    Q=q=>[c.width/2+X/Z*800,c.height/2+Y/Z*800]
+    bgimg=new Image()
+    go=playing=false
+    bgimg.addEventListener('load',()=>{
+      go=true
+    })
+    bgimg.src='1f3KSc.jpg'
+    showwebs=false
+    curveres=8
+    iBl=2
+    iPv=1,iPc=30
+    lh=iBl*(115+S(t*1.75)*100)/2
+    oX=oY=oZ=0
+    oTy=0
+    P=[
+      [-iBl,0,0,0,0,0,1,0],
+      [0,0,0,iBl,0,0,0,0],
+      [iBl,-lh,0,iBl*2,-lh,0,1,0],
+      [iBl,lh,0,iBl*2,lh,0,1,0],
+    ]
+    B=[
+     [1,2],
+     [1,3]
+    ]
+    
+    T=q=>{
+      lhl=lh/(1+B.length/2)
+      P=[...P,
+          [P[q][3],P[q][4],P[q][5],P[q][3]+iBl,P[q][4],P[q][5],0,0],
+          [P[q][3]+iBl,P[q][4]-lhl,P[q][5],P[q][3]+iBl*2,P[q][4]-lhl,P[q][5],1,0],
+          [P[q][3]+iBl,P[q][4]+lhl,P[q][5],P[q][3]+iBl*2,P[q][4]+lhl,P[q][5],1,0]
+      ]
+      B=[...B,[P.length-3,P.length-2],[P.length-3,P.length-1]]
+    }
+    for(j=iPc;j--;)P[B[B.length-((l=(((j+2)**3.1)|0)%2)==1?2:1)][1]][7]=1,T(B[B.length-(l?1:2)][1])
+    x.lineCap=x.lineJoin='round'
+  }
+  
+  if(go){
+    iPv=.25+(.7+S(t/1.5)*.7)
+    curveres=4+S(t/3)*4
+    if(P[P.length-1][0]<20){
+      l=Rn()<.5?1:2
+      P[B[B.length-(l==1?2:1)][1]][7]=1
+      T(B[B.length-l][1])
+      B=B.filter((v,i)=>i>1)
+      P[P.length-iPc*3-4][6]=0
+      P[P.length-iPc*3-5][6]=0
+      P[P.length-iPc*3-6][6]=0
+      P[0][6]=0
+    }
+    
+    lh=iBl*(115+S(t*1.75)*100)/2
+    Rl=t/6,Pt=S(-t)/2,Yw=S(t/2)/2
+    oX=-2
+    oY+=((-P[P.length-1][1])-oY)/30
+    oZ=24+S(t/2)*8
+    x.globalAlpha=1
+    x.drawImage(bgimg,0,0,c.width,c.height)
+    x.globalAlpha=1
+    x.fillStyle='#012c',x.fillRect(0,0,c.width,c.height)
+    
+    P.map((v,i)=>{
+      x.globalAlpha=Math.max(0, 1-(1+(P.length-i)/iPc)**5/1000)
+      v[0]-=iPv
+      v[3]-=iPv
+      if(v[6]){
+        x.beginPath()
+        X=v[0]
+        Y=v[1]
+        Z=v[2]
+        R(Rl,Pt,Yw,1)
+        if(Z>0)x.lineTo(...Q())
+        X=v[3]
+        Y=v[4]
+        Z=v[5]
+        R(Rl,Pt,Yw,1)
+        if(Z>0)x.lineTo(...Q())
+        x.lineWidth=Math.min(60, 1600/(Z**1.5))
+        x.strokeStyle=`hsla(${220 - (P.length-i)/2},99%,50%,.3)`
+        x.stroke()
+        x.lineWidth /= 4
+        x.strokeStyle='#fffc'
+        x.stroke()
+        if(v[7]&&Z>0){
+          x.beginPath()
+          x.arc(...Q(),150/Z,0,7)
+          x.fillStyle='#801c'
+          x.fill()
+        }
+      }
+    })
+
+    B.map((v,i)=>{
+      i1=v[0]
+      i2=v[1]
+      x.globalAlpha=Math.max(0, 1-(1+(P.length-i1)/iPc)**5/1000)
+      tx1=P[i1][0]
+      ty1=P[i1][1]
+      tz1=P[i1][2]
+      tx2=tx1+(P[i1][3]-tx1)/2
+      ty2=ty1+(P[i1][4]-ty1)/2
+      tz2=tz1+(P[i1][5]-tz1)/2
+      tx3=tx2
+      ty3=ty1+(P[i2][1]-ty2)/2
+      tz3=tz1+(P[i2][2]-tz2)/2
+      cv=[[tx1,ty1,tz1]]
+      for(m=0;m<curveres+1;m++){
+        if(m){
+          tax=ax
+          tay=ay
+          taz=az
+          tbx=bx
+          tby=by
+          tbz=bz
+        }
+        if(showwebs)x.beginPath()
+        ax=X=tx1+(tx2-tx1)/curveres*m
+        ay=Y=ty1+(ty2-ty1)/curveres*m
+        az=Z=tz1+(tz2-tz1)/curveres*m
+        if(showwebs)R(Rl,Pt,Yw,1)
+        if(showwebs&&Z>0)x.lineTo(...Q())
+        bx=X=tx2+(tx3-tx2)/curveres*m
+        by=Y=ty2+(ty3-ty2)/curveres*m
+        bz=Z=tz2+(tz3-tz2)/curveres*m
+        if(showwebs){
+          R(Rl,Pt,Yw,1)
+          if(Z>0)x.lineTo(...Q())
+          x.strokeStyle='#fff1'
+          x.lineWidth=Math.min(60, 10/Z)
+          x.stroke()
+        }
+        if(m && (d=I(ax,ay,bx,by,tax,tay,tbx,tby))){
+          X=d[0]
+          Y=d[1]
+          Z=(bz+tbz)/2
+          cv=[...cv, [X,Y,Z]]
+        }
+      }
+      cv=[...cv,[tx3,ty3,tz3]]
+
+      tx1=tx2
+      ty1=ty1+(P[i2][1]-ty2)/2
+      tz1=tz1+(P[i2][2]-tz2)/2
+      tx2=(tx2+tx1)/2
+      ty2=P[i2][1]
+      tz2=(tz2+tz1)/2
+      tx3=P[i2][0]
+      ty3=P[i2][1]
+      tz3=P[i2][2]
+      for(m=0;m<curveres+1;m++){
+        if(m){
+          tax=ax
+          tay=ay
+          taz=az
+          tbx=bx
+          tby=by
+          tbz=bz
+        }
+        if(showwebs)x.beginPath()
+        ax=X=tx1+(tx2-tx1)/curveres*m
+        ay=Y=ty1+(ty2-ty1)/curveres*m
+        az=Z=tz1+(tz2-tz1)/curveres*m
+        if(showwebs)R(Rl,Pt,Yw,1)
+        if(showwebs&&Z>0)x.lineTo(...Q())
+        bx=X=tx2+(tx3-tx2)/curveres*m
+        by=Y=ty2+(ty3-ty2)/curveres*m
+        bz=Z=tz2+(tz3-tz2)/curveres*m
+        if(showwebs){
+          R(Rl,Pt,Yw,1)
+          if(Z>0)x.lineTo(...Q())
+          x.strokeStyle='#fff1'
+          x.lineWidth=Math.min(60, 10/Z)
+          x.stroke()
+        }
+        if(m && (d=I(ax,ay,bx,by,tax,tay,tbx,tby))){
+          X=d[0]
+          Y=d[1]
+          Z=(bz+tbz)/2
+          cv=[...cv, [X,Y,Z]]
+        }
+      }
+      cv=[...cv,[tx3,ty3,tz3]]
+      x.beginPath()
+      cv.map(v=>{
+        X=v[0]
+        Y=v[1]
+        Z=v[2]
+        R(Rl,Pt,Yw,1)
+        if(Z>0)x.lineTo(...Q())
+      })
+        x.lineWidth=Math.min(60, 1600/(Z**1.5))
+        x.strokeStyle=`hsla(${220 - (B.length-i)/2},99%,50%,.3)`
+        x.stroke()
+        x.lineWidth /= 4
+        x.strokeStyle='#fffc'
+        x.stroke()
+    })
+  }
+
+
+        t+=1/60
+        requestAnimationFrame(Draw)
+      }
+      Draw()
+    </script>
+  
+
+</body></html>

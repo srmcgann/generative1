@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      body,html{
+        background: #000;
+        margin: 0;
+        height: 100vh;
+        font-family: courier;
+      }
+      #c{
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        background: #000;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id=c></canvas>
+    <script>
+      c=document.querySelector('#c')
+      c.width  = 1920
+      c.height = 1080
+      x=c.getContext('2d')
+      S=Math.sin
+      C=Math.cos
+      Rn=Math.random
+      R = function(r,g,b,a) {
+        a = a === undefined ? 1 : a;
+        return "rgba("+(r|0)+","+(g|0)+","+(b|0)+","+a+")";
+      };
+      t=go=0
+      rsz=window.onresize=()=>{
+        setTimeout(()=>{
+          if(document.body.clientWidth > document.body.clientHeight*1.77777778){
+            c.style.height = '100vh'
+            setTimeout(()=>c.style.width = c.clientHeight*1.77777778+'px',0)
+          }else{
+            c.style.width = '100vw'
+            setTimeout(()=>c.style.height = c.clientWidth/1.77777778 + 'px',0)
+          }
+          c.width=1920
+          c.height=c.width/1.777777778
+        },0)
+      }
+      rsz()
+
+      Draw=()=>{
+        if(!t){
+          R=(Rl,Pt,Yw,m)=>{
+            M=Math
+            A=M.atan2
+            H=M.hypot
+            X=S(p=A(X,Y)+Rl)*(d=H(X,Y))
+            Y=C(p)*d
+            X=S(p=A(X,Z)+Yw)*(d=H(X,Z))
+            Z=C(p)*d
+            Y=S(p=A(Y,Z)+Pt)*(d=H(Y,Z))
+            Z=C(p)*d
+            if(m){
+              X+=oX
+              Y+=oY
+              Z+=oZ
+            }
+          }
+          Q=()=>[c.width/2+X/Z*800,c.height/2+Y/Z*800]
+          I=(A,B,M,D,E,F,G,H)=>(K=((G-E)*(B-F)-(H-F)*(A-E))/(J=(H-F)*(M-A)-(G-E)*(D-B)))>=0&&K<=1&&(L=((M-A)*(B-F)-(D-B)*(A-E))/J)>=0&&L<=1?[A+K*(M-A),B+K*(D-B)]:0
+
+          stroke=(scol,fcol)=>{
+            if(scol){
+              x.closePath()
+              x.globalAlpha=.2
+              x.strokeStyle=scol
+              x.lineWidth=Math.min(500, 500/Z)
+              x.stroke()
+              x.globalAlpha=1
+              x.lineWidth/=4
+              x.stroke()
+            }
+            if(fcol){
+              x.fillStyle=fcol
+              x.fill()
+            }
+          }
+
+          P=[]
+
+          G=100, iPv=0
+
+          spawnP = () => {
+            X = (Rn()-.5)*G
+            Y = 0
+            Z = (Rn()-.5)*G
+            vx = S(p=Rn()*Math.PI*2)*(v=Rn()*iPv)
+            vy = 0
+            vz = C(p)*v
+            P=[...P, [X,Y,Z,vx,vy,vz,1,Rn()*10|0]]
+          }
+
+          iBc = 16, iBv=2
+          B=Array(iBc).fill().map(v => {
+            X = (Rn()-.5)*G/1.5
+            Y = 0
+            Z = (Rn()-.5)*G/1.5
+            vx = (Rn()-.5)*iBv
+            vy = 0
+            vz = (Rn()-.5)*iBv
+            return [X,Y,Z,vx,vy,vz]
+          })
+
+          floor = (X,Z) => {
+            g=0
+            B.map(v=>{
+              X2=v[0]
+              Y2=v[1]
+              Z2=v[2]
+              d=(3+Math.hypot(X-X2,Z-Z2))**2/4
+              g+=100/(1+d)
+            })
+            return g
+          }
+
+          bg = new Image()
+          go=false
+          bg.onload=()=>{
+            go=true
+          }
+          bg.src='2705Yc.jpg'
+
+          starsLoaded = false, stars = [{loaded: false}]
+          stars = Array(10).fill().map((v,i) => {
+            let a = {img: new Image(), loaded: false}
+            a.img.onload = () => {
+              a.loaded = true
+              setTimeout(()=>{
+                if(stars.filter(v=>v.loaded).length == 10) starsLoaded = true, init()
+              }, 0)
+            }
+            a.img.src = `star${i?i:''}.png`
+            return a
+          })
+        }
+
+        if(go && starsLoaded){
+          x.globalAlpha = .2
+          x.drawImage(bg,0,0,c.width,c.height)
+          x.globalAlpha = 1
+          x.fillStyle='#0006'
+          x.fillRect(0,0,c.width,c.height)
+          oX=0, oY=0, oZ=80+Math.max(-20,Math.min(20,S(t)*80))
+          Rl=S(t)/2,Pt=Math.PI/2-S(t/2)/1,Yw=C(t*2)/2
+
+          for(m=50;m--;)if(!((t*60|0)%0)) spawnP()
+
+          P=P.filter(v=>v[6]>0)
+
+          P.map(v=>{
+            X=v[0]+=v[3]
+            Z=v[2]+=v[5]
+            if(X>G/2)X-=G
+            if(X<-G/2)X+=G
+            if(Z>G/2)Z-=G
+            if(Z<-G/2)Z+=G
+            if((d_=Math.hypot(X,Z))<G/2){
+              L=Y=floor(X,Z)
+              v[6]-=.02
+              R(Rl,Pt,Yw,1)
+              if(Z>0){
+                s=Math.min(1e3,Math.max(0,Math.min(20,L-7)*600/Z))
+                l=Q()
+                x.drawImage(stars[9].img,l[0]-s/2,l[1]-s/2,s,s)
+              }
+            }
+          })
+
+          B.map(v=>{
+            X=v[0]+=v[3]
+            Z=v[2]+=v[5]
+            Y=floor(X,Z)
+            if(X>G/2.5 || X<-G/2.5) v[3]*=-1
+            if(Z>G/2.5 || Z<-G/2.5) v[5]*=-1
+            R(Rl,Pt,Yw,1)
+            if(Z>0){
+              s=Math.min(1e3,15000/Z)
+              l=Q()
+              x.drawImage(stars[7].img,l[0]-s/2,l[1]-s/2,s,s)
+              /*
+              x.fillStyle='#0f82'
+              x.fillRect(l[0]-s/2,l[1]-s/2,s,s)
+              s/=3
+              x.fillStyle='#8ff'
+              x.fillRect(l[0]-s/2,l[1]-s/2,s,s)*/
+            }
+          })
+        }
+
+        t+=1/60
+        requestAnimationFrame(Draw)
+
+      }
+      Draw()
+    </script>
+  </body>
+</html>

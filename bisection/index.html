@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html><head>
+    <meta property="og:image" content="1zotP8.jpg">
+    <style>
+      body, html{
+        margin: 0;
+        width: 100%;
+        height: 100vh;
+        overflow: hidden;
+        background: #000;
+      }
+      #c{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 100%;
+        height: 100%;
+        background: url(1zotP8.jpg);
+        background-position: center center;
+        background-size: fill;
+        transform: translate(-50%, -50%);
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="c" width="1920" height="1079" style="height: 732.375px; width: 100vw;"></canvas>
+    <script>
+      c=document.querySelector('#c')
+      x=c.getContext('2d')
+      S=Math.sin
+      C=Math.cos
+      t=playing=0
+      window.onclick=()=>{if(!playing)mp3.play()}
+      rsz=window.onresize=()=>{
+        setTimeout(()=>{
+          if(document.body.clientWidth > document.body.clientHeight*1.77777778){
+            c.style.height = '100vh'
+            setTimeout(()=>c.style.width = c.clientHeight*1.77777778+'px',0)
+          }else{
+            c.style.width = '100vw'
+            setTimeout(()=>c.style.height = c.clientWidth/1.77777778 + 'px',0)
+          }
+          c.width=1920
+          c.height=c.width/1.777777778
+        },0)
+      }
+      rsz()
+      Draw=()=>{
+        if(!t){
+          mp3 = new Audio()
+          mp3.loop=true
+          mp3.onplaying=()=>{playing=true}
+          mp3.oncanplay=()=>{go=true;if(!playing)mp3.play()}
+          mp3.src = 'a940f6d8c9ed6db741cbd41e75326d1b.MP3'
+          Rn=Math.random
+          bgimg = new Image()
+          go=playing=false
+          bgimg.addEventListener('load', ()=>{
+            go=true
+          })
+          R=(Rl,Pt,Yw,o)=>{
+            X=S(p=(A=(M=Math).atan2)(X,Y)+Rl)*(d=(H=M.hypot)(X,Y)),Y=C(p)*d,Y=S(p=A(Y,Z)+Pt)*(d=H(Y,Z)),Z=C(p)*d,X=S(p=A(X,Z)+Yw)*(d=H(X,Z)),Z=C(p)*d
+            if(o)X+=oX,Y+=oY,Z+=oZ
+          }
+          Q=q=>[c.width/2+X/Z*800,c.height/2+Y/Z*800]
+          I=(A,B,M,D,E,F,G,H)=>(K=((G-E)*(B-F)-(H-F)*(A-E))/(J=(H-F)*(M-A)-(G-E)*(D-B)))>=0&&K<=1&&(L=((M-A)*(B-F)-(D-B)*(A-E))/J)>=0&&L<=1?[A+K*(M-A),B+K*(D-B)]:0
+          G=32,G2=G/1
+          iBc=70,iBv=.1,iBr=80,iPw=2400,iPl=3,iPv=.03,aspect=1
+          go=playing=false
+          B=Array(iBc).fill().map(v=>{
+            X=(Rn()-.5)*G*aspect
+            Y=(Rn()-.5)*G
+            Z=0
+            vx=S(p=Math.PI*2*Rn())*iBv
+            vy=C(p)*iBv
+            vz=0
+            return [X,Y,Z,vx,vy,vz]
+          })
+          P=[]
+          stars=[]
+          go=false
+          bgimg=new Image()
+          bgimg.addEventListener('load',()=>{
+            go=true
+          })
+          star=new Image()
+          star.src="vtpHy.png"
+          bgimg.src="1zotP8.jpg"
+        }
+        
+        if(go){
+          x.lineJoin=x.lineCap='round'
+          x.globalAlpha=.125
+          x.drawImage(bgimg,0,0,c.width,c.height)
+          x.globalAlpha=1
+          x.fillStyle='#0003',x.fillRect(0,0,c.width,c.height)
+          
+          Rl=Math.PI/2-S(t/120)*10,Pt=C(t/4)/3,Yw=S(t/4)/4
+          oX=oY=0,oZ=14-C(t/8)*7
+
+          x.strokeStyle='#cfc2'
+          for(i=10;i--;){
+            X=(-G/2+G/10*i)*aspect*1.05
+            Y=-G/2*1.05
+            Z=0
+            R(Rl,Pt,Yw,1)
+            if(Z>0){
+              x.beginPath()
+              x.lineTo(...Q())
+              X=(-G/2+G/10*(i+1))*aspect*1.05
+              Y=-G/2*1.05
+              Z=0
+              R(Rl,Pt,Yw,1)
+              if(Z>0){
+                x.lineTo(...Q())
+                x.lineWidth=70/Z
+                x.stroke()
+              }
+            }
+            
+            X=(-G/2+G/10*i)*aspect*1.05
+            Y=G/2*1.05
+            Z=0
+            R(Rl,Pt,Yw,1)
+            if(Z>0){
+              x.beginPath()
+              x.lineTo(...Q())
+              X=(-G/2+G/10*(i+1))*aspect*1.05
+              Y=G/2*1.05
+              Z=0
+              R(Rl,Pt,Yw,1)
+              if(Z>0){
+                x.lineTo(...Q())
+                x.lineWidth=70/Z
+                x.stroke()
+              }
+            }
+
+            X=-G/2*aspect*1.05
+            Y=(-G/2+G/10*i)*1.05
+            Z=0
+            R(Rl,Pt,Yw,1)
+            if(Z>0){
+              x.beginPath()
+              x.lineTo(...Q())
+              X=-G/2*aspect*1.05
+              Y=(-G/2+G/10*(i+1))*1.05
+              Z=0
+              R(Rl,Pt,Yw,1)
+              if(Z>0){
+                x.lineTo(...Q())
+                x.lineWidth=70/Z
+                x.stroke()
+              }
+            }
+            
+            X=G/2*aspect*1.05
+            Y=(-G/2+G/10*i)*1.05
+            Z=0
+            R(Rl,Pt,Yw,1)
+            if(Z>0){
+              x.beginPath()
+              x.lineTo(...Q())
+              X=G/2*aspect*1.05
+              Y=(-G/2+G/10*(i+1))*1.05
+              Z=0
+              R(Rl,Pt,Yw,1)
+              if(Z>0){
+                x.lineTo(...Q())
+                x.lineWidth=70/Z
+                x.stroke()
+              }
+            }
+          }
+
+          for(m=1;m--;){
+            if(!((t*60|0)%1)){
+              tr=((1.1-Rn())*(Rn()<.5?-1:1))/200
+              v6=Rn()*Math.PI*2
+              X=(Rn()-.5)*G2*aspect
+              Y=(Rn()-.5)*G2
+              X1=X+S(p=tr)*iPl/2
+              Y1=Y+C(p)*iPl/2
+              Z1=0
+              X2=X-S(p)*iPl/2
+              Y2=Y-C(p)*iPl/2
+              Z2=0
+              vx=S(p=Math.PI*2*Rn())*iPv
+              vy=C(p)*iPv
+              vz=0
+              P=[...P,[X1,Y1,Z1,X2,Y2,Z2,v6,tr,vx,vy,vz,1,0]]
+            }
+          }
+          P.map((v,j)=>{
+            v[12]++
+            mx=(v[0]+v[3])/2
+            my=(v[1]+v[4])/2
+            mz=(v[2]+v[5])/2
+            X1=v[0]
+            Y1=v[1]
+            Z1=v[2]
+            X2=v[3]
+            Y2=v[4]
+            Z2=v[5]
+            if(mx>G2/2*aspect || mx<-G2/2*aspect)v[8]*=-1
+            if(my>G2/2 || my<-G2/2)v[9]*=-1
+            if(mz>G2/2 || mz<-G2/2)v[10]*=-1
+            d1=Math.hypot(X1-X2,Y1-Y2,Z1-Z2)/2-.003
+            v[0]=mx+S(p=v[6]+=v[7])*d1
+            v[1]=my+C(p)*d1
+            v[3]=mx-S(p)*d1
+            v[4]=my-C(p)*d1
+            v[0]+=v[8]
+            v[1]+=v[9]
+            v[2]+=v[10]
+            v[3]+=v[8]
+            v[4]+=v[9]
+            v[5]+=v[10]
+            x.beginPath()
+            X=v[0]
+            Y=v[1]
+            Z=v[2]
+            R(Rl,Pt,Yw,1)
+            x.lineTo(...Q())
+            X=v[3]
+            Y=v[4]
+            Z=v[5]
+            R(Rl,Pt,Yw,1)
+            x.globalAlpha=1
+            if(Z>0){
+              x.lineTo(...Q())
+              x.globalAlpha = Math.min(.4,(((dm=Math.hypot(v[0]-v[3],v[1]-v[4],v[2]-v[5]))/10)**3)*((.7+v[12])*2000)*(.2+dm)/30)/1.25
+              x.strokeStyle=`hsla(${dm*60-t*40},99%,${Math.min(96,45+dm**2*20)}%,.3`
+              x.lineWidth=Math.min(100, iPw/Z/Z)
+              x.stroke()
+              x.strokeStyle=`#fff`
+              x.lineWidth=Math.min(100, 1+iPw/Z/Z)/5
+              x.stroke()
+            }
+          })
+          P=P.filter(v=>v[11]&&Math.hypot(v[0]-v[3],v[1]-v[4],v[2]-v[5])>.1)
+          x.globalAlpha = 1
+          B.map(v=>{
+            tx1=v[0]
+            ty1=v[1]
+            tz1=v[2]
+            tx2=v[0]+S(p=Math.atan2(v[3],v[4]))*iBv*3
+            ty2=v[1]+C(p)*iBv*3
+            tz2=v[2]
+            X=v[0]+=v[3]
+            Y=v[1]+=v[4]
+            Z=v[2]+=v[5]
+            if(v[0]>G/2*aspect || v[0]<-G/2*aspect)v[3]*=-1
+            if(v[1]>G/2 || v[1]<-G/2)v[4]*=-1
+            if(v[2]>G/2 || v[2]<-G/2)v[5]*=-1
+            P.map((q,j)=>{
+              if(q[12]>1){
+                tx3=q[0]
+                ty3=q[1]
+                tz3=q[2]
+                tx4=q[3]
+                ty4=q[4]
+                tz4=q[5]
+                if(mp=I(tx1,ty1,tx2,ty2,tx3,ty3,tx4,ty4)){
+                  stars=[...stars,[mp[0],mp[1],0,0]]
+                  q[11]=q[12]=0
+                  X1=q[0]
+                  Y1=q[1]
+                  Z1=q[2]
+                  X2=mp[0]
+                  Y2=mp[1]
+                  Z2=0
+                  v6=q[6]//Rn()*Math.PI*2
+                  tr=q[7]*3
+                  if(tr>.1)tr=.1
+                  if(tr<-.1)tr=-.1
+                  vx=q[8]
+                  vy=q[9]
+                  vz=q[10]
+                  P.push([X1,Y1,Z1,X2,Y2,Z2,v6,tr,vx,vy,vz,1,0])
+                  X1=mp[0]
+                  Y1=mp[1]
+                  Z1=0
+                  X2=tx4
+                  Y2=ty4
+                  Z2=0
+                  v6=q[6]//Rn()*Math.PI*2
+                  tr=-q[7]*3
+                  if(tr>.1)tr=.1
+                  if(tr<-.1)tr=-.1
+                  vx=-q[8]
+                  vy=-q[9]
+                  vz=-q[10]
+                  P.push([X1,Y1,Z1,X2,Y2,Z2,v6,tr,vx,vy,vz,1,0])
+                }
+              }
+            })
+            R(Rl,Pt,Yw,1)
+            if(Z>0){
+              x.beginPath()
+              x.arc(...Q(),Math.min(500,iBr*12/(Z**1.5)),0,7)
+              x.fillStyle='#28f2'
+              x.fill()
+              x.beginPath()
+              x.arc(...Q(),Math.min(500,iBr*12/(Z**1.5))/2.5,0,7)
+              x.fillStyle='#fffa'
+              x.fill()
+            }
+          })
+          stars = stars.map(v=>{
+            X=v[0]
+            Y=v[1]
+            Z=v[2]
+            R(Rl,Pt,Yw,1)
+            l=Q()
+            x.globalAlpha=(1/(.8+(v[3]+=4)/15)**3)*3
+            s=Math.min(800,(1+v[3])/.2**2/(Z**1.5)*16)
+            x.drawImage(star,l[0]-s/2,l[1]-s/2,s,s)
+            return v
+          }).filter(v=>v[3]<100)
+          x.globalAlpha=1
+        }else{
+          x.fillStyle='#102a',x.fillRect(0,0,c.width,c.height)
+        }
+
+          t+=1/60
+          requestAnimationFrame(Draw)
+        }
+      Draw()
+    </script>
+  
+
+</body></html>

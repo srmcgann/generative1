@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html><head>
+    <meta property="og:image" content="1QxCBC.jpg">
+    <style>
+      body, html{
+        margin: 0;
+        width: 100%;
+        height: 100vh;
+        overflow: hidden;
+        background: #000;
+      }
+      #c{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 100%;
+        height: 100%;
+        background: url(1QxCBC.jpg);
+        background-position: center center;
+        background-size: cover;
+        transform: translate(-50%, -50%);
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="c" width="1920" height="1079" style="height: 587.812px; width: 100vw;"></canvas>
+    <script>
+      c=document.querySelector('#c')
+      x=c.getContext('2d')
+      S=Math.sin
+      C=Math.cos
+      t=playing=0
+      window.onclick=()=>{if(!playing)mp3.play()}
+      rsz=window.onresize=()=>{
+        setTimeout(()=>{
+          if(document.body.clientWidth > document.body.clientHeight*1.77777778){
+            c.style.height = '100vh'
+            setTimeout(()=>c.style.width = c.clientHeight*1.77777778+'px',0)
+          }else{
+            c.style.width = '100vw'
+            setTimeout(()=>c.style.height = c.clientWidth/1.77777778 + 'px',0)
+          }
+          c.width=1920
+          c.height=c.width/1.777777778
+        },0)
+      }
+      rsz()
+      Draw=()=>{
+
+        cl=6,sp=10
+        s=cl*sp/2
+        x.lineJoin=x.lineCap='round'
+
+        if(!t){
+          w=c.width,h=650
+          R=(Rl,Pt,Yw)=>{X=S(p=(A=(M=Math).atan2)(X,Y)+Rl)*(d=(H=M.hypot)(X,Y)),Y=C(p)*d,Y=S(p=A(Y,Z)+Pt)*(d=H(Y,Z)),Z=C(p)*d,X=S(p=A(X,Z)+Yw)*(d=H(X,Z)),Z=C(p)*d}
+          Q=q=>[c.width/2+X/Z*h,c.height/2+Y/Z*700]
+          mp3 = new Audio()
+          mp3.loop=true
+          mp3.onplaying=()=>{playing=true}
+          mp3.oncanplay=()=>{go=true;if(!playing)mp3.play()}
+          mp3.src='46c46eb29197f50ad870d17052dfda8b.MP3'
+          Rn=Math.random
+
+          sql=0
+          PX=PY=PZ=0
+          PRl=PPt=PYw=0
+          
+          sd=10
+          iBv=.2
+          iPv=.5
+          iFex=.04
+          iFfreq=3
+          iFms=1.75
+          
+          P=Array(200).fill().map((v,i)=>{
+            X=0,Y=-iBv,Z=0
+            R(0,Rn()*Math.PI,Rn()*Math.PI*2)
+            //R(0,-Math.PI/2,-Math.PI/4)
+            vx=X,vy=Y,vz=Z
+            X=((i%cl)-cl/2+.5)*sp
+            Y=(((i/cl|0)%cl)-cl/2+.5)*sp
+            Z=((i/cl/cl|0)%cl-cl/2+.5)*sp          
+            return [X,Y,Z,vx,vy,vz]
+          })
+          
+          MR=q=>{
+            R(0,0,-PYw)
+            R(0,-PPt,0)
+            R(-PRl,0,0)
+            R(Rl,Pt,Yw)
+          }
+
+          FQ=v=>{
+            a=[]
+            for(let i=sd;i--;){
+              X=S(p=Math.PI*2/sd*i+t*2)
+              Y=C(p)
+              Z=0
+              p1=A(v[3],v[5])
+              p2=Math.acos(v[4]/(H(v[3],v[4],v[5])))
+              R(0,-p2-Math.PI/2,0)
+              R(0,0,p1)
+              a=[...a,[X,Y,Z,v[0],v[1],v[2],p1,p2,.2]]
+            }
+            return a
+          }
+
+          F=[]
+          bgimg = new Image()
+          go=false
+          bgimg.onload=()=>{
+            go=true
+          }
+          bgimg.src='1QxCBC.jpg'
+        }
+
+        if(go){
+          Rl=0,Pt=0,Yw=0
+          oX=0,oY=0,oZ=0
+          x.lineJoin=x.lineCap='round'
+          x.globalAlpha=.2
+          x.drawImage(bgimg,0,0,c.width,c.height)
+          x.globalAlpha=1
+          x.fillStyle='#1027',x.fillRect(0,0,c.width,c.height)
+        
+          X=0,Y=0,Z=iPv
+          PRl=C(t)/2
+          PPt=S(t*2)/4
+          PYw=S(t)
+          R(PRl,PPt,PYw)
+          PX+=X,PY+=Y,PZ+=Z
+          
+          P.map(v=>{
+            X=v[3],Y=v[4],Z=v[5]
+            R(0,(Rn()-.5)*Math.PI*sql,(Rn()-.5)*Math.PI*2*sql)
+            v[3]=X,v[4]=Y,v[5]=Z
+            v[0]+=v[3]
+            v[1]+=v[4]
+            v[2]+=v[5]
+            X=v[0]-PX
+            Y=v[1]-PY
+            Z=v[2]-PZ
+            while(X<-s)X+=s*2
+            while(X>s)X-=s*2
+            while(Y<-s)Y+=s*2
+            while(Y>s)Y-=s*2
+            while(Z<-s)Z+=s*2
+            while(Z>s)Z-=s*2
+            MR()
+            X+=oX,Y+=oY,Z+=oZ
+            alpha=1/(1+((1+Z)**6)/5e7)
+            if(Z>0){
+              x.beginPath()
+              x.arc(...Q(),Math.min(100,100/Z),0,7)
+              x.fillStyle=`hsla(${150},99%,50%,${alpha}`
+              x.fill()
+            }
+            
+            if(!((t*60|0)%iFfreq)){
+              F=[...F,FQ(v)]
+            }
+            
+          })
+
+          F.map(v=>{
+            x.beginPath()
+            X=v[0][3]-PX
+            Y=v[0][4]-PY
+            Z=v[0][5]-PZ
+            while(X<-s)X+=s*2
+            while(X>s)X-=s*2
+            while(Y<-s)Y+=s*2
+            while(Y>s)Y-=s*2
+            while(Z<-s)Z+=s*2
+            while(Z>s)Z-=s*2
+            tx=X,ty=Y,tz=Z
+            v.map(v=>{
+              X=tx+(v[0]*v[8])
+              Y=ty+(v[1]*v[8])
+              Z=tz+(v[2]*v[8])
+              MR()
+              X+=oX,Y+=oY,Z+=oZ
+              if(Z>0)x.lineTo(...Q())
+              v[8]*=1.05
+              v[8]+=iFex
+            })
+            
+            X=tx,Y=ty,Z=tz
+            MR()
+            if(Z>1){
+              x.closePath()
+              alpha=1/(1+((1+Z)**6)/7e8)
+              x.strokeStyle=`hsla(${360*(iFms/8)*v[0][8]+t*400},99%,${100-v[0][8]/iFms*50}%,${1/((1+iFms*v[0][8])**1.8)*alpha})`
+              x.lineWidth=Math.min(50,1+300/Z/Z)
+              x.stroke()
+            }
+          })
+
+          F=F.filter(v=>v[0][8]<iFms)
+        }
+  
+        t+=1/60
+        requestAnimationFrame(Draw)
+      }
+      Draw()
+    </script>
+  
+
+</body></html>

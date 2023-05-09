@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html><head>
+    <meta property="og:image" content="1urDKs.jpg">
+    <style>
+      body, html{
+        margin: 0;
+        width: 100%;
+        height: 100vh;
+        overflow: hidden;
+        background: #000;
+      }
+      #c{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 100%;
+        height: 100%;
+        background: url(1urDKs.jpg);
+        background-position: center center;
+        background-size: fill;
+        transform: translate(-50%, -50%);
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="c" width="1920" height="1079" style="height: 411.75px; width: 100vw;"></canvas>
+    <script>
+      c=document.querySelector('#c')
+      x=c.getContext('2d')
+      S=Math.sin
+      C=Math.cos
+      t=playing=0
+      window.onclick=()=>{if(!playing)mp3.play()}
+      rsz=window.onresize=()=>{
+        setTimeout(()=>{
+          if(document.body.clientWidth > document.body.clientHeight*1.77777778){
+            c.style.height = '100vh'
+            setTimeout(()=>c.style.width = c.clientHeight*1.77777778+'px',0)
+          }else{
+            c.style.width = '100vw'
+            setTimeout(()=>c.style.height = c.clientWidth/1.77777778 + 'px',0)
+          }
+          c.width=1920
+          c.height=c.width/1.777777778
+        },0)
+      }
+      rsz()
+      Draw=()=>{
+        if(!t){
+          mp3 = new Audio()
+          mp3.loop=true
+          mp3.onplaying=()=>{playing=true}
+          mp3.oncanplay=()=>{go=true;if(!playing)mp3.play()}
+          mp3.src='cbffcaac33865d8cf019704150a10a0b.MP3'
+          Rn=Math.random
+          R=(Rl,Pt,Yw,o)=>{
+            X=S(p=(A=(M=Math).atan2)(X,Y)+Rl)*(d=(H=M.hypot)(X,Y)),Y=C(p)*d,Y=S(p=A(Y,Z)+Pt)*(d=H(Y,Z)),Z=C(p)*d,X=S(p=A(X,Z)+Yw)*(d=H(X,Z)),Z=C(p)*d
+            if(o)X+=oX,Y+=oY,Z+=oZ
+          }
+          I=(A,B,M,D,E,F,G,H)=>(K=((G-E)*(B-F)-(H-F)*(A-E))/(J=(H-F)*(M-A)-(G-E)*(D-B)))>=0&&K<=1&&(L=((M-A)*(B-F)-(D-B)*(A-E))/J)>=0&&L<=1?[A+K*(M-A),B+K*(D-B)]:0
+          Q=q=>[c.width/2+X/Z*800,c.height/2+Y/Z*800]
+          sd=2
+          x.lineJoin=x.lineCap='butt'
+          bgimg=new Image()
+          go=playing=false
+          bgimg.addEventListener('load',()=>{
+            go=true
+          })
+          bgimg.src='1urDKs.jpg'
+        }
+        if(go){
+          x.globalAlpha=.4
+          x.drawImage(bgimg,0,0,c.width,c.height)
+          x.globalAlpha=1
+          x.fillStyle='#0016',x.fillRect(0,0,w=c.width,w)
+          B=[
+            [-6,-6,6],
+            [-6,6,-6],
+            [-6,-6,-6],
+            [-6,6,6],
+            [6,-6,6],
+            [6,6,-6],
+            [6,-6,-6],
+            [6,6,6],
+          ]
+          if(!((t*60|0)%120)) sd++
+          if(sd>6)sd=2
+          sl=2
+          P=[]
+          Rc=(X,Y,sl1,a)=>{
+            if(sl1>=.2+sd/25){
+              for(let i=sd;i--;){
+                p=a+(Math.PI*2/sd*i)*(l=sl!=sl1?(1+sl1/sl)*(1.25+S(t*4))/5:1)
+                p-=Math.PI*2/sd*(sd-1)/2*l
+                tx=S(p)*sl1
+                ty=C(p)*sl1
+                P=[...P,[X,Y,0,X+tx,Y+ty,0,sl1]]
+                Rc(X+tx,Y+ty,sl1/(.95+sd/5),p)
+              }
+            }
+          }
+          Rc(0,0,sl,0)
+
+          Rl=t/4,Pt=-t/4,Yw=S(t/12)*12
+          oX=0,oY=0,oZ=22+S(t)*9
+          B.map((v,i)=>{
+            tx=v[0]
+            ty=v[1]
+            tz=v[2]
+            P.map(q=>{
+              x.beginPath()
+              X=q[0]
+              Y=q[1]*(i%2?1:-1)
+              Z=q[2]
+              R(S(t/4)*6,-t/4+i,t/2+i)
+              X+=tx
+              Y+=ty
+              Z+=tz
+              R(Rl,Pt,Yw,1)
+              if(Z>0)x.lineTo(...Q())
+              X=q[3]
+              Y=q[4]*(i%2?1:-1)
+              Z=q[5]
+              R(S(t/4)*6,-t/4+i,t/2+i)
+              X+=tx
+              Y+=ty
+              Z+=tz
+              R(Rl,Pt,Yw,1)
+              if(Z>0)x.lineTo(...Q())
+              x.lineWidth=Math.min(40, 1+40*(1+q[6]**2.5)/Z)
+              x.strokeStyle=`hsla(${q[6]*200+t*800},99%,${Math.max(60,55+40*q[6])}%,${((3+q[6])**2/40)}`
+              if(Z>0)x.lineTo(...Q())
+              x.stroke()
+            })
+          })
+        }
+              
+        t+=1/60
+        requestAnimationFrame(Draw)
+      }
+      Draw()
+    </script>
+  
+
+</body></html>

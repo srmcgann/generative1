@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html><head>
+    <meta property="og:image" content="26xeQS.jpg">
+    <style>
+      body, html{
+        margin: 0;
+        width: 100%;
+        height: 100vh;
+        overflow: hidden;
+        background: #000;
+      }
+      #c{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 100%;
+        height: 100%;
+        background: url(26xeQS.jpg);
+        background-position: center center;
+        background-size: fill;
+        transform: translate(-50%, -50%);
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="c" width="1920" height="1079" style="height: 732.375px; width: 100vw;"></canvas>
+    <script>
+      c=document.querySelector('#c')
+      x=c.getContext('2d')
+      S=Math.sin
+      C=Math.cos
+      t=playing=0
+      window.onclick=()=>{if(!playing)mp3.play()}
+      rsz=window.onresize=()=>{
+        setTimeout(()=>{
+          if(document.body.clientWidth > document.body.clientHeight*1.77777778){
+            c.style.height = '100vh'
+            setTimeout(()=>c.style.width = c.clientHeight*1.77777778+'px',0)
+          }else{
+            c.style.width = '100vw'
+            setTimeout(()=>c.style.height = c.clientWidth/1.77777778 + 'px',0)
+          }
+          c.width=1920
+          c.height=c.width/1.777777778
+        },0)
+      }
+      rsz()
+      Draw=()=>{
+        if(!t){
+          mp3 = new Audio()
+          mp3.loop=true
+          mp3.onplaying=()=>{playing=true}
+          mp3.oncanplay=()=>{go=true;if(!playing)mp3.play()}
+          mp3.src='ded6713f182822e0a0f978ab8cd71965.MP3'
+          Rn=Math.random
+          bgimg = new Image()
+          go=false
+          bgimg.onload=()=>{go=true}
+          bgimg.src='26xeQS.jpg'
+        }
+          if(go){
+            x.lineJoin=x.lineCap='round'
+            x.globalAlpha=.2
+            x.drawImage(bgimg,0,-c.height/10,c.width,c.height+c.height/10)
+            x.globalAlpha=1
+            x.fillStyle='#0000',x.fillRect(0,0,w=1920,w)
+          }else{
+            x.fillStyle='#0004',x.fillRect(0,0,w=1920,w)
+          }
+          for(s=30,h=540,k=200,i=w;i--;){X=((f=i%s)-s/2)*1.5;(i+1)%s||(x.stroke(),x.lineWidth /= 4,x.strokeStyle='#fff',x.stroke(),x.beginPath());Z=2+(i/s|0)-(t*20)%1,Y=S(f+S(Z/3+t*8)+S(X/5+t*2)*3)/2+2
+          x.globalAlpha=.05+.6*k/(Z**1.25)/6
+          x.strokeStyle=`hsla(${Y*300+t*99},99%,${300+S(t)*250}%,.5`
+          x.lineWidth = 3+2599/Z/Z
+          x.lineTo(960+X/Z*w,k+Y/Z*w)
+          }
+        t+=1/60
+        requestAnimationFrame(Draw)
+      }
+      Draw()
+    </script>
+  
+
+</body></html>

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html><head>
+    <style>
+      body, html{
+        margin: 0;
+        width: 100%;
+        height: 100vh;
+        overflow: hidden;
+        background: #000;
+      }
+      #c{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        background: url(bekBP.jpg);
+        transform: translate(-50%, -50%);
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="c" width="1920" height="1079" style="height: 552.375px; width: 100vw;"></canvas>
+    <script>
+      c=document.querySelector('#c')
+      x=c.getContext('2d')
+      S=Math.sin
+      C=Math.cos
+      t=playing=0
+      window.onclick=()=>{if(!playing)mp3.play()}
+      rsz=window.onresize=()=>{
+        setTimeout(()=>{
+          if(document.body.clientWidth > document.body.clientHeight*1.77777778){
+            c.style.height = '100vh'
+            setTimeout(()=>c.style.width = c.clientHeight*1.77777778+'px',0)
+          }else{
+            c.style.width = '100vw'
+            setTimeout(()=>c.style.height = c.clientWidth/1.77777778 + 'px',0)
+          }
+          c.width=1920
+          c.height=c.width/1.777777778
+          t=0
+        },0)
+      }
+      rsz()
+      Draw=()=>{
+  if(!t){
+    R=(Rl,Pt,Yw,o)=>{
+      X=S(p=(A=(M=Math).atan2)(X,Y)+Rl)*(d=(H=M.hypot)(X,Y)),Y=C(p)*d,Y=S(p=A(Y,Z)+Pt)*(d=H(Y,Z)),Z=C(p)*d,X=S(p=A(X,Z)+Yw)*(d=H(X,Z)),Z=C(p)*d
+      if(o)X+=oX,Y+=oY,Z+=oZ
+    }
+    Q=q=>[c.width/2+X/Z*900,c.height/2+Y/Z*900]
+    Rn=Math.random
+    loaded=false
+    bg = new Image()
+    bg.addEventListener('load',()=>{
+      loaded=true
+    })
+    bg.src = 'bekBP.jpg'
+    mp3 = new Audio()
+    mp3.loop = true
+    playing=false
+    mp3.onplaying=()=>{playing=true}
+    mp3.oncanplay=()=>{if(!playing)mp3.play()}
+    mp3.src = 'c7cf25830f292cf63f179ea8cb4ce6de.MP3'
+    ST=Array(w=1920).fill().map(v=>[(Rn()-.5)*50,(Rn()-.5)*50,Rn()*50])
+    x.lineJoin=x.lineCap='round'
+  }
+
+  if(loaded){
+    x.globalAlpha=.3
+    x.drawImage(bg,0,0,w=c.width,1080)
+    x.globalAlpha=1
+    x.fillStyle='#0005',x.fillRect(0,0,w,w)
+  } else {
+    x.fillStyle='#0008',x.fillRect(0,0,w,w)
+  }
+
+  oX=0,oY=0,oZ=6-C(t/2)*1.5
+  Rl=t/1.5,Pt=-t/4,Yw=S(t/4)*2
+  
+  ST.map(v=>{
+    X=v[0]
+    Y=v[1]
+    Z=v[2]-=.25
+    if(v[2]<1)v[2]+=50
+    x.fillStyle='#ffff'
+    x.globalAlpha=1/(1+Z**4/999999)*Math.min(1,Z/20)
+    x.fillRect(...Q(),s=1+499/(3+Z**2),s)
+  })
+  x.globalAlpha=1
+
+  G=(x1,y1,z1,rl,pt,yw,ls)=>{
+    if(ls<.075) return
+    for(let i=sd|0;i--;){
+      a=[]
+      x.beginPath()
+      X=x1,Y=y1,Z=z1
+      a=[...a,[X,Y,Z]]
+      X=S(p=0)*ls
+      Y=C(p)*ls
+      Z=0
+      R(rl,pt,yw)
+      R(Math.PI*2/sd*i+Math.PI/2-t,0,0)
+      X+=x1,Y+=y1,Z+=z1
+      tx=X,ty=Y,tz=Z
+      a=[...a,[X,Y,Z,ls]]
+      B=[...B,a]
+      G(tx,ty,tz,rl+Math.PI/2+t,pt,yw,ls/2)
+    }
+  }
+
+  F=(rl,pt,yw,x1,y1,z1)=>{
+    B.map(v=>{
+      x.beginPath()
+      X=v[0][0]
+      Y=v[0][1]
+      Z=v[0][2]
+      R(rl,pt,yw)
+      X+=x1,Y+=y1,Z+=z1
+      R(Rl,Pt,Yw,1)
+      x.lineTo(...Q())
+      X=v[1][0]
+      Y=v[1][1]
+      Z=v[1][2]
+      R(rl,pt,yw)
+      X+=x1,Y+=y1,Z+=z1
+      R(Rl,Pt,Yw,1)
+      x.lineTo(...Q())
+      x.lineWidth=80/Z*((.35+v[1][3])**2/2)
+      x.strokeStyle=`hsla(${v[1][3]*(90+S(t*8)*45)-5},99%,${40+(1.5+S(t*8)*1.5)*v[1][3]*50}%,${.6+S(t*2)/4})`
+      x.stroke()
+    })
+  }
+  s=2**.5*(2+S(t*2+1.5))/1,sd=3
+  B=[],G(0,0,0,0,0,0,1,0,0,0),F(Math.PI/4,0,0,0,0,s)
+  B=[],G(0,0,0,0,0,0,1,0,0,0),F(Math.PI/4,0,0,0,0,-s)
+  B=[],G(0,0,0,0,0,0,1,Math.PI*2,0,0),F(0,Math.PI/2,Math.PI/4,0,s,0)
+  B=[],G(0,0,0,0,0,0,1,Math.PI*2,0,0),F(0,Math.PI/2,Math.PI/4,0,-s,0)
+  B=[],G(0,0,0,0,0,0,1,Math.PI*2,0,0),F(Math.PI/4,0,Math.PI/2,s,0,0)
+  B=[],G(0,0,0,0,0,0,1,Math.PI*2,0,0),F(Math.PI/4,0,Math.PI/2,-s,0,0)
+  
+  t+= 1/60
+  requestAnimationFrame(Draw)
+}
+    Draw()
+    </script>
+  
+
+</body></html>

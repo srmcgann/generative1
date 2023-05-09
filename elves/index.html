@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html><head>
+    <meta property="og:image" content="ll">
+    <style>
+      body, html{
+        margin: 0;
+        width: 100%;
+        height: 100vh;
+        overflow: hidden;
+        background: #000;
+      }
+      #c{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 100%;
+        height: 100%;
+        background: url(1KCLn.jpg);
+        background-position: center center;
+        backgroun-size: fill;
+        transform: translate(-50%, -50%);
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="c" width="1920" height="1079" style="height: 587.812px; width: 100vw;"></canvas>
+    <script>
+      c=document.querySelector('#c')
+      x=c.getContext('2d')
+      S=Math.sin
+      C=Math.cos
+      t=playing=0
+      window.onclick=()=>{if(!playing)mp3.play()}
+      rsz=window.onresize=()=>{
+        setTimeout(()=>{
+          if(document.body.clientWidth > document.body.clientHeight*1.77777778){
+            c.style.height = '100vh'
+            setTimeout(()=>c.style.width = c.clientHeight*1.77777778+'px',0)
+          }else{
+            c.style.width = '100vw'
+            setTimeout(()=>c.style.height = c.clientWidth/1.77777778 + 'px',0)
+          }
+          c.width=1920
+          c.height=c.width/1.777777778
+        },0)
+      }
+      rsz()
+      Draw=()=>{
+        if(!t){
+          mp3 = new Audio()
+          mp3.loop=true
+          mp3.onplaying=()=>{playing=true}
+          mp3.oncanplay=()=>{go=true;if(!playing)mp3.play()}
+          mp3.src='7258b236f4e085a815f0b5e1b65e9b37.MP3'
+          Rn=Math.random
+          bgimg = new Image()
+          go=playing=false
+          bgimg.onload=()=>{
+            go=true
+          }
+          bgimg.src='1KCLn.jpg'
+          Rn=q=>Math.random()-.5
+          R=q=>{X=S(p=(A=(M=Math).atan2)(X,Y)+Rl)*(d=(H=M.hypot)(X,Y)),Y=C(p)*d,Y=S(p=A(Y,Z)+Pt)*(d=H(Y,Z)),Z=C(p)*d,X=S(p=A(X,Z)+Yw)*(d=H(X,Z)),Z=C(p)*d,X+=oX,Y+=oY,Z+=oZ}
+          Q=()=>[c.width/2+X/Z*h,c.height/2+Y/Z*h]
+ }
+  
+  iV=.4,iS=250,iC=16
+  cl=8
+  oX=0,oY=0,oZ=12+S(t)*4
+  Rl=0,Pt=-t,Yw=t*2
+  P=t?P:Array(iC).fill().map((v,i)=>[0,0,0,S(p=Rn()*Math.PI*2)*S(q=Rn()*Math.PI*2)*iV,C(q)*iV,C(p)*S(q)*iV,iS,i])
+  if(go){
+    x.globalAlpha = .3
+    x.drawImage(bgimg, 0,0,c.width,c.height)
+    x.globalAlpha = 1
+    x.fillStyle='#0001',x.fillRect(0,0,w=c.width,w),h=800
+    
+
+    for(i=cl**3;i--;){
+      X=(i%cl)-cl/2+.5
+      Y=((i/cl|0)%cl)-cl/2+.5
+      Z=(i/cl/cl|0)-cl/2+.5
+      R()
+      x.fillStyle='#afd2'
+      v=Q()
+      x.fillRect(v[0]-(s=99/Z)/2,v[1]-s/2,s,s)
+    }
+    
+    P.map(v=>{
+      if(v[6]<iS)v[6]/=1.04
+      d=(cl-1)/2
+      X=v[0]+=v[3]*=v[0]+v[3]>d||v[0]+v[3]<-d?-1:1
+      Y=v[1]+=v[4]*=v[1]+v[4]>d||v[1]+v[4]<-d?-1:1
+      Z=v[2]+=v[5]*=v[2]+v[5]>d||v[2]+v[5]<-d?-1:1
+      //X=M.max(-d,M.min(d,X))
+      //Y=M.max(-d,M.min(d,Y))
+      //Z=M.max(-d,M.min(d,Z))
+      if(v[6]===iS)P=[...P,[X,Y,Z,v[3]/2,v[4]/2,v[5]/2,v[6]/1.01,v[7]]]
+      R()
+      x.beginPath()
+      x.arc(...Q(),v[6]/Z,0,7)
+      x.fillStyle=`hsla(${360/iC*v[7]+v[6]+t*800},99%,${v[6]**2/500}%,.3`
+      x.fill()
+      return v
+    })
+    P=P.filter(v=>v[6]>30)
+    
+    s=(cl-1)/2
+    for(m=7;m--;){
+      x.beginPath()
+      for(v=[],i=4;i--;){
+        v[0]=S(p=M.PI*2/4*i+M.PI/4)*s*2**.5
+        v[1]=s
+        v[2]=C(p)*s*2**.5
+        X=v[m%3]*(d=m<3?-1:1)
+        Y=v[(m+1)%3]*d
+        Z=v[(m+2)%3]*d
+        R()
+        x.lineTo(...Q())
+      }
+      x.strokeStyle='#3862'
+      x.lineJoin='round'
+      x.lineWidth=Math.min(50, 250/Z)
+      x.closePath()
+      x.stroke()
+    }
+  } else {
+    x.fillStyle='#0004',x.fillRect(0,0,w=c.width,w),h=800
+  }
+  
+  t+=1/60
+  requestAnimationFrame(Draw)
+      }
+      Draw()
+    </script>
+  
+
+</body></html>

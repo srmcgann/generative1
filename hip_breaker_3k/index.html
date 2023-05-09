@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      body,html{
+        background: #000;
+        margin: 0;
+        height: 100vh;
+        font-family: courier;
+      }
+      #c{
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        background: #000;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id=c></canvas>
+    <script>
+      c=document.querySelector('#c')
+      c.width  = 1920
+      c.height = 1080
+      x=c.getContext('2d')
+      S=Math.sin
+      C=Math.cos
+      Rn=Math.random
+      R = function(r,g,b,a) {
+        a = a === undefined ? 1 : a;
+        return "rgba("+(r|0)+","+(g|0)+","+(b|0)+","+a+")";
+      };
+      t=go=0
+      rsz=window.onresize=()=>{
+        setTimeout(()=>{
+          if(document.body.clientWidth > document.body.clientHeight*1.77777778){
+            c.style.height = '100vh'
+            setTimeout(()=>c.style.width = c.clientHeight*1.77777778+'px',0)
+          }else{
+            c.style.width = '100vw'
+            setTimeout(()=>c.style.height = c.clientWidth/1.77777778 + 'px',0)
+          }
+          c.width=1920
+          c.height=c.width/1.777777778
+        },0)
+      }
+      rsz()
+
+      Draw=()=>{
+  if(!t){
+    playing = false
+    mp3 = new Audio()
+    mp3.onplaying=()=>{playing=true}
+    mp3.loop = true
+    mp3.src = 'hipbreaker3k.mp3'
+    window.onclick=()=>{
+      if(!playing) mp3.play()
+    }
+
+    R=(Rl,Pt,Yw,m)=>{
+      M=Math
+      A=M.atan2
+      H=M.hypot
+      X=S(p=A(X,Z)+Yw)*(d=H(X,Z))
+      Z=C(p)*d
+      Y=S(p=A(Y,Z)+Pt)*(d=H(Y,Z))
+      Z=C(p)*d
+      X=S(p=A(X,Y)+Rl)*(d=H(X,Y))
+      Y=C(p)*d
+      if(m){
+        X+=oX
+        Y+=oY
+        Z+=oZ
+      }
+    }
+    Q=()=>[c.width/2+X/Z*800,c.height/2+Y/Z*800]
+    I=(A,B,M,D,E,F,G,H)=>(K=((G-E)*(B-F)-(H-F)*(A-E))/(J=(H-F)*(M-A)-(G-E)*(D-B)))>=0&&K<=1&&(L=((M-A)*(B-F)-(D-B)*(A-E))/J)>=0&&L<=1?[A+K*(M-A),B+K*(D-B)]:0
+
+    stroke=(scol,fcol)=>{
+      if(scol){
+        x.closePath()
+        //x.globalAlpha=.2
+        x.strokeStyle=scol
+        x.lineWidth=Math.min(500, 1500/Z)
+        //x.stroke()
+        x.globalAlpha=1
+        x.lineWidth/=8
+        x.stroke()
+      }
+      if(fcol){
+        x.fillStyle=fcol
+        x.fill()
+      }
+    }
+
+    cl=16, rw=cl*3,sp=3,s=sp/2
+    b = []
+    Array(cl*rw|0).fill().map((v,i)=>{
+      tx = ((i%cl)-cl/2)*sp*1.5+((i/cl|0)%2?sp*1.5/2:0)
+      ty = 0//((i/cl/rw|0)-br/2)*sp
+      tz = (((i/cl|0)%rw)-rw/2)*sp/(3**3/12)
+      if((d=Math.hypot(tx,tz)<(rad=cl*sp/Math.PI*2))){
+        for(a=[], j=6;j--;){
+          X=tx+S(p=Math.PI*2/6*j+Math.PI/6)*s
+          Y=ty
+          Z=tz+C(p)*s
+          a=[...a, [X,Y,Z]]
+        }
+        b=[...b, a]
+      }
+    })
+    B = b
+
+    P=[]
+    spawnP=()=>{
+      sc=stars[Rn()*stars.length|0]
+      ls=Rn()**.5*rad*1
+      X=S(p=Rn()*Math.PI*2)*ls
+      Z=C(p)*ls
+      Y=-24
+      vx=vy=vz=0
+      P=[...P, [X,Y,Z,vx,vy,vz,1,sc]]
+    }
+    stars = Array(9).fill().map((v,i)=>{
+      a = new Image()
+      a.src = `star${i?i+1:''}.png`
+      return a
+    })
+    star1 = new Image()
+    star1.src = 'star7.png'
+    star2 = new Image()
+    star2.src = 'star3.png'
+    grav=.116
+    go=false
+    bg=new Image()
+    bg.onload=()=>{
+      go=true
+    }
+    bg.src='24HTvk.jpg'
+  }
+
+  if(go){
+    x.globalAlpha=.4
+    x.drawImage(bg,0,0,c.width,c.height)
+    x.globalAlpha=1
+    x.fillStyle='#0005'
+    x.fillRect(0,0,c.width,c.height)
+    oX=0, oY=-10, oZ=40
+    Rl=S(t)/3, Pt=-.3, Yw=S(t/2)*6
+
+    if(!((t*60|0)%0)){
+      for(m=1;m--;)spawnP()
+    }
+
+    B.map(v=>{
+      x.beginPath()
+      v.map(q=>{
+        X1 = q[0]
+        Y1 = q[1]
+        Z1 = q[2]
+        oy=0
+        P.map(n=>{
+          X2=n[0]
+          Y2=n[1]
+          Z2=n[2]
+          if(Y2>0){
+            d=Math.hypot(X2-X1,(Y2-Y2),Z1-Z2)
+            oy+=(Y2-1)*150/d*n[6]
+          }
+        })
+        X=X1
+        Y=Y1+oy/30
+        Y=Math.min(14,Y)
+        Y_=Y
+        Z=Z1
+        R(Rl,Pt,Yw,1)
+        if(Z>0) x.lineTo(...Q())
+      })
+      stroke('#fff2', `hsla(${Y_*40},99%,50%,.1)`)
+    })
+
+
+    P.map(v=>{
+      X=v[0]+=v[3]
+      Y=(v[1]+=v[4]+=grav)+3
+      Z=v[2]+=v[5]
+      v[6]-=.03
+      R(Rl,Pt,Yw,1)
+      if(Z>0){
+        s=Math.min(2e3, 2e5/Z/Z)
+        l=Q()
+        x.globalAlpha=(1-(1/(1+(1+v[6])**16/5)))*.75
+        x.drawImage(v[7],l[0]-s/2,l[1]-s/2,s,s)
+      }
+    })
+    P=P.filter(v=>v[6]>0)
+    x.globalAlpha=1
+  }
+        t+=1/60
+        requestAnimationFrame(Draw)
+
+      }
+      Draw()
+    </script>
+  </body>
+</html>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html><head>
+    <meta property="og:image" content="2kgpxQ.jpg">
+    <style>
+      body, html{
+        margin: 0;
+        width: 100%;
+        height: 100vh;
+        overflow: hidden;
+        background: #000;
+      }
+      #c{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 100%;
+        height: 100%;
+        background: url(2kgpxQ.jpg);
+        background-position: center center;
+        backgroun-size: fill;
+        transform: translate(-50%, -50%);
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="c" width="1920" height="1079" style="height: 411.75px; width: 100vw;"></canvas>
+    <script>
+      c=document.querySelector('#c')
+      x=c.getContext('2d')
+      S=Math.sin
+      C=Math.cos
+      t=playing=0
+      window.onclick=()=>{if(!playing)mp3.play();if(!vidplaying)vid.play()}
+      rsz=window.onresize=()=>{
+        setTimeout(()=>{
+          if(document.body.clientWidth > document.body.clientHeight*1.77777778){
+            c.style.height = '100vh'
+            setTimeout(()=>c.style.width = c.clientHeight*1.77777778+'px',0)
+          }else{
+            c.style.width = '100vw'
+            setTimeout(()=>c.style.height = c.clientWidth/1.77777778 + 'px',0)
+          }
+          c.width=1920
+          c.height=c.width/1.777777778
+        },0)
+      }
+      rsz()
+      Draw=()=>{
+        if(!t){
+          mp3 = new Audio()
+          mp3.loop=true
+          mp3.onplaying=()=>{playing=true}
+          mp3.oncanplay=()=>{go=true;if(!playing)mp3.play()}
+          mp3.src='f1f0aff14cf2ddacad94818ff236a00f.MP3'
+          vid = document.createElement('video')
+          vid.onplaying=()=>{vidplaying=true}
+          vid.style.position='absolute'
+          vid.style.opacity=0
+          document.body.appendChild(vid)
+          vidplaying=false
+          vid.oncanplay=()=>{
+           vid.play()
+          }
+          vid.loop=true
+          vid.src='output.mp4'
+          Rn=Math.random
+    cl=6,rw=4,sp=260,ls=2.25
+    bg=new Image()
+    go=false
+    bg.onload=()=>{go=true}
+    bg.src='2kgpxQ.jpg'
+    ps=[4,10,6,32,3]
+    if(!t){R=q=>{X=S(p=(A=(M=Math).atan2)(X,Y)+Rl)*(d=H(X,Y)),Y=C(p)*d,Y=S(p=A(Y,Z)+Pt)*(d=H(Y,Z)),Z=C(p)*d,X=S(p=A(X,Z)+Yw)*(d=H(X,Z)),Z=C(p)*d,Z+=12.5};Q=q=>[c.width/2+X/Z*600,c.height/2+Y/Z*600];
+    spn=(sd)=>{B=Array(sd).fill().map(v=>[(O=Rn)(),O(),O()]),L=q=>q*99**3/d
+    for(m=1e3/(1+sd/9)|0;m--;){B.map((v,i)=>{f=g=h=0,B.map(q=>{d=(1+(H=Math.hypot)(a=v[0]-q[0],b=v[1]-q[1],e=v[2]-q[2])*9)**3,f+=L(a),g+=L(b),h+=L(e)}),d=H(v[0]+=f,v[1]+=g,v[2]+=h),v[0]*=ls/d,v[1]*=ls/d,v[2]*=ls/d})};n=6e6,B.map(v=>{B.map(q=>{if((d=H(q[0]-v[0],q[1]-v[1],q[2]-v[2]))&&d<n)n=d})});return [[...B],sd,n,0,2+Rn()*5]}}
+    for(G=[],i=cl*rw;i--;)G.push(spn(ps[(1-Rn()**.7)*ps.length|0]))
+  }
+  if(go){
+    x.globalAlpha=.2
+    x.drawImage(vid,0,0,c.width,c.height)
+    x.globalAlpha=1
+    x.fillStyle='#0004'
+    x.fillRect(0,0,w=c.width,w)
+    for(U=cl*rw;U--;){
+      am=G[U][3]+=.02
+      am2=Math.min(1, G[U][4]-am)
+      rr=1.5/(am2+.5)/3+(2/3)
+      am=Math.min(am,am2)
+      if(G[U][3]>G[U][4]){
+        G[U]=spn(ps[(1-Rn()**.7)*ps.length|0])
+        am=0
+      }
+      am-=.2
+      am=Math.max(0,Math.min(am,1.2))
+      lx=((U%cl)-cl/2+.5)*sp*1.2
+      ly=((U/cl|0)-rw/2+.5)*sp
+      Rl=t/4,Pt=C(-t/4-U*4)*5,Yw=S(t/3+U*9)*4,x.lineCap='round',G[U][0].map((v,i)=>{G[U][0].map((q,j)=>{if(j>i){d=H(q[0]-v[0],q[1]-v[1],q[2]-v[2]);if(d<G[U][2]*1.22+G[U][1]**2/2e5){x.beginPath(),R(X=v[0]*rr,Y=v[1]*rr,Z=v[2]*rr),l=Q(),x.lineTo(l[0]+lx,l[1]+ly),k=Z-5,R(X=q[0]*rr,Y=q[1]*rr,Z=q[2]*rr),l=Q(),x.lineTo(l[0]+lx,l[1]+ly),am=Math.min(1,am),x.globalAlpha=10000/(k**5)*am,x.strokeStyle=`hsla(${Z*20+t*400+U*9},99%,${150+S(t)*100}%,.15)`,x.lineWidth=Math.min(30,2500/(Z**2)),x.stroke(),x.strokeStyle='#fff',x.globalAlpha=(10000/(k**5)+.2)*am,x.lineWidth=Math.min(30,350/(Z**2)),x.stroke()}}})})
+    }
+  }else{
+    x.fillRect(0,0,c.width,c.height)
+  }
+              
+        t+=1/60
+        requestAnimationFrame(Draw)
+      }
+      Draw()
+    </script><video loop="" src="output.mp4" style="position: absolute; opacity: 0;"></video>
+  
+
+</body></html>

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html><head>
+    <meta property="og:image" content="VoZVF.jpg">
+    <style>
+      body, html{
+        margin: 0;
+        width: 100%;
+        height: 100vh;
+        overflow: hidden;
+        background: #000;
+      }
+      #c{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 100%;
+        height: 100%;
+        background: url(VoZVF.jpg);
+        background-position: center center;
+        background-size: cover;
+        transform: translate(-50%, -50%);
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="c" width="1920" height="1079" style="height: 411.75px; width: 100vw;"></canvas>
+    <script>
+      c=document.querySelector('#c')
+      x=c.getContext('2d')
+      S=Math.sin
+      C=Math.cos
+      t=playing=0
+      window.onclick=()=>{if(!playing)mp3.play()}
+      rsz=window.onresize=()=>{
+        setTimeout(()=>{
+          if(document.body.clientWidth > document.body.clientHeight*1.77777778){
+            c.style.height = '100vh'
+            setTimeout(()=>c.style.width = c.clientHeight*1.77777778+'px',0)
+          }else{
+            c.style.width = '100vw'
+            setTimeout(()=>c.style.height = c.clientWidth/1.77777778 + 'px',0)
+          }
+          c.width=1920
+          c.height=c.width/1.777777778
+        },0)
+      }
+      rsz()
+      Draw=()=>{
+        if(!t){
+          mp3 = new Audio()
+          mp3.loop=true
+          mp3.onplaying=()=>{playing=true}
+          mp3.oncanplay=()=>{if(!playing)mp3.play()}
+          mp3.src='b234c2fbbfa9349f9717568521e0a73b.MP3'
+          Rn=Math.random
+          R=(Rl,Pt,Yw,o)=>{
+            X=S(p=(A=(M=Math).atan2)(X,Z)+Yw)*(d=(H=M.hypot)(X,Z)),Z=C(p)*d
+            Y=S(p=A(Y,Z)+Pt)*(d=H(Y,Z)),Z=C(p)*d
+            X=S(p=A(X,Y)+Rl)*(d=H(X,Y)),Y=C(p)*d
+            if(o)X+=oX,Y+=oY,Z+=oZ
+          }
+          Q=q=>[c.width/2+X/Z*800,c.height/2+Y/Z*800]
+          bgimg = new Image()
+          stars = Array(9).fill().map((v,j)=>{i = new Image(); i.src='./star'+(j+1)+'.png';return i})
+          go=playing=false
+          bgimg.onload=()=>{
+            go=true
+          }
+          bgimg.src='8R6Nb.png'
+          G=40000,iPc=15000
+          P=Array(iPc).fill().map(v=>{
+            return [(Rn()-.5)*G,(Rn()-.5)*G,(Rn()-.5)*G]
+          })
+          p1=C(t/16)*2
+          p2=Math.PI/2-S(t/40)/4
+          tx=-S(p1)*S(p2)*1200
+          ty=-C(p2)*1200
+          tz=-C(p1)*S(p2)*1200
+          p1=p2=tx=ty=tz=Rl=Pt=Yw=0
+        }
+          
+        if(go){
+          x.globalAlpha=1-Math.max(0,Math.min(1,2-C(t/3)*3))
+          x.drawImage(bgimg,0,0,c.width,c.height)
+          x.globalAlpha=1
+          x.fillStyle='#0006',x.fillRect(0,0,c.width,c.height)
+          iPv=(40+C(t/6)*107)/1.25
+          Rl=C(t/3),Pt=0,Yw=0
+          oX=0,oY=0,oZ=G/20
+          p1=C(t/4)*3
+          p2=Math.PI/2-S(t/10)*1.5
+          P.map((v,i)=>{
+            tx=-S(p1)*S(p2)*iPv
+            ty=-C(p2)*iPv
+            tz=-C(p1)*S(p2)*iPv
+            X=v[0]+=tx
+            Y=v[1]+=ty
+            Z=v[2]+=tz
+            if(v[0]<-G/2)v[0]+=G
+            if(v[1]<-G/2)v[1]+=G
+            if(v[2]<-G/2)v[2]+=G
+            if(v[0]>G/2)v[0]-=G
+            if(v[1]>G/2)v[1]-=G
+            if(v[2]>G/2)v[2]-=G
+            R(Rl,Pt-(Math.PI/2-p2),Yw-p1,1)
+            if(Z>0){
+              if(!i||(x.globalAlpha=1/(1+(H(X,Y,Z)/16)**3.8/1e11)*Math.min(1,H(X,Y,Z)/600)**3.5)>.05){
+                if(i%20<19){
+                  l=Q(),s=(Math.min(4000,6+5e7/6/(Z**1.75))*4)
+                  x.drawImage(stars[!i?3:0],l[0]-s/2,l[1]-s/2,s,s)
+                } else {
+                  l=Q(),s=(Math.min(2000,8+5e7/1/(Z**1.75))*4)
+                  x.drawImage(stars[(((i+47)**1.234)|0)%9],l[0]-s/2,l[1]-s/2,s,s)
+                }
+              }
+            }
+          })
+        } else {
+          x.fillStyle='#0008',x.fillRect(0,0,c.width,c.height)
+        }
+              
+        t+=1/60
+        requestAnimationFrame(Draw)
+      }
+      Draw()
+    </script>
+  
+
+</body></html>

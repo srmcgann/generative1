@@ -1,0 +1,205 @@
+<html><head>
+    <title>text song</title>
+    <link rel="icon" href="POSOl.jpg" type="image/png">
+    <style>
+      body, html{
+  margin: 0;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  background: #000;
+}
+#c{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  background: url(VoZVF.jpg);
+  background-position: center center;
+  background-size: fill;
+  transform: translate(-50%, -50%);
+}
+
+      .homeLink{
+        z-index: 10000;
+        position: fixed;
+        background: #2466;
+        cursor: pointer;
+        font-size: 12px;
+        color: #fff8;
+        top: 5px;
+        right: 5px;
+        border-radius: 3px;
+        border: 1px solid #4688;
+      }
+      .homeLink:focus{
+        outline: none;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="c" width="1920" height="1079" style="height: 676.125px; width: 100vw;">
+    <script>//---- do not edit the following code (you can indent as you wish)
+let alphabet = "123456789abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ"
+var fxhash = "oo" + Array(49).fill(0).map(_=>alphabet[(Math.random()*alphabet.length)|0]).join('')
+let b58dec = (str) => str.split('').reduce((p,c,i) => p + alphabet.indexOf(c) * (Math.pow(alphabet.length, str.length-i-1)), 0)
+let fxhashTrunc = fxhash.slice(2)
+let regex = new RegExp(".{" + ((fxhashTrunc.length/4)|0) + "}", 'g')
+let hashes = fxhashTrunc.match(regex).map(h => b58dec(h))
+let sfc32 = (a, b, c, d) => {
+  return () => {
+    a |= 0; b |= 0; c |= 0; d |= 0
+    var t = (a + b | 0) + d | 0
+    d = d + 1 | 0
+    a = b ^ b >>> 9
+    b = c + (c << 3) | 0
+    c = c << 21 | c >>> 11
+    c = c + t | 0
+    return (t >>> 0) / 4294967296
+  }
+}
+var fxrand = sfc32(...hashes)
+//---- /do not edit the following code
+c=document.querySelector('#c')
+tc=c.cloneNode()
+ctx = tc.getContext('2d')
+x=c.getContext('2d')
+S=Math.sin
+C=Math.cos
+t=playing=0
+window.onclick=()=>{if(!playing)mp3.play()}
+rsz=window.onresize=()=>{
+  setTimeout(()=>{
+    if(document.body.clientWidth > document.body.clientHeight*1.77777778){
+      c.style.height = '100vh'
+      setTimeout(()=>c.style.width = c.clientHeight*1.77777778+'px',0)
+    }else{
+      c.style.width = '100vw'
+      setTimeout(()=>c.style.height = c.clientWidth/1.77777778 + 'px',0)
+    }
+    c.width=1920
+    c.height=c.width/1.777777778
+    tc.width=100
+                                  tc.height=100
+  },0)
+}
+rsz()
+Draw=()=>{
+  if(!t){
+    R=(Rl,Pt,Yw,m)=>{X=S(p=(A=(M=Math).atan2)(X,Y)+Rl)*(d=(H=M.hypot)(X,Y)),Y=C(p)*d,Y=S(p=A(Y,Z)+Pt)*(d=H(Y,Z)),Z=C(p)*d,X=S(p=A(X,Z)+Yw)*(d=H(X,Z)),Z=C(p)*d;if(m)X+=oX,Y+=oY,Z+=oZ}
+    Q=()=>[c.width/2+X/Z*800,c.height/2+Y/Z*800]
+    ctx = tc.getContext('2d')
+    mp3 = new Audio()
+    mp3.loop=true
+    mp3.onplaying=()=>{playing=true}
+    mp3.oncanplay=()=>{go=true;if(!playing)mp3.play()}
+    mp3.src='47d4bf7a1adf4a88cf17668ef7fb52d1.MP3'
+    Rn=fxrand
+    drawText=(tx,ty,tz,raw,size)=>{
+      raw.map((v,i)=>{
+        X=v[0]/9+tx
+        Y=v[1]/9+ty
+        Z=v[2]/9+tz
+        R(Rl,Pt,Yw,1)
+        l=Q()
+        s=Math.min(500, 60*size/(Z))
+        x.fillStyle='#8fe4'
+        x.fillRect(l[0]-s/2,l[1]-s/2,s,s)
+        s/=3
+        x.fillStyle='#fffc'
+        x.fillRect(l[0]-s/2,l[1]-s/2,s,s)
+      })
+    }
+    genText=(text, tx, ty, tz, font, size, mode)=>{
+      text+=''
+      switch(font){
+        case 0: sp=1; break
+        case 1: sp=1; break
+        case 2: sp=1; break
+        case 3: sp=1; break
+        case 4: sp=.9; break
+        case 5: sp=1; break
+        case 6: sp=1; break
+        case 7: sp=.8; break
+        case 8: sp=1; break
+        case 9: sp=.7; break
+      }
+      sp*=.7
+      fonts=['arial','verdana','helvetica','tahoma','trebuchet','Times New Roman','Georgia','Garamond','Courier New','Brush Script MT']
+      ctx.clearRect(0,0,tc.width,tc.height)
+      text.split('\n').map((v, i)=>{
+        ctx.font=size+'px ' + fonts[font]
+        ctx[mode?'fillStyle':'strokeStyle']='#fff'
+        ctx[mode?'fillText':'strokeText'](v, 15, size + i*size*sp)
+      })
+        d=ctx.getImageData(0,0,tc.width,tc.height)
+        ar=[]
+        minX=6e6,maxX=-6e6
+        minY=6e6,maxY=-6e6
+        for(i=0; i < d.data.length; i+=4){
+          if(!(i%4)){
+            j=i/4|0
+            X=j%tc.width
+            Y=(j/tc.width|0)
+            red=d.data[i]
+            green=d.data[i+1]
+            blue=d.data[i+2]
+            alpha=d.data[i+3]
+            AL=(red+green+blue+alpha)/4
+            if(AL>128){
+              ar=[...ar,[X,Y,0]]
+              if(X<minX)minX=X
+              if(X>maxX)maxX=X
+              if(Y<minY)minY=Y
+              if(Y>maxY)maxY=Y
+            }
+          }
+        }
+        mw=maxX-minX
+        mh=maxY-minY
+        ar.map((v,i)=>{
+          v[0]-=minX+mw/2
+          v[1]-=minY+mh/2
+          v[0]+=tx
+          v[1]+=ty
+          v[2]+=tz
+        })
+      return ar
+    }
+    chars='0 1 2 3 4 5 6 7 8 9 + − × ÷ = ≠ ± < > ° ƒ % ‰ ∑ √ ∞'
+    texts = chars.split(' ').map((v, i) => {
+      return genText(v, 0, 0, 0, 8, 20, 1)
+    })
+
+    G=50
+    B=Array(100).fill().map((v, i)=>{
+      bx=(Rn()-.5)*G/5
+      by=(Rn()-.5)*G/5
+      bz=Rn()*G
+      return [bx, by, bz, texts[i%texts.length]]
+    })
+  }
+
+  x.fillStyle='#0008'
+  x.fillRect(0,0,c.width,c.height)
+        oX=oY=0, oZ=0
+  Rl=S(t/3)/2,Pt=0,Yw=S(t/2)/2
+  B.map(v=>{
+    X=v[0]
+    Y=v[1]
+    Z=v[2]-=.5+S(t/4)
+    x.globalAlpha=1/(1+Z**10/9999999999999999)
+    if(Z<0)v[0]=(Rn()-.5)*G/5,v[1]=(Rn()-.5)*G/5,v[2]+=G
+    if(Z>G)v[0]=(Rn()-.5)*G/5,v[1]=(Rn()-.5)*G/5,v[2]-=G
+    drawText(X, Y, Z, v[3], 2)
+  })
+  x.globalAlpha=1
+  t+=1/60
+  requestAnimationFrame(Draw)
+}
+Draw()
+</script>
+  
+
+</canvas></body></html>
