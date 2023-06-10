@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+body,html{
+  background: linear-gradient(46deg,#201, #000, #102);
+  margin: 0;
+  height: 100vh;
+  font-family: courier;
+}
+#c{
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+    </style>
+  </head>
+  <body>
+    <canvas id=c></canvas>
+    <script>
+      c=document.querySelector('#c')
+      x=c.getContext('2d')
+      S=Math.sin
+      C=Math.cos
+      t=playing=0
+      window.onclick=()=>{if(!playing)mp3.play()}
+      rsz=window.onresize=()=>{
+        setTimeout(()=>{
+          if(document.body.clientWidth > document.body.clientHeight*1.77777778){
+            c.style.height = '100vh'
+            setTimeout(()=>c.style.width = c.clientHeight*1.77777778+'px',0)
+          }else{
+            c.style.width = '100vw'
+            setTimeout(()=>c.style.height = c.clientWidth/1.77777778 + 'px',0)
+          }
+          c.width=1920
+          c.height=c.width/1.777777778
+        },0)
+      }
+      rsz()
+      Draw=()=>{
+        if(!t){
+          mp3 = new Audio()
+          mp3.loop=true
+          mp3.onplaying=()=>{playing=true}
+          mp3.oncanplay=()=>{go=true;if(!playing)mp3.play()}
+          mp3.src='7b62d9fae4769f7ecfcd7f8eb9a0db03.MP3'
+          Rn=Math.random
+          N=O=P=0,q=[0,0,0]
+          go=false
+          stars = Array(10).fill([,])
+          stars = Array(10).fill().map((v,i)=>{
+            let img = [new Image(),0]
+            img[0].onload=()=>{
+              img[1]=true
+              go=true
+              stars.map(v=>{if(!v[1])go=false})
+            }
+            img[0].src = './star' + (i?i:'') + '.png'
+            img[2]=i
+            return img
+          })
+        }
+        if(go){
+          x.globalAlpha=1
+          x.fillStyle=`#0008`
+          x.fillRect(0,0,w=2e3,w)
+          s=10
+          Q=(m,a)=>{
+             d=(M=Math).hypot(A=q[m],B=q[f=(m+1)%3])
+             q[m]=S(p=M.atan2(A,B)+a)*d
+             q[f]=C(p)*d
+          }
+          vl=.1+S(t*.6)/8
+          y=C(t/1.5)
+          pt=S(t)*2
+          r=(t+S(t))/2
+          h=650+S(t/1.5)*300
+          N-=S(y)*C(pt)*vl
+          O+=S(pt)*vl
+          P-=C(y)*C(pt)*vl
+          for(i=s**3;i--;){
+             q[0]=(i%s)+N%1-(k=s/2-.5)
+             q[1]=(i/s|0)%s+O%1-k
+             q[2]=(i/s/s|0)+P%1-k
+             Q(2,y)
+             Q(1,pt)
+             Q(0,r)
+             d=M.hypot(...q)
+             x.globalAlpha=1/(1+(Z=q[2])**4/80)
+             ls=250/(.2+Z*Z/9)
+             if(Z>0)x.drawImage(stars[i%10][0],960+q[0]/Z*h-ls/2,540+q[1]/Z*h-ls/2,ls,ls)
+          }
+        }
+             
+        t+=1/60
+        requestAnimationFrame(Draw)
+      }
+      Draw()
+    </script>
+  </body>
+</html>
