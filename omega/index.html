@@ -69,9 +69,12 @@ Draw=()=>{
   iPc=3,G=5,iPv=.08,iPs=5,sd=2,sR=.3,iSTc=w*3,STG=20
 
   if(!t){
+    playing = false
     mp3 = new Audio()
     mp3.loop = true
-    mp3.oncanplay=()=>{mp3.play()}
+    mp3.onplaying = () =>{playing = true}
+    window.onclick = () =>{if(!playing)mp3.play()}
+    mp3.oncanplay=()=>{if(!playing)mp3.play()}
     mp3.src='24c12e38d716153a7855f1c1453c8c61.MP3'
     x.lineJoin=x.lineCap='round'
     P=Array(iPc).fill().map((v,i)=>{
