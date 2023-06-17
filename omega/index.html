@@ -128,7 +128,7 @@ Draw=()=>{
       x.fillStyle='#41f8'
       x.fill()
     }
-
+    x.lineJoin = x.lineCap = 'round'
     v[6].map((n,j)=>{
       if(j){
         n=n.filter(v=>v[3]>.05)
