@@ -1,1 +1,211 @@
-nothimg 
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>whitehot robot live animations (w/music)</title>
+    <style>
+      body, html{
+        margin: 0;
+        background: #000;
+        color: #f00;
+        font-family: courier;
+        min-height: 100vh;
+        font-size: 24px;
+        text-align: center;
+        overflow: hidden;
+      }
+      #playerModal{
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        z-index: 1000;
+        background: #000810cc;
+      }
+      #title{
+        font-size: 1em;
+        text-shadow: #0f8 0px 0px 20px;
+        color: #fff4;
+        min-width: 500px;
+        position: absolute;
+        left: 50%;
+        transform: scale(2,1) translate(-130px);
+        margin-top:20px;
+        margin-bottom:20px;
+      }
+      .span{
+        font-size: .8em;
+      }
+      .loadButton{
+        border: none;
+        border-radius: 10px;
+        font-family: courier;
+        color: #4ff;
+        background: #133;
+        min-width: 100px;
+        cursor: pointer;
+      }
+      .closeButton{
+        border: none;
+        border-radius: 10px;
+        font-family: courier;
+        color: #f88;
+        margin: 10px;
+        font-size: 1em;
+        cursor: pointer;
+        background: #400;
+        min-width: 100px;
+        position: absolute;
+        z-index: 2000;
+        transform: translate(-50%);
+      }
+      #tiles{
+        margin-top: 100px;
+      }
+      .tile{
+        border: 1px solid #4f83;
+        display: inline-block;
+        margin: 10px;
+        min-height: 50px;
+        background: #40f2;
+        padding: 10px;
+      }
+      #playerFrame{
+        position: absolute;
+        display: block;
+        z-index: 1500;
+        border: none;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+      }
+    </style>
+  </head>
+  <body>
+    <div id="title"> whitehot robot demos</div>
+    <div id="title"> whitehot robot demos</div>
+    <div id="title"> whitehot robot demos</div>
+    <div id="title"> whitehot robot demos</div>
+    <div id="title"> whitehot robot demos</div>
+    <div id="title"> whitehot robot demos</div>
+    <div id="playerModal">
+      <button class="closeButton" onclick="hidePlayerModal()">
+        close
+      </button>
+      <iframe id="playerFrame"></iframe>
+    </div>
+    <div id="tiles"></div>
+    <script>
+
+      demoList = [
+        "ambient_soul_salve",
+        "angels",
+        "anthropology2.0",
+        "awakening",
+        "bisection",
+        "breaking_formation",
+        "cellular_automata",
+        "collosus",
+        "crush",
+        "cube_inception",
+        "ragonfly",
+        "elves",
+        "emerge",
+        "epiphany_ts",
+        "everything_i_wanted",
+        "exist_for_love",
+        "eye",
+        "eye_of_the_storm",
+        "fade_into_you",
+        "flying_hex",
+        "forks",
+        "giant_oaks",
+        "golden_bird",
+        "golden_spiral",
+        "good_girls",
+        "grape_skittles",
+        "halogen",
+        "heavenly_conduit",
+        "hetrochromia",
+        "hipbreaker",
+        "hip_breaker_3k",
+        "hypergeometry",
+        "icosahedron",
+        "index.html",
+        "lobotomy",
+        "luckystar",
+        "magnesium",
+        "make_me_a_robot",
+        "march_of_the_cloud_people",
+        "natural_fun",
+        "next_level",
+        "ocean",
+        "omega",
+        "only_in_my_dreams",
+        "pudding",
+        "sierpenski",
+        "snowflake",
+        "sorting_hat",
+        "starship_excelsior",
+        "streamers",
+        "streets",
+        "subspace_ripples",
+        "symbols_from_beyond",
+        "text_song",
+        "the_barn_that_time_forgot",
+        "the_deepest_lake",
+        "the_physical_world",
+        "torus_inception",
+        "tree_of_knowledge",
+        "wells",
+        "wings_actual",
+        "winter_days",
+        "☺"
+  ]
+      
+      playerModal = document.querySelector('#playerModal')
+      showPlayerModal = (tgt='') => {
+        playerModal.style.display = 'block'
+        rsz___ = window.onresize = () => {
+          setTimeout(()=>{
+            playerFrame = document.querySelector('#playerFrame')
+            if(document.body.clientWidth > document.body.clientHeight*1.77777778){
+              playerFrame.style.height = '100vh'
+              setTimeout(()=>playerFrame.style.width = playerFrame.clientHeight*1.77777778+'px',0)
+            }else{
+              playerFrame.style.width = '100vw'
+              setTimeout(()=>playerFrame.style.height = playerFrame.clientWidth/1.77777778 + 'px',0)
+            }
+            playerFrame.src = tgt
+          },0)
+        }
+        rsz___()
+      }
+      hidePlayerModal = tgt => {
+        playerModal.style.display = 'none'
+      }
+      
+      tiles = document.querySelector('#tiles')
+      demoList.map(v => {
+        el = document.createElement('button')
+        el.className = 'loadButton'
+        el.innerHTML = 'launch'
+        el2 = document.createElement('div')
+        el2.className = 'tile'
+        span = document.createElement('span')
+        span.className = 'span'
+        span.innerHTML = v
+        el2.appendChild(span)
+        br = document.createElement('br')
+        el2.appendChild(br)
+        el2.appendChild(el)
+        tiles.appendChild(el2)
+        el.onclick = () => {
+          
+          showPlayerModal(v)
+        }
+      })
+    </script>
+  </body>
+</html>
