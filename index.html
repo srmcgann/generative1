@@ -163,6 +163,69 @@
         "winter_days",
         "☺"
   ]
+  
+  thumblist = ["ambient_soul_salve_thumb.jpg",
+    "angels_thumb.jpg",
+    "anthropology2.0_thumb.jpg",
+    "awakening_thumb.jpg",
+    "bisection_thumb.jpg",
+    "breaking_formation_thumb.jpg",
+    "cellular_automata_thumb.jpg",
+    "collosus_thumb.jpg",
+    "crush_thumb.jpg",
+    "cube_inception_thumb.jpg",
+    "dragonfly_thumb.jpg",
+    "elves_thumb.jpg",
+    "emerge_thumb.jpg",
+    "ephiphany_ts_thumb.jpg",
+    "everything_i_wanted_thumb.jpg",
+    "exist_for_love_thumb.jpg",
+    "eye_of_the_storm_thumb.jpg",
+    "eye_thumb.jpg",
+    "fade_into_you_thumb.jpg",
+    "flying_hex_thumb.jpg",
+    "forks_thumb.jpg",
+    "giant_oaks_thumb.jpg",
+    "golden_bird_thumb.jpg",
+    "golden_spiral_thumb.jpg",
+    "good_girls_thumb.jpg",
+    "grape_skittles_thumb.jpg",
+    "halogen_thumb.jpg",
+    "heavenly_conduit_thumb.jpg",
+    "heterochromia_thumb.jpg",
+    "hip_breaker_3k_thumb.jpg",
+    "hip_breaker_thumb.jpg",
+    "hypergeometry_thumb.jpg",
+    "icosahedron_thumb.jpg",
+    "lobotomy_thumb.jpg",
+    "lucky_star_thumb.jpg",
+    "magnesium_thumb.jpg",
+    "make_me_a_robot_thumb.jpg",
+    "march_of_the_cloud_people_thumb.jpg",
+    "natural_fun_thumb.jpg",
+    "next_level_thumb.jpg",
+    "ocean_thumb.jpg",
+    "omega_thumb.jpg",
+    "only_in_my_dreams_thumb.jpg",
+    "pudding_thumb.jpg",
+    "sierpenski_thumb.jpg",
+    "snowflake_thumb.jpg",
+    "sorting_hat_thumb.jpg",
+    "starship_excelsior_thumb.jpg",
+    "streamers_thumb.jpg",
+    "streets_thumb.jpg",
+    "subspace_ripples_thumb.jpg",
+    "symbols_from_beyond_thumb.jpg",
+    "text_song_thumb.jpg",
+    "the_barn_that_time_forgot_thumb.jpg",
+    "the_deepest_lake_thumb.jpg",
+    "the_physical_world_thumb.jpg",
+    "torus_inception_thumb.jpg",
+    "tree_of_knowledge_thumb.jpg",
+    "wells_thumb.jpg",
+    "wings_actual_thumb.jpg",
+    "winter_days_thumb.jpg",
+    "smiley_face_thumb.jpg"]
       
       playerModal = document.querySelector('#playerModal')
       showPlayerModal = (tgt='') => {
@@ -188,7 +251,7 @@
       }
       
       tiles = document.querySelector('#tiles')
-      demoList.map(v => {
+      demoList.map((v, i) => {
         el = document.createElement('button')
         el.className = 'loadButton'
         el.innerHTML = 'launch'
@@ -197,6 +260,8 @@
         span = document.createElement('span')
         span.className = 'span'
         span.innerHTML = v
+        thumb = document.createElement('img')
+        thumb.src = thumblist[i]
         el2.appendChild(span)
         br = document.createElement('br')
         el2.appendChild(br)
