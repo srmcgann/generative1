@@ -254,7 +254,6 @@
       
       tiles = document.querySelector('#tiles')
       demoList.map((v, i) => {
-        br = document.createElement('br')
         el = document.createElement('button')
         el.className = 'loadButton'
         el.innerHTML = 'launch'
@@ -267,8 +266,10 @@
         thumb.src = thumblist[i]
         thumb.className = 'thumb'
         el2.appendChild(span)
+        br = document.createElement('br')
         el2.appendChild(br)
         el2.appendChild(thumb)
+        br = document.createElement('br')
         el2.appendChild(br)
         el2.appendChild(el)
         tiles.appendChild(el2)
