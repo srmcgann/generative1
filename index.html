@@ -46,6 +46,9 @@
         min-width: 100px;
         cursor: pointer;
       }
+      .thumb{
+        border-radius: 5px;
+      }
       .closeButton{
         border: none;
         border-radius: 10px;
@@ -97,7 +100,6 @@
     </div>
     <div id="tiles"></div>
     <script>
-
       demoList = [
         "ambient_soul_salve",
         "angels",
@@ -226,7 +228,6 @@
     "wings_actual_thumb.jpg",
     "winter_days_thumb.jpg",
     "smiley_face_thumb.jpg"]
-      
       playerModal = document.querySelector('#playerModal')
       showPlayerModal = (tgt='') => {
         playerModal.style.display = 'block'
@@ -263,14 +264,14 @@
         span.innerHTML = v
         thumb = document.createElement('img')
         thumb.src = thumblist[i]
+        thumb.className = 'thumb'
         el2.appendChild(span)
         el2.appendChild(br)
         el2.appendChild(thumb)
         el2.appendChild(br)
         el2.appendChild(el)
         tiles.appendChild(el2)
-        el.onclick = () => {
-          
+        thumb.onclick = el.onclick = () => {
           showPlayerModal(v)
         }
       })
